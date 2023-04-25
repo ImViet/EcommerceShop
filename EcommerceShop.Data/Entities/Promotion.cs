@@ -18,6 +18,6 @@ namespace EcommerceShop.Data.Entities
         public string ProductIds { set; get; }
         public string ProductCategoryIds { set; get; }
         public Status Status { set; get; }
-        public string Name { set; get; }
+        public string PromotionName { set; get; }
     }
 }
