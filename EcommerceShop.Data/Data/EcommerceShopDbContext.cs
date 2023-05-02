@@ -12,6 +12,9 @@ namespace EcommerceShop.Data.Data
 {
     public class EcommerceShopDbContext : DbContext
     {
+        public EcommerceShopDbContext(DbContextOptions<EcommerceShopDbContext> options) : base(options)
+        {
+        }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<AppConfig> AppConfigs { get; set; }
@@ -33,9 +36,9 @@ namespace EcommerceShop.Data.Data
 
         public DbSet<Transaction> Transactions { get; set; }
 
-
-        public EcommerceShopDbContext(DbContextOptions options) : base(options)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -53,7 +56,7 @@ namespace EcommerceShop.Data.Data
             modelBuilder.ApplyConfiguration(new PromotionConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
 
-            //base.OnModelCreating(modelBuilder);
         }
+       
     }
 }
