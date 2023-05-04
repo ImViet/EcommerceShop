@@ -1,4 +1,5 @@
 ﻿using EcommerceShop.Data.Configurations;
+using EcommerceShop.Data.Data.Seeds;
 using EcommerceShop.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -42,6 +43,7 @@ namespace EcommerceShop.Data.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Configuration using Fluent API
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
@@ -55,7 +57,8 @@ namespace EcommerceShop.Data.Data
             modelBuilder.ApplyConfiguration(new ProductTranslationConfiguration());
             modelBuilder.ApplyConfiguration(new PromotionConfiguration());
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
-
+            //Seeding data
+            modelBuilder.SeedData();
         }
        
     }
