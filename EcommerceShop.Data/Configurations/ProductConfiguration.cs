@@ -18,7 +18,6 @@ namespace EcommerceShop.Data.Configurations
             builder.HasKey(x => x.ProductId);
             builder.Property(x => x.ProductId).UseIdentityColumn();
 
-            builder.Property(x => x.ProductName).IsRequired();
             builder.Property(x => x.Price).IsRequired();
             builder.Property(x => x.OriginalPrice).IsRequired();
             builder.Property(x => x.Stock).IsRequired().HasDefaultValue(0);
