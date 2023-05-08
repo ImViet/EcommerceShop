@@ -15,5 +15,8 @@ namespace EcommerceShop.Data.Entities
         public Guid UserId { get; set; }
         public Product Product { get; set; }
         public DateTime DateCreated { get; set; }
+
+        public AppUser User { get; set; }       
+
     }
 }

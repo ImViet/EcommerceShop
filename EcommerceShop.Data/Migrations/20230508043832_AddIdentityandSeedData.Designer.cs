@@ -4,6 +4,7 @@ using EcommerceShop.Data.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceShop.Data.Migrations
 {
     [DbContext(typeof(EcommerceShopDbContext))]
-    partial class EcommerceShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230508043832_AddIdentityandSeedData")]
+    partial class AddIdentityandSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
