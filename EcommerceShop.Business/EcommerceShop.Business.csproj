@@ -7,12 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EcommerceShop.Data\EcommerceShop.Data.csproj" />
+    <PackageReference Include="AutoMapper" Version="12.0.1">
+      <PrivateAssets></PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\EcommerceShop.Constracts\EcommerceShop.Contracts.csproj" />
+    <ProjectReference Include="..\EcommerceShop.Data\EcommerceShop.Data.csproj" />
   </ItemGroup>
 
 </Project>
