@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceShop.Data", "Ecomm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceShop.Business", "EcommerceShop.Business\EcommerceShop.Business.csproj", "{0211D53E-CB1F-4D82-8B1D-92BFBA9F286F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommerceShop.Constracts", "EcommerceShop.Constracts\EcommerceShop.Constracts.csproj", "{C226C611-D356-4998-B743-D64C2ED032CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommerceShop.Contracts", "EcommerceShop.Constracts\EcommerceShop.Contracts.csproj", "{C226C611-D356-4998-B743-D64C2ED032CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
