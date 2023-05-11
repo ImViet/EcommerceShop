@@ -11,9 +11,12 @@ namespace EcommerceShop.Business.Interfaces
     public interface IManageProductService
     {
         Task<List<ProductDto>> GetAllAsync();
-        Task<PagingDto<ProductDto>> GetAllPagingAsync(string search, int pageIndex, int pageSize);
-        Task<int> CreateProductAsync(ProductCreateDto productCreateDto);
-        Task<int> UpdateProductAsync(ProductUpdateDto productUpdateDto);
-        Task<int> DeleteProductAsync();
+        Task<PagedResultDto<ProductDto>> GetAllPagingAsync(ProductPagingRequestDto request);
+        Task<bool> CreateProductAsync(ProductCreateDto productCreateDto);
+        Task<bool> UpdateProductAsync(ProductUpdateDto productUpdateDto);
+        Task<bool> DeleteProductAsync(int productId);
+        Task<bool> UpdatePriceAsync(int productId, decimal newPrice);
+        Task AddViewCountAsync(int productId);
+        Task<bool> UpdateStockAsync(int productId, int addQuantity);
     }
 }

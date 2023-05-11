@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace EcommerceShop.Contracts.Dtos
 {
-    public class PagingDto<T>
+    public class ProductPagingRequestDto: PagingRequestDto
     {
-        public int TotalRecord { get; set; }
-        public List<T> Items { get; set; }
+        public string search { get; set; }
+        public List<int> CategoryIds { get; set; }
     }
 }

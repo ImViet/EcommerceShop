@@ -11,7 +11,7 @@ namespace EcommerceShop.Business.Services
 {
     public class PublicProductService : IPublicProductService
     {
-        public PagingDto<ProductDto> GetAllByCategoryId(int categoryId, int pageIndex, int pageSize)
+        public PagedResultDto<ProductDto> GetAllByCategoryId(int categoryId, int pageIndex, int pageSize)
         {
             throw new NotImplementedException();
         }

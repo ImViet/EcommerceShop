@@ -10,6 +10,6 @@ namespace EcommerceShop.Business.Interfaces
 {
     public interface IPublicProductService
     {
-        Task<PagingDto<ProductDto>> GetAllByCategoryIdAsync(int categoryId, int pageIndex, int pageSize);
+        Task<PagedResultDto<ProductDto>> GetAllByCategoryIdAsync(int categoryId, int pageIndex, int pageSize);
     }
 }

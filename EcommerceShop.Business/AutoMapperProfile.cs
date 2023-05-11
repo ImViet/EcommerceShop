@@ -17,8 +17,10 @@ namespace EcommerceShop.Business
         }
         private void FromPresentationLayer()
         {
+            //Product
             CreateMap<ProductCreateDto, Product>()
                 .ForMember(d => d.ProductId, t => t.Ignore());
+            CreateMap<ProductUpdateDto, ProductTranslation>();
         }
         private void FromDataAccessorLayer()
         {
