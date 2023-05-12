@@ -18,7 +18,7 @@ namespace EcommerceShop.Business.Services
         {
             _context = context;
         }
-        public async PagedResultDto<ProductDto> GetAllByCategoryIdAsync(int categoryId, int pageIndex, int pageSize)
+        public async Task<PagedResultDto<ProductDto>> GetAllByCategoryIdAsync(int categoryId, int pageIndex, int pageSize)
         {
             //Join table
             var query = from p in _context.Products

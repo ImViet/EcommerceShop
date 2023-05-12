@@ -18,7 +18,7 @@ namespace EcommerceShop.Data.Entities
         public List<ProductInCategory> ProductsInCategories { get; set;}
         public List<OrderDetail> OrderDetails { get; set; }
         public List<Cart> Carts { get; set; }
-
+        public List<ProductImage> ProductImages { get; set; }
         public List<ProductTranslation> ProductTranslations { get; set; }
     }
 }
