@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceShop.Data", "Ecomm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceShop.Business", "EcommerceShop.Business\EcommerceShop.Business.csproj", "{0211D53E-CB1F-4D82-8B1D-92BFBA9F286F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommerceShop.Contracts", "EcommerceShop.Constracts\EcommerceShop.Contracts.csproj", "{C226C611-D356-4998-B743-D64C2ED032CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceShop.Contracts", "EcommerceShop.Constracts\EcommerceShop.Contracts.csproj", "{C226C611-D356-4998-B743-D64C2ED032CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommerceShop.BackendAPI", "EcommerceShop.BackendAPI\EcommerceShop.BackendAPI.csproj", "{6FA5507C-4C76-4260-ABB9-9CA4C089901F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{C226C611-D356-4998-B743-D64C2ED032CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C226C611-D356-4998-B743-D64C2ED032CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C226C611-D356-4998-B743-D64C2ED032CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FA5507C-4C76-4260-ABB9-9CA4C089901F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FA5507C-4C76-4260-ABB9-9CA4C089901F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FA5507C-4C76-4260-ABB9-9CA4C089901F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FA5507C-4C76-4260-ABB9-9CA4C089901F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
