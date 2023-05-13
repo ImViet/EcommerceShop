@@ -5,10 +5,12 @@ using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Exceptions;
 using EcommerceShop.Data.Data;
 using EcommerceShop.Data.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,10 +20,12 @@ namespace EcommerceShop.Business.Services
     {
         private readonly EcommerceShopDbContext _context;
         private readonly IMapper _mapper;
-        public ManageProductService(EcommerceShopDbContext context, IMapper mapper) 
+        private readonly IStorageService _fileStorageService;
+        public ManageProductService(EcommerceShopDbContext context, IMapper mapper, IStorageService storageService) 
         {
             _context = context;
             _mapper = mapper;
+            _fileStorageService = storageService;
         }
         public Task<List<ProductDto>> GetAllAsync()
         {
@@ -88,6 +92,23 @@ namespace EcommerceShop.Business.Services
                     LanguageId = productCreateDto.LanguageId,
                 }
             };
+
+            //Save image
+            if(productCreateDto.ThumbnailImage != null) 
+            {
+                product.ProductImages = new List<ProductImage>()
+                {
+                    new ProductImage()
+                    {
+                        Caption = "Thumbnail image",
+                        DateCreated = DateTime.Now,
+                        FileSize = productCreateDto.ThumbnailImage.Length,
+                        ImagePath = await this.SaveFileAsync(productCreateDto.ThumbnailImage),
+                        IsDefault = true,
+                        SortOrder = 1,
+                    }
+                };
+            }
             _context.Products.Add(product);
             return await _context.SaveChangesAsync() > 0;
 
@@ -102,6 +123,18 @@ namespace EcommerceShop.Business.Services
                 throw new EcommerceShopException($"Product is not found!!! Product: {productUpdateDto.ProductId}");
             }
             _mapper.Map(productUpdateDto, productTranslation);
+            //Save image
+            if (productUpdateDto.ThumbnailImage != null)
+            {
+                var thumbnailImage = await _context.ProductImages
+                    .FirstOrDefaultAsync(x => x.IsDefault == true && x.ProductId == productUpdateDto.ProductId);
+                if(thumbnailImage != null)
+                {
+                    thumbnailImage.FileSize = productUpdateDto.ThumbnailImage.Length;
+                    thumbnailImage.ImagePath = await this.SaveFileAsync(productUpdateDto.ThumbnailImage);
+                    _context.ProductImages.Update(thumbnailImage);
+                }
+            }
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -111,6 +144,12 @@ namespace EcommerceShop.Business.Services
             if(product == null)
             {
                 throw new EcommerceShopException($"Product is not found!!! Product: {productId}" );
+            }
+            var images = _context.ProductImages
+                    .Where(x => x.IsDefault == true && x.ProductId == productId);
+            foreach (var item in images)
+            {
+                await _fileStorageService.DeleteFileAsync(item.ImagePath);
             }
             _context.Products.Remove(product);
             return await _context.SaveChangesAsync() > 0;
@@ -144,6 +183,33 @@ namespace EcommerceShop.Business.Services
             product.Stock += addQuantity;
             return await _context.SaveChangesAsync() > 0;
             
+        }
+        private async Task<string> SaveFileAsync(IFormFile file)
+        {
+            var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
+            await _fileStorageService.SaveFileAsync(file.OpenReadStream(), fileName);
+            return fileName;
+        }
+
+        public Task<int> AddImageAsync(int productId, List<IFormFile> files)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteImageAsync(int productId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateImageAsync(int imageId, string caption, bool isDefault)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ProductImageDto>> GetProductImageAsync(int productId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
