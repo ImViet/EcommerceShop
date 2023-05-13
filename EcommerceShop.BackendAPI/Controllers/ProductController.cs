@@ -14,9 +14,9 @@ namespace EcommerceShop.BackendAPI.Controllers
             _productService = productService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllProduct()
+        public async Task<IActionResult> GetAllProduct(int categoryId, int pageIndex, int pageSize)
         {
-            var products= await _productService.GetAllByCategoryIdAsync(1, 2, 1);
+            var products= await _productService.GetAllByCategoryIdAsync(categoryId, pageIndex, pageSize);
             return Ok(products);
         }
     }
