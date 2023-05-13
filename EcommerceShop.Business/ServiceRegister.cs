@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using EcommerceShop.Business.Interfaces;
+using EcommerceShop.Business.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,8 @@ namespace EcommerceShop.Business
         public static void AddBusinessLayer(this IServiceCollection services) 
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddTransient<IPublicProductService, PublicProductService>();
+
         }
     }
 }

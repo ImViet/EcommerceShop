@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\EcommerceShop.Business\EcommerceShop.Business.csproj" />
   </ItemGroup>
 
 </Project>
