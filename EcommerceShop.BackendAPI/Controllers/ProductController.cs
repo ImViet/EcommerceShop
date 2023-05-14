@@ -65,5 +65,16 @@ namespace EcommerceShop.BackendAPI.Controllers
             }
             return Ok();
         }
+        [HttpPut]
+        [Route("UpdatePrice")]
+        public async Task<IActionResult> UpdatePrice(int productId, decimal newPrice)
+        {
+            var result = await _manageProductService.UpdatePriceAsync(productId, newPrice);
+            if(result == false)
+            {
+                return BadRequest($"Cannot update product with id = {productId}");
+            }
+            return Ok();
+        }
     }
 }
