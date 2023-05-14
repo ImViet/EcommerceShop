@@ -16,6 +16,8 @@ namespace EcommerceShop.Business
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddTransient<IPublicProductService, PublicProductService>();
+            services.AddTransient<IManageProductService, ManageProductService>();
+            services.AddTransient<IStorageService, FileStorageService>();
 
         }
     }

@@ -76,6 +76,30 @@ namespace EcommerceShop.Business.Services
             };
             return pagedResult;
         }
+        public async Task<ProductDto> GetProductByIdAsync(int productId, string languageId)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            var productTranslation = await _context.ProductTranslations
+                                                .FirstOrDefaultAsync(x => x.ProductId == productId && x.LanguageId == languageId);
+            var productDto = new ProductDto()
+            {
+                ProductId = product.ProductId,
+                DateCreated = product.DateCreated,
+                Description = productTranslation != null ? productTranslation.Description : null,
+                LanguageId = productTranslation.LanguageId,
+                Details = productTranslation != null ? productTranslation.Details : null,
+                Name = productTranslation != null ? productTranslation.Name : null,
+                OriginalPrice = product.OriginalPrice,
+                Price = product.Price,
+                SeoAlias = productTranslation != null ? productTranslation.SeoAlias : null,
+                SeoDescription = productTranslation != null ? productTranslation.SeoDescription : null,
+                SeoTitle = productTranslation != null ? productTranslation.SeoTitle : null,
+                Stock = product.Stock,
+                ViewCount = product.ViewCount
+            };
+            return productDto;
+
+        }
         public async Task<bool> CreateProductAsync(ProductCreateDto productCreateDto)
         {
             var product = _mapper.Map<Product>(productCreateDto);

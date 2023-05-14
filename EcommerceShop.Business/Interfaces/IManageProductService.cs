@@ -14,6 +14,7 @@ namespace EcommerceShop.Business.Interfaces
         //Product
         Task<List<ProductDto>> GetAllAsync();
         Task<PagedResultDto<ProductDto>> GetAllPagingAsync(ProductPagingRequestDto request);
+        Task<ProductDto> GetProductByIdAsync(int productId, string languageId);
         Task<bool> CreateProductAsync(ProductCreateDto productCreateDto);
         Task<bool> UpdateProductAsync(ProductUpdateDto productUpdateDto);
         Task<bool> DeleteProductAsync(int productId);
