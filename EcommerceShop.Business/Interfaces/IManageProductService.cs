@@ -1,5 +1,6 @@
 ﻿using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
+using EcommerceShop.Contracts.Dtos.ProductImageDtos;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,9 @@ namespace EcommerceShop.Business.Interfaces
         Task AddViewCountAsync(int productId);
         Task<bool> UpdateStockAsync(int productId, int addQuantity);
         //Image
-        Task<int> AddImageAsync(int productId, List<IFormFile> files);
-        Task<bool> DeleteImageAsync(int productId);
-        Task<bool> UpdateImageAsync(int imageId, string caption, bool isDefault);
+        Task<bool> AddImageAsync(int productId, ProductImageCreateDto productImageCreateDto);
+        Task<bool> DeleteImageAsync(int imageId);
+        Task<bool> UpdateImageAsync(int imageId, ProductImageUpdateDto productImageUpdateDto);
         Task<List<ProductImageDto>> GetProductImageAsync(int productId);
     }
 }
