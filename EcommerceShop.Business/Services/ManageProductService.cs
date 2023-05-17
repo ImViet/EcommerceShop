@@ -2,6 +2,7 @@
 using EcommerceShop.Business.Interfaces;
 using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
+using EcommerceShop.Contracts.Dtos.ProductImageDtos;
 using EcommerceShop.Contracts.Exceptions;
 using EcommerceShop.Data.Data;
 using EcommerceShop.Data.Entities;
@@ -75,6 +76,30 @@ namespace EcommerceShop.Business.Services
                 Items = data,
             };
             return pagedResult;
+        }
+        public async Task<ProductDto> GetProductByIdAsync(int productId, string languageId)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            var productTranslation = await _context.ProductTranslations
+                                                .FirstOrDefaultAsync(x => x.ProductId == productId && x.LanguageId == languageId);
+            var productDto = new ProductDto()
+            {
+                ProductId = product.ProductId,
+                DateCreated = product.DateCreated,
+                Description = productTranslation != null ? productTranslation.Description : null,
+                LanguageId = productTranslation.LanguageId,
+                Details = productTranslation != null ? productTranslation.Details : null,
+                Name = productTranslation != null ? productTranslation.Name : null,
+                OriginalPrice = product.OriginalPrice,
+                Price = product.Price,
+                SeoAlias = productTranslation != null ? productTranslation.SeoAlias : null,
+                SeoDescription = productTranslation != null ? productTranslation.SeoDescription : null,
+                SeoTitle = productTranslation != null ? productTranslation.SeoTitle : null,
+                Stock = product.Stock,
+                ViewCount = product.ViewCount
+            };
+            return productDto;
+
         }
         public async Task<bool> CreateProductAsync(ProductCreateDto productCreateDto)
         {
@@ -192,24 +217,59 @@ namespace EcommerceShop.Business.Services
             return fileName;
         }
 
-        public Task<int> AddImageAsync(int productId, List<IFormFile> files)
+        public async Task<List<ProductImageDto>> GetProductImageAsync(int productId)
         {
-            throw new NotImplementedException();
+            var productImages = await _context.ProductImages.Where(x => x.ProductId == productId).ToListAsync();
+            if(productImages == null)
+            {
+                throw new EcommerceShopException($"Cannot find product image with productId = {productId}");
+            }
+            var result = _mapper.Map<List<ProductImageDto>>(productImages);
+            return result;
         }
 
-        public Task<bool> DeleteImageAsync(int productId)
+        public async Task<bool> AddImageAsync(int productId, ProductImageCreateDto productImageCreateDto)
         {
-            throw new NotImplementedException();
+            if(productImageCreateDto.ImageFile == null)
+            {
+                throw new EcommerceShopException("No image!!!");
+            }
+            var productImage = _mapper.Map<ProductImage>(productImageCreateDto);
+            productImage.ImagePath = await this.SaveFileAsync(productImageCreateDto.ImageFile);
+            productImage.FileSize = productImage.ImagePath.Length; 
+            productImage.ProductId = productId;
+            productImage.DateCreated = DateTime.Now;
+            _context.ProductImages.Add(productImage);
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public Task<bool> UpdateImageAsync(int imageId, string caption, bool isDefault)
+        public async Task<bool> DeleteImageAsync(int imageId)
         {
-            throw new NotImplementedException();
+            var productImage = await _context.ProductImages.FindAsync(imageId);
+            if(productImage == null)
+            {
+                throw new EcommerceShopException($"Cannot find product image with id = {imageId}"); ;
+            }
+            _context.ProductImages.Remove(productImage);
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public Task<List<ProductImageDto>> GetProductImageAsync(int productId)
+        public async Task<bool> UpdateImageAsync(int imageId, ProductImageUpdateDto productImageUpdateDto)
         {
-            throw new NotImplementedException();
+            var productImage = await _context.ProductImages.FindAsync(imageId);
+            if(productImage == null)
+            {
+                throw new EcommerceShopException($"Cannot find product image with id = {imageId}");
+            }
+            if (productImageUpdateDto.ImageFile == null)
+            {
+                throw new EcommerceShopException("No image!!!");
+            }
+            _mapper.Map(productImageUpdateDto, productImage);
+            productImage.ImagePath = await this.SaveFileAsync(productImageUpdateDto.ImageFile);
+            productImage.FileSize = productImage.ImagePath.Length;
+            _context.ProductImages.Update(productImage);
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

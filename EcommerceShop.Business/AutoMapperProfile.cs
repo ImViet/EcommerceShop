@@ -1,4 +1,5 @@
 ﻿using EcommerceShop.Contracts.Dtos.ProductDtos;
+using EcommerceShop.Contracts.Dtos.ProductImageDtos;
 using EcommerceShop.Data.Entities;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,14 @@ namespace EcommerceShop.Business
             CreateMap<ProductCreateDto, Product>()
                 .ForMember(d => d.ProductId, t => t.Ignore());
             CreateMap<ProductUpdateDto, ProductTranslation>();
+            //ProductImage
+            CreateMap<ProductImageCreateDto, ProductImage>();
+            CreateMap<ProductImageUpdateDto, ProductImage>();
         }
         private void FromDataAccessorLayer()
         {
-
+            //ProductImage
+            CreateMap<ProductImage, ProductImageDto>();
         }
         
     }

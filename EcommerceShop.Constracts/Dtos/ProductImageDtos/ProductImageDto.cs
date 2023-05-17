@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EcommerceShop.Contracts.Dtos.ProductDtos
+namespace EcommerceShop.Contracts.Dtos.ProductImageDtos
 {
     public class ProductImageDto
     {
