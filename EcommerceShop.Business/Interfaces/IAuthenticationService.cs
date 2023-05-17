@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EcommerceShop.Business.Interfaces
 {
-    public interface IAuthenticateService
+    public interface IAuthenticationService
     {
         Task<string> LoginAsync(UserLoginDto userLogin);
         Task<bool> RegisterAsync(UserRegisterDto userRegister);

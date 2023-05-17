@@ -23,7 +23,7 @@ namespace EcommerceShop.Business
             services.AddTransient<IPublicProductService, PublicProductService>();
             services.AddTransient<IManageProductService, ManageProductService>();
             services.AddTransient<IStorageService, FileStorageService>();
-            services.AddTransient<IAuthenticateService, AuthenticateService>();
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
         }
     }
 }

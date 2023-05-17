@@ -7,10 +7,10 @@ namespace EcommerceShop.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthenticateController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
-        private readonly IAuthenticateService _authenticateService;
-        public AuthenticateController(IAuthenticateService authenticateService)
+        private readonly IAuthenticationService _authenticateService;
+        public AuthenticationController(IAuthenticationService authenticateService)
         {
             _authenticateService = authenticateService;
         }

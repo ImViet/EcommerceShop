@@ -16,13 +16,13 @@ using System.Threading.Tasks;
 
 namespace EcommerceShop.Business.Services
 {
-    public class AuthenticateService : IAuthenticateService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IMapper _mapper;
-        public AuthenticateService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, 
+        public AuthenticationService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, 
             RoleManager<AppRole> roleManager, IMapper mapper)
         {
             _userManager = userManager;

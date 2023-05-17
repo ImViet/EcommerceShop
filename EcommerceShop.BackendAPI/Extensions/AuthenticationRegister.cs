@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace EcommerceShop.BackendAPI.Extensions
 {
-    public static class AuthenticateRegister
+    public static class AuthenticationRegister
     {
         public static void AddAuthenticateRegister(this IServiceCollection services)
         {
