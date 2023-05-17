@@ -5,7 +5,7 @@ using EcommerceShop.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddAuthenticateRegister();
 builder.Services.AddControllers();
 builder.Services.AddDataLayer(builder.Configuration);
 builder.Services.AddBusinessLayer();
