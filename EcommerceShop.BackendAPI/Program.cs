@@ -1,8 +1,11 @@
 using EcommerceShop.BackendAPI.Extensions;
 using EcommerceShop.Business;
 using EcommerceShop.Data;
+using FluentValidation.AspNetCore;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +19,11 @@ builder.Services.AddEndpointsApiExplorer();
 //Swagger bearer token
 builder.Services.AddSwaggerRegister();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddFluentValidation(fv =>
+    {
+        fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+    });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

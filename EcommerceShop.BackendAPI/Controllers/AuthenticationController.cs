@@ -27,7 +27,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         }
         [HttpPost]
         [Route("Register")]
-        public async Task<IActionResult> Register(UserRegisterDto userRegister)
+        public async Task<IActionResult> Register([FromForm]UserRegisterDto userRegister)
         {
             var result = await _authenticateService.RegisterAsync(userRegister);
             if (result == false)
