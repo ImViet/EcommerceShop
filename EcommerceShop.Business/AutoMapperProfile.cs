@@ -1,4 +1,5 @@
-﻿using EcommerceShop.Contracts.Dtos.ProductDtos;
+﻿using EcommerceShop.Contracts.Dtos.AuthDtos;
+using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.ProductImageDtos;
 using EcommerceShop.Data.Entities;
 using System;
@@ -18,6 +19,8 @@ namespace EcommerceShop.Business
         }
         private void FromPresentationLayer()
         {
+            //Authenticate
+            CreateMap<UserRegisterDto, AppUser>();
             //Product
             CreateMap<ProductCreateDto, Product>()
                 .ForMember(d => d.ProductId, t => t.Ignore());
