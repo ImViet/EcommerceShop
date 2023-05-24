@@ -16,7 +16,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         }
         [HttpPost]
         [Route("Login")]
-        public async Task<IActionResult> Login([FromForm]UserLoginDto userLogin)
+        public async Task<IActionResult> Login([FromBody]UserLoginDto userLogin)
         {
             var resultToken = await _authenticateService.LoginAsync(userLogin);
             if(string.IsNullOrEmpty(resultToken))
@@ -27,7 +27,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         }
         [HttpPost]
         [Route("Register")]
-        public async Task<IActionResult> Register([FromForm]UserRegisterDto userRegister)
+        public async Task<IActionResult> Register([FromBody]UserRegisterDto userRegister)
         {
             var result = await _authenticateService.RegisterAsync(userRegister);
             if (result == false)

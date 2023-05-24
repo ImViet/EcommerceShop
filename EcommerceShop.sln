@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceShop.Contracts", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EcommerceShop.BackendAPI", "EcommerceShop.BackendAPI\EcommerceShop.BackendAPI.csproj", "{6FA5507C-4C76-4260-ABB9-9CA4C089901F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecommerce.AdminApp", "Ecommerce.AdminApp\Ecommerce.AdminApp.csproj", "{B033C9BB-21FC-46C5-8FE3-048AFC92D61D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcommerceShop.AdminApp", "Ecommerce.AdminApp\EcommerceShop.AdminApp.csproj", "{B033C9BB-21FC-46C5-8FE3-048AFC92D61D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
