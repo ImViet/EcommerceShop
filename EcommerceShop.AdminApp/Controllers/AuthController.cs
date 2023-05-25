@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Text;
-using Ecommerce.AdminApp.Interfaces;
+using EcommerceShop.AdminApp.Interfaces;
 using EcommerceShop.Contracts.Dtos.AuthDtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +40,7 @@ namespace Ecommerce.AdminApp.Controllers
                 ExpiresUtc = DateTime.UtcNow.AddMinutes(10),
                 IsPersistent = false,
             };
+            HttpContext.Session.SetString("Token", token);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                 userPrincipal,
                 authProperties
@@ -50,6 +51,7 @@ namespace Ecommerce.AdminApp.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Remove("Token");
             return RedirectToAction("Login", "Auth");
         }
         private ClaimsPrincipal ValidateToken(string jwtToken)
