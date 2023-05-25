@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EcommerceShop.Contracts.Dtos
+namespace EcommerceShop.Contracts.Dtos.RequestDtos
 {
     public class ProductPagingRequestDto: PagingRequestDto
     {
