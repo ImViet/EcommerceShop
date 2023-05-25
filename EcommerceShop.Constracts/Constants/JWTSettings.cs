@@ -8,7 +8,7 @@ namespace EcommerceShop.Contracts.Constants
 {
     public static class JWTSettings
     {
-        public const string Key = "C1CF4B4DC1C4177B7618DE4F55CA2";
+        public const string Key = "0123456789ABCDEFDINHQUOCVIET31082001";
         public const string Issuer = "EcommerceShop.Management";
         public const string Audience = "EcommerceShop.User";
     }
