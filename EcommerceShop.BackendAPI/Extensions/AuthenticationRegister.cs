@@ -43,7 +43,7 @@ namespace EcommerceShop.BackendAPI.Extensions
                         ValidateIssuerSigningKey = true,
                         ValidateIssuer = true,
                         ValidateAudience = true,
-                        ValidateLifetime = false,
+                        ValidateLifetime = true,
                         ClockSkew = TimeSpan.Zero,
                         ValidIssuer = JWTSettings.Issuer,
                         ValidAudience = JWTSettings.Audience,
