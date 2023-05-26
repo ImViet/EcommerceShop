@@ -10,6 +10,8 @@ using EcommerceShop.Contracts.Constants;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.IdentityModel.Tokens.Jwt;
+using EcommerceShop.AdminApp.Controllers;
+
 namespace Ecommerce.AdminApp.Controllers
 {
     public class AuthController : Controller
@@ -31,13 +33,13 @@ namespace Ecommerce.AdminApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(ModelState);
+                return View();
             }
             var token = await _authApiService.LoginAsync(userLoginDto);
             var userPrincipal = ValidateToken(token);
             var authProperties = new AuthenticationProperties()
             {
-                ExpiresUtc = DateTime.UtcNow.AddMinutes(10),
+                ExpiresUtc = DateTime.UtcNow.AddMinutes(0.5),
                 IsPersistent = false,
             };
             HttpContext.Session.SetString("Token", token);

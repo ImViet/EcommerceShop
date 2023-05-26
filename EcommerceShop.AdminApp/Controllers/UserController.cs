@@ -1,10 +1,11 @@
+using EcommerceShop.AdminApp.Controllers;
 using EcommerceShop.AdminApp.Interfaces;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.AdminApp.Controllers
 {
-    public class UserController: Controller
+    public class UserController: BaseController
     {
         private readonly IUserApiService _userService;
         public UserController(IUserApiService userService)

@@ -1,7 +1,64 @@
 @using EcommerceShop.Contracts.Dtos;
 @using EcommerceShop.Contracts.Dtos.UserDtos;
 @model PagedResultDto<UserDto>;
-@foreach (var item in Model.Items)
-{
-    <h1>@item.FirstName</h1>
-}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Tables</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Tổng quan</a></li>
+        <li class="breadcrumb-item active">Danh sách người dùng</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-body">
+            <button type="button" class="btn btn-outline-success">Tạo mới</button>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            DataTable Example
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>UserName</th>
+                        <th>FirstName</th>
+                        <th>LastName</th>
+                        <th>PhoneNumber</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @* <tfoot>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Office</th>
+                        <th>Age</th>
+                        <th>Start date</th>
+                        <th>Salary</th>
+                    </tr>
+                </tfoot> *@
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                    <tr>
+                        <td>@item.UserName</td>
+                        <td>@item.FirstName</td>
+                        <td>@item.LastName</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.Email</td>
+                        <td>
+                            <button type="button" class="btn btn-outline-dark">Cập nhật</button>
+                            <button type="button" class="btn btn-outline-danger">Xoá</button>
+                            <button type="button" class="btn btn-outline-info">Chi tiết</button>
+                            @* <button type="button" class="btn btn-outline-warning">Warning</button> *@
+                        </td>
+                    </tr>
+                    }                 
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
