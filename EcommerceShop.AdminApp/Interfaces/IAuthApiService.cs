@@ -1,6 +1,6 @@
 ﻿using EcommerceShop.Contracts.Dtos.AuthDtos;
 
-namespace Ecommerce.AdminApp.Interfaces
+namespace EcommerceShop.AdminApp.Interfaces
 {
     public interface IAuthApiService
     {

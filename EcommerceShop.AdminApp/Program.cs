@@ -1,5 +1,5 @@
-using Ecommerce.AdminApp.Interfaces;
-using Ecommerce.AdminApp.Services;
+using EcommerceShop.AdminApp.Interfaces;
+using EcommerceShop.AdminApp.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 //
 builder.Services.AddTransient<IAuthApiService, AuthApiService>();
+builder.Services.AddTransient<IUserApiService, UserApiService>();
+builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddControllersWithViews();
@@ -14,6 +17,10 @@ builder.Services.AddHttpClient("myclient", client =>
 {
     client.BaseAddress = new Uri("https://localhost:7196");
 });
+builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {
     options.LoginPath = "/Auth/Login";
 });
@@ -29,6 +36,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseSession();
 
 app.UseRouting();
 app.UseAuthentication();

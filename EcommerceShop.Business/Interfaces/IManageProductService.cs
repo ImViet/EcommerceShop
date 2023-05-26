@@ -1,6 +1,7 @@
 ﻿using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.ProductImageDtos;
+using EcommerceShop.Contracts.Dtos.RequestDtos;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;

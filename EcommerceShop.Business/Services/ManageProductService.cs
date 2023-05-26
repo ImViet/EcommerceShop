@@ -3,6 +3,7 @@ using EcommerceShop.Business.Interfaces;
 using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.ProductImageDtos;
+using EcommerceShop.Contracts.Dtos.RequestDtos;
 using EcommerceShop.Contracts.Exceptions;
 using EcommerceShop.Data.Data;
 using EcommerceShop.Data.Entities;

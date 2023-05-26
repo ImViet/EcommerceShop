@@ -1,6 +1,7 @@
 ﻿using EcommerceShop.Contracts.Dtos.AuthDtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.ProductImageDtos;
+using EcommerceShop.Contracts.Dtos.UserDtos;
 using EcommerceShop.Data.Entities;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,8 @@ namespace EcommerceShop.Business
         {
             //ProductImage
             CreateMap<ProductImage, ProductImageDto>();
+            //User
+            CreateMap<AppUser, UserDto>();
         }
         
     }

@@ -1,9 +1,9 @@
-﻿using Ecommerce.AdminApp.Interfaces;
+﻿using EcommerceShop.AdminApp.Interfaces;
 using EcommerceShop.Contracts.Dtos.AuthDtos;
 using Newtonsoft.Json;
 using System.Text;
 
-namespace Ecommerce.AdminApp.Services
+namespace EcommerceShop.AdminApp.Services
 {
     public class AuthApiService : IAuthApiService
     {
