@@ -1,5 +1,6 @@
 using EcommerceShop.AdminApp.Controllers;
 using EcommerceShop.AdminApp.Interfaces;
+using EcommerceShop.Contracts.Dtos.AuthDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,16 @@ namespace Ecommerce.AdminApp.Controllers
             };
             var users = await _userService.GetAllUser(request);
             return View(users);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(UserRegisterDto userRegister)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View();
+            }
+            var result = _userService.CreateUser(userRegister);
+            return RedirectToAction("Index", "User");
         }
     }
 }
