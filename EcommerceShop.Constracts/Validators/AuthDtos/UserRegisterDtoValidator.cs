@@ -11,7 +11,7 @@ namespace EcommerceShop.Contracts.Validators.AuthDtos
         public UserRegisterDtoValidator() 
         {
             //_userService = userService;
-            RuleFor(x => x.UserName).NotEmpty().WithMessage("Username is required");
+            RuleFor(x => x.UserName).NotEmpty().WithMessage("Nhập tên tài khoản");
             //    .Custom(async (userName, context) =>
             //{
             //    var result = await _userService.IsUserNameUniqueAsync(userName);
@@ -19,28 +19,28 @@ namespace EcommerceShop.Contracts.Validators.AuthDtos
             //        context.AddFailure("Username is already");
             //});
 
-            RuleFor(x => x.Password).NotEmpty().WithMessage("Password is required")
-                .MinimumLength(6).WithMessage("Password is at least 6 characters");
+            RuleFor(x => x.Password).NotEmpty().WithMessage("Nhập mật khẩu")
+                .MinimumLength(6).WithMessage("Mật khẩu tối thiểu 6 ký tự");
 
-            RuleFor(x => x.ConfirmPassword).NotEmpty().WithMessage("Confirmpassword is required")
-                .MinimumLength(6).WithMessage("Confirmpassword is at least 6 characters")
-                .Equal(x => x.Password).WithMessage("Confirmpassword is not match password");
+            RuleFor(x => x.ConfirmPassword).NotEmpty().WithMessage("Xác nhận mật khẩu")
+                .MinimumLength(6).WithMessage("Mật khẩu tối thiểu 6 ký tự")
+                .Equal(x => x.Password).WithMessage("Không trùng khớp với mật khẩu");
 
-            RuleFor(x => x.Email).NotEmpty().WithMessage("Email is required")
-                .EmailAddress().WithMessage("A valid email is required");
+            RuleFor(x => x.Email).NotEmpty().WithMessage("Nhập email")
+                .EmailAddress().WithMessage("Không đúng định dạng email");
 
-            RuleFor(x => x.FirstName).NotEmpty().WithMessage("Firstname is required")
-                .MaximumLength(100).WithMessage("Firstname must be 100 characters or fewer");
+            RuleFor(x => x.FirstName).NotEmpty().WithMessage("Nhập họ")
+                .MaximumLength(100).WithMessage("Tối đa 100 ký tự");
 
-            RuleFor(x => x.LastName).NotEmpty().WithMessage("Lastname is required")
-                .MaximumLength(100).WithMessage("Lastname must be 100 characters or fewer");
+            RuleFor(x => x.LastName).NotEmpty().WithMessage("Nhập tên")
+                .MaximumLength(100).WithMessage("Tối đa 100 ký tự");
 
-            RuleFor(x => x.DoB).NotEmpty().WithMessage("Date of birth is required")
-                .LessThan(DateTime.Now.AddYears(-14)).WithMessage("User is under 14");
+            RuleFor(x => x.DoB).NotEmpty().WithMessage("Nhập ngày tháng năm sinh")
+                .LessThan(DateTime.Now.AddYears(-14)).WithMessage("Người dùng không đủ 14 tuổi");
 
-            RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("Phonenumber is required")
-                .MaximumLength(10).WithMessage("Phonenumber is 10 numbers")
-                .MinimumLength(10).WithMessage("Phonenumber is 10 numbers")
+            RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("Nhập số điện thoại")
+                .MaximumLength(10).WithMessage("Chỉ 10 chữ số")
+                .MinimumLength(10).WithMessage("Chỉ 10 chữ số")
                 .Matches(new Regex(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$")).WithMessage("Phonenumber not valid");
         }
     }

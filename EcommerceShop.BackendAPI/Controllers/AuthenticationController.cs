@@ -18,23 +18,27 @@ namespace EcommerceShop.BackendAPI.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody]UserLoginDto userLogin)
         {
-            var resultToken = await _authenticateService.LoginAsync(userLogin);
-            if(string.IsNullOrEmpty(resultToken))
+            if(!ModelState.IsValid)
+                return BadRequest();
+            var result = await _authenticateService.LoginAsync(userLogin);
+            if(string.IsNullOrEmpty(result.ResponseObject))
             {
-                return BadRequest("Username or Password is incorrect");
+                return BadRequest(result);
             }
-            return Ok(resultToken);
+            return Ok(result);
         }
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register([FromBody]UserRegisterDto userRegister)
         {
+            if(!ModelState.IsValid)
+                return BadRequest();
             var result = await _authenticateService.RegisterAsync(userRegister);
-            if (result == false)
+            if (result.IsSuccessed == false)
             {
-                return BadRequest("Register is unsuccessfull");
+                return BadRequest(result);
             }
-            return Ok();
+            return Ok(result);
         }
     }
 }

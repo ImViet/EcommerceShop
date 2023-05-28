@@ -35,14 +35,14 @@ namespace Ecommerce.AdminApp.Controllers
             {
                 return View();
             }
-            var token = await _authApiService.LoginAsync(userLoginDto);
-            var userPrincipal = ValidateToken(token);
+            var result = await _authApiService.LoginAsync(userLoginDto);
+            var userPrincipal = ValidateToken(result.ResponseObject);
             var authProperties = new AuthenticationProperties()
             {
-                ExpiresUtc = DateTime.UtcNow.AddMinutes(0.5),
+                ExpiresUtc = DateTime.UtcNow.AddMinutes(10),
                 IsPersistent = false,
             };
-            HttpContext.Session.SetString("Token", token);
+            HttpContext.Session.SetString("Token", result.ResponseObject);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                 userPrincipal,
                 authProperties
