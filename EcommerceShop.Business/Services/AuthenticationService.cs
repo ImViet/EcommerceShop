@@ -53,7 +53,7 @@ namespace EcommerceShop.Business.Services
             var resultRegister = await _userManager.CreateAsync(user, userRegister.Password);
             if(!resultRegister.Succeeded) 
             {
-                return false;
+                throw new Exception();
             }
             return true;
         }

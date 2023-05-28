@@ -1,14 +1,23 @@
-﻿using EcommerceShop.Contracts.Dtos.AuthDtos;
+﻿//using EcommerceShop.Business.Interfaces;
+using EcommerceShop.Contracts.Dtos.AuthDtos;
 using FluentValidation;
 using System.Text.RegularExpressions;
 
-namespace EcommerceShop.BackendAPI.Validators.AuthDtos
+namespace EcommerceShop.Contracts.Validators.AuthDtos
 {
     public class UserRegisterDtoValidator: AbstractValidator<UserRegisterDto>
     {
+        //private readonly IUserService _userService;
         public UserRegisterDtoValidator() 
         {
+            //_userService = userService;
             RuleFor(x => x.UserName).NotEmpty().WithMessage("Username is required");
+            //    .Custom(async (userName, context) =>
+            //{
+            //    var result = await _userService.IsUserNameUniqueAsync(userName);
+            //    if (result)
+            //        context.AddFailure("Username is already");
+            //});
 
             RuleFor(x => x.Password).NotEmpty().WithMessage("Password is required")
                 .MinimumLength(6).WithMessage("Password is at least 6 characters");

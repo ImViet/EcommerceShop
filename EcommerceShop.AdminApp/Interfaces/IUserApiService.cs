@@ -9,5 +9,6 @@ namespace EcommerceShop.AdminApp.Interfaces
     {
         Task<PagedResultDto<UserDto>> GetAllUser(GetUserPagingRequestDto request);
         Task<bool> CreateUser(UserRegisterDto userRegister);
+        Task<UserDto> GetUser(Guid userId);
     }
 }

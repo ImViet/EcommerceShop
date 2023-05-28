@@ -30,8 +30,7 @@ namespace EcommerceShop.AdminApp.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<PagedResultDto<UserDto>> GetAllUser(GetUserPagingRequestDto request)
-        
+        public async Task<PagedResultDto<UserDto>> GetAllUser(GetUserPagingRequestDto request)    
         {
             var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient("myclient");
@@ -40,6 +39,18 @@ namespace EcommerceShop.AdminApp.Services
             var response = await client.GetAsync(url);
             var data = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<PagedResultDto<UserDto>>(data);
+            return user;
+        }
+
+        public async Task<UserDto> GetUser(Guid userId)
+        {
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient("myclient");
+            var url = $"/api/user/getuser?userid={userId}";
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await client.GetAsync(url);
+            var data = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<UserDto>(data);
             return user;
         }
     }

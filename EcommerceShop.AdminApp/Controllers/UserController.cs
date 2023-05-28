@@ -22,17 +22,29 @@ namespace Ecommerce.AdminApp.Controllers
                 PageSize = pageSize,
             };
             var users = await _userService.GetAllUser(request);
-            return View(users);
+            ViewData["ListUsers"] = users.Items;
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            return View();
         }
         [HttpPost]
-        public async Task<IActionResult> CreateUser(UserRegisterDto userRegister)
+        public async Task<IActionResult> Create(UserRegisterDto userRegister)
         {
-            if(!ModelState.IsValid)
+            if(ModelState.IsValid)
             {
-                return View();
+                var result = _userService.CreateUser(userRegister);
+                return RedirectToAction("Index", "User");
             }
-            var result = _userService.CreateUser(userRegister);
-            return RedirectToAction("Index", "User");
+                return View();
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetUser(Guid userId)
+        {
+            var user = await _userService.GetUser(userId);
+            return new JsonResult(user);
         }
     }
 }
