@@ -19,23 +19,27 @@ namespace EcommerceShop.BackendAPI.Controllers
         [Route("GetAllUser")]
         public async Task<IActionResult> GetAllUser([FromQuery]GetUserPagingRequestDto request)
         {
-            var users = await _userService.GetAllUserAsync(request);
-            if(users == null)
+            if(!ModelState.IsValid)
+                return BadRequest();
+            var data = await _userService.GetAllUserAsync(request);
+            if(data == null)
             {
                 return BadRequest("Cannot find any user");
             }
-            return Ok(users);
+            return Ok(data);
         }
         [HttpGet]
         [Route("GetUser")]
         public async Task<IActionResult> GetUser([FromQuery]Guid userId)
         {
-            var user = await _userService.GetUserByIdAsync(userId);
-            if(user == null)
+            if(!ModelState.IsValid)
+                return BadRequest();
+            var data = await _userService.GetUserByIdAsync(userId);
+            if(data == null)
             {
                 return BadRequest("Cannot find user with id = {userId}");
             }
-            return Ok(user);
+            return Ok(data);
         }
     }
 }

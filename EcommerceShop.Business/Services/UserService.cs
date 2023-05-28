@@ -1,5 +1,6 @@
 using AutoMapper;
 using EcommerceShop.Business.Interfaces;
+using EcommerceShop.Contracts;
 using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
 using EcommerceShop.Contracts.Dtos.UserDtos;
@@ -22,7 +23,7 @@ namespace EcommerceShop.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<PagedResultDto<UserDto>> GetAllUserAsync(GetUserPagingRequestDto request)
+        public async Task<ApiResponse<PagedResultDto<UserDto>>> GetAllUserAsync(GetUserPagingRequestDto request)
         {
             var query = _userManager.Users;
             //2.Filter
@@ -41,17 +42,17 @@ namespace EcommerceShop.Business.Services
                 TotalRecord = totalRow,
                 Items = _mapper.Map<List<UserDto>>(data)
             };
-            return pagedResult;
+            return new ApiSuccessResponse<PagedResultDto<UserDto>>(pagedResult);
         }
 
-        public async Task<UserDto> GetUserByIdAsync(Guid userId)
+        public async Task<ApiResponse<UserDto>> GetUserByIdAsync(Guid userId)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == userId);
             if(user == null)
             {
                 throw new EcommerceShopException($"Cannot find user with id = {userId}");
             }
-            return _mapper.Map<UserDto>(user);
+            return new ApiSuccessResponse<UserDto>(_mapper.Map<UserDto>(user));
         }
 
         public async Task<bool> IsUserNameUniqueAsync(string userName)

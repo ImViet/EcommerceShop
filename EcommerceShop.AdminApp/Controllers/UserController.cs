@@ -21,8 +21,8 @@ namespace Ecommerce.AdminApp.Controllers
                 PageIndex = pageIndex,
                 PageSize = pageSize,
             };
-            var users = await _userService.GetAllUser(request);
-            ViewData["ListUsers"] = users.Items;
+            var data = await _userService.GetAllUser(request);
+            ViewData["ListUsers"] = data.ResponseObject.Items;
             return View();
         }
         [HttpGet]
@@ -43,8 +43,8 @@ namespace Ecommerce.AdminApp.Controllers
         [HttpGet]
         public async Task<JsonResult> GetUser(Guid userId)
         {
-            var user = await _userService.GetUser(userId);
-            return new JsonResult(user);
+            var data = await _userService.GetUser(userId);
+            return new JsonResult(data.ResponseObject);
         }
     }
 }

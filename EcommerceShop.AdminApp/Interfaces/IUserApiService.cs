@@ -1,3 +1,4 @@
+using EcommerceShop.Contracts;
 using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.AuthDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
@@ -7,8 +8,8 @@ namespace EcommerceShop.AdminApp.Interfaces
 {
     public interface IUserApiService
     {
-        Task<PagedResultDto<UserDto>> GetAllUser(GetUserPagingRequestDto request);
-        Task<bool> CreateUser(UserRegisterDto userRegister);
-        Task<UserDto> GetUser(Guid userId);
+        Task<ApiResponse<PagedResultDto<UserDto>>> GetAllUser(GetUserPagingRequestDto request);
+        Task<ApiResponse<bool>> CreateUser(UserRegisterDto userRegister);
+        Task<ApiResponse<UserDto>> GetUser(Guid userId);
     }
 }
