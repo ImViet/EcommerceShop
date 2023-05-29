@@ -1,10 +1,11 @@
-﻿using EcommerceShop.Contracts.Dtos.AuthDtos;
+﻿using EcommerceShop.Contracts;
+using EcommerceShop.Contracts.Dtos.AuthDtos;
 
 namespace EcommerceShop.AdminApp.Interfaces
 {
     public interface IAuthApiService
     {
-        Task<string> LoginAsync(UserLoginDto userLoginDto);
-        Task<bool> RegisterAsync(UserRegisterDto userRegisterDto);
+        Task<ApiResponse<string>> LoginAsync(UserLoginDto userLoginDto);
+        Task<ApiResponse<bool>> RegisterAsync(UserRegisterDto userRegisterDto);
     }
 }

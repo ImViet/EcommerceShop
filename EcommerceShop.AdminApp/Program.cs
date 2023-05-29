@@ -1,9 +1,12 @@
+using System.Reflection;
 using EcommerceShop.AdminApp.Interfaces;
 using EcommerceShop.AdminApp.Services;
+using EcommerceShop.Contracts.Dtos.AuthDtos;
+using EcommerceShop.Contracts.Validators.AuthDtos;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 //
 builder.Services.AddTransient<IAuthApiService, AuthApiService>();
@@ -12,7 +15,10 @@ builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddFluentValidation(fv =>
+    {
+        fv.RegisterValidatorsFromAssemblyContaining<UserRegisterDtoValidator>();
+    });;
 builder.Services.AddHttpClient("myclient", client =>
 {
     client.BaseAddress = new Uri("https://localhost:7196");

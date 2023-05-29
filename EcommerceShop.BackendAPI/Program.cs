@@ -1,5 +1,7 @@
 using EcommerceShop.BackendAPI.Extensions;
 using EcommerceShop.Business;
+using EcommerceShop.Contracts.Dtos.AuthDtos;
+using EcommerceShop.Contracts.Validators.AuthDtos;
 using EcommerceShop.Data;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Options;
@@ -22,7 +24,7 @@ builder.Services.AddSwaggerRegister();
 builder.Services.AddControllers()
     .AddFluentValidation(fv =>
     {
-        fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        fv.RegisterValidatorsFromAssemblyContaining<UserRegisterDtoValidator>();
     });
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
-﻿using EcommerceShop.Contracts.Dtos.AuthDtos;
+﻿using EcommerceShop.Contracts;
+using EcommerceShop.Contracts.Dtos.AuthDtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace EcommerceShop.Business.Interfaces
 {
     public interface IAuthenticationService
     {
-        Task<string> LoginAsync(UserLoginDto userLogin);
-        Task<bool> RegisterAsync(UserRegisterDto userRegister);
+        Task<ApiResponse<string>> LoginAsync(UserLoginDto userLogin);
+        Task<ApiResponse<bool>> RegisterAsync(UserRegisterDto userRegister);
     }
 }

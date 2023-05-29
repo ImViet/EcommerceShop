@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EcommerceShop.Business.Interfaces;
+using EcommerceShop.Contracts;
 using EcommerceShop.Contracts.Constants;
 using EcommerceShop.Contracts.Dtos.AuthDtos;
 using EcommerceShop.Contracts.Exceptions;
@@ -30,32 +31,42 @@ namespace EcommerceShop.Business.Services
             _roleManager = roleManager;
             _mapper = mapper;
         }
-        public async Task<string> LoginAsync(UserLoginDto userLogin)
+        public async Task<ApiResponse<string>> LoginAsync(UserLoginDto userLogin)
         {
             var user = await _userManager.FindByNameAsync(userLogin.UserName);
             if(user == null)
             {
-                throw new EcommerceShopException($"Cannot find user: {userLogin.UserName}");
+                return null;
             }
             var resultLogin = await _signInManager.PasswordSignInAsync(user, userLogin.Password, userLogin.RememberMe, true);
             if(!resultLogin.Succeeded)
             {
-                return null;
+                return new ApiErrorResponse<string>("Sai tài khoản hoặc mật khẩu");
             }
             var token = CreateToken(user);
-            return token;
+            return new ApiSuccessResponse<string>(token);
         }
 
-        public async Task<bool> RegisterAsync(UserRegisterDto userRegister)
+        public async Task<ApiResponse<bool>> RegisterAsync(UserRegisterDto userRegister)
         {
+            var userName = await _userManager.FindByNameAsync(userRegister.UserName);
+            if(userName != null)
+            {
+                return new ApiErrorResponse<bool>("Tài khoản đã tồn tại");
+            }
+            var email = await _userManager.FindByEmailAsync(userRegister.Email);
+            if(email != null)
+            {
+                return new ApiErrorResponse<bool>("Email đã tồn tại");
+            }
             var user = _mapper.Map<AppUser>(userRegister);
             user.Id = Guid.NewGuid();
             var resultRegister = await _userManager.CreateAsync(user, userRegister.Password);
             if(!resultRegister.Succeeded) 
             {
-                return false;
+                return new ApiErrorResponse<bool>("Đăng ký thất bại");
             }
-            return true;
+            return new ApiSuccessResponse<bool>();
         }
         private string CreateToken(AppUser user)
         {

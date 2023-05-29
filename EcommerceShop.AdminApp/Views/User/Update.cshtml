@@ -1,0 +1,70 @@
+@using EcommerceShop.Contracts.Dtos.UserDtos;
+@model UserUpdateDto
+@{
+    ViewData["Title"] = "Tạo người dùng";
+    var doB = String.Format("{0:yyyy-MM-dd}", Model.DoB);
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Tables</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Tổng quan</a></li>
+        <li class="breadcrumb-item active">Tạo người dùng</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-body">
+            <a class="btn btn-outline-success" asp-controller="User" asp-action="Index">Danh sách</a>
+        </div>
+    </div>
+    <div class="card mb-4">
+        @* <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            DataTable Example
+        </div> *@
+        <div class="card-body">
+            <form class="row g-3" asp-controller="User" asp-action="Update" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col-md-6" hidden>
+                    <label asp-for="Id" class="form-label">Tên</label>
+                    <input asp-for="Id" type="text" class="form-control"value="@Model.Id">
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="FirstName" for="inputFirstName" class="form-label">Tên</label>
+                    <input asp-for="FirstName" type="text" class="form-control" id="inputFirstName" value="@Model.FirstName">
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="LastName" for="inputLastName" class="form-label">Họ</label>
+                    <input asp-for="LastName" type="text" class="form-control" id="inputLastName" value="@Model.LastName">
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Email" for="inputEmail" class="form-label">Email</label>
+                    <input asp-for="Email" type="text" class="form-control" id="inputEmail" value="@Model.Email">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="PhoneNumber" for="inputPhoneNumber" class="form-label">Số điện thoại</label>
+                    <input asp-for ="PhoneNumber" type="text" class="form-control" id="inputPhoneNumber" value="@Model.PhoneNumber">
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="DoB" for="inputDoB" class="form-label">Ngày sinh</label>
+                    <input asp-for="DoB" type="date" class="form-control" id="inputDoB" value="@doB">
+                    <span asp-validation-for="DoB" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script asp-append-version="true">
+        $(document).ready(function(){
+            $("#inputDoB").val = Convert.ToDateTime(dt.Rows[0][5]).ToString("yyyy-MM-dd");
+        });
+    </script>
+}

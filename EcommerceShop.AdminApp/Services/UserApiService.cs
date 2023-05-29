@@ -1,6 +1,7 @@
 using System.Net.Http.Headers;
 using System.Text;
 using EcommerceShop.AdminApp.Interfaces;
+using EcommerceShop.Contracts;
 using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.AuthDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
@@ -19,7 +20,7 @@ namespace EcommerceShop.AdminApp.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<bool> CreateUser(UserRegisterDto userRegister)
+        public async Task<ApiResponse<bool>> CreateUser(UserRegisterDto userRegister)
         {
             var client = _httpClientFactory.CreateClient("myclient");
 
@@ -27,11 +28,13 @@ namespace EcommerceShop.AdminApp.Services
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             var url = $"/api/authentication/register";
             var response = await client.PostAsync(url, httpContent);
-            return response.IsSuccessStatusCode;
+            var data = await response.Content.ReadAsStringAsync();
+            if(response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResponse<bool>>(data);
+            return JsonConvert.DeserializeObject<ApiErrorResponse<bool>>(data);
         }
 
-        public async Task<PagedResultDto<UserDto>> GetAllUser(GetUserPagingRequestDto request)
-        
+        public async Task<ApiResponse<PagedResultDto<UserDto>>> GetAllUser(GetUserPagingRequestDto request)    
         {
             var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
             var client = _httpClientFactory.CreateClient("myclient");
@@ -39,8 +42,37 @@ namespace EcommerceShop.AdminApp.Services
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await client.GetAsync(url);
             var data = await response.Content.ReadAsStringAsync();
-            var user = JsonConvert.DeserializeObject<PagedResultDto<UserDto>>(data);
-            return user;
+            if(response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResponse<PagedResultDto<UserDto>>>(data);
+            return JsonConvert.DeserializeObject<ApiErrorResponse<PagedResultDto<UserDto>>>(data);
+        }
+
+        public async Task<ApiResponse<UserDto>> GetUser(Guid userId)
+        {
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient("myclient");
+            var url = $"/api/user/getuser?userid={userId}";
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await client.GetAsync(url);
+            var data = await response.Content.ReadAsStringAsync();
+            if(response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResponse<UserDto>>(data);
+            return JsonConvert.DeserializeObject<ApiErrorResponse<UserDto>>(data);
+        }
+
+        public async Task<ApiResponse<bool>> UpdateUser(Guid userId, UserUpdateDto userUpdate)
+        {
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient("myclient");
+            var url = $"/api/user/updateuser?userid={userId}";
+            var json = JsonConvert.SerializeObject(userUpdate);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await client.PutAsync(url, httpContent);
+            var data = await response.Content.ReadAsStringAsync();
+            if(response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResponse<bool>>(data);
+            return JsonConvert.DeserializeObject<ApiErrorResponse<bool>>(data);
         }
     }
 }

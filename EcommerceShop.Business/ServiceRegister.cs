@@ -1,6 +1,9 @@
 ﻿using EcommerceShop.Business.Interfaces;
 using EcommerceShop.Business.Services;
+using EcommerceShop.Contracts.Dtos.AuthDtos;
 using EcommerceShop.Data.Entities;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;

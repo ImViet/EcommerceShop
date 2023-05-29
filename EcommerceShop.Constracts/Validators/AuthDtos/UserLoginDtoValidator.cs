@@ -1,7 +1,7 @@
 ﻿using EcommerceShop.Contracts.Dtos.AuthDtos;
 using FluentValidation;
 
-namespace EcommerceShop.BackendAPI.Validators.AuthDtos
+namespace EcommerceShop.Contracts.Validators.AuthDtos
 {
     public class UserLoginDtoValidator: AbstractValidator<UserLoginDto>
     {

@@ -1,6 +1,8 @@
 @using EcommerceShop.Contracts.Dtos;
 @using EcommerceShop.Contracts.Dtos.UserDtos;
-@model PagedResultDto<UserDto>;
+@{
+    var listUser = ViewData["ListUsers"] as List<UserDto>;
+}
 
 <div class="container-fluid px-4">
     <h1 class="mt-4">Tables</h1>
@@ -10,22 +12,22 @@
     </ol>
     <div class="card mb-4">
         <div class="card-body">
-            <button type="button" class="btn btn-outline-success">Tạo mới</button>
+            <a type="button" class="btn btn-outline-success" asp-controller="User" asp-action="Create">Tạo mới</a>
         </div>
     </div>
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            DataTable Example
+            Danh sách
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>UserName</th>
-                        <th>FirstName</th>
-                        <th>LastName</th>
-                        <th>PhoneNumber</th>
+                        <th>Tên tài khoản</th>
+                        <th>Tên</th>
+                        <th>Họ</th>
+                        <th>Số điện thoại</th>
                         <th>Email</th>
                         <th></th>
                     </tr>
@@ -41,7 +43,7 @@
                     </tr>
                 </tfoot> *@
                 <tbody>
-                    @foreach (var item in Model.Items)
+                    @foreach (var item in listUser)
                     {
                     <tr>
                         <td>@item.UserName</td>
@@ -50,9 +52,9 @@
                         <td>@item.PhoneNumber</td>
                         <td>@item.Email</td>
                         <td>
-                            <button type="button" class="btn btn-outline-dark">Cập nhật</button>
-                            <button type="button" class="btn btn-outline-danger">Xoá</button>
-                            <button type="button" class="btn btn-outline-info">Chi tiết</button>
+                            <a class="btn btn-outline-primary" asp-controller="User" asp-action="Update" asp-route-userId="@item.Id">Cập nhật</a>
+                            <a class="btn btn-outline-danger">Xoá</a>
+                            <a class="btn btn-outline-info">Chi tiết</a>
                             @* <button type="button" class="btn btn-outline-warning">Warning</button> *@
                         </td>
                     </tr>
@@ -62,3 +64,11 @@
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+    <script src="/js/users/user.js" asp-append-version="true"></script>
+    <script asp-append-version="true">
+       
+    </script>
+}
