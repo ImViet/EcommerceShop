@@ -10,5 +10,6 @@ namespace EcommerceShop.Business.Interfaces
         Task<ApiResponse<PagedResultDto<UserDto>>> GetAllUserAsync(GetUserPagingRequestDto request);
         Task<ApiResponse<UserDto>> GetUserByIdAsync(Guid userId);
         Task<bool> IsUserNameUniqueAsync(string userName);
+        Task<ApiResponse<bool>> UpdateUserAsync(Guid userId, UserUpdateDto userUpdate);
     }
 }

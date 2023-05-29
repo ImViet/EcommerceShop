@@ -1,7 +1,8 @@
-@using EcommerceShop.Contracts.Dtos.AuthDtos;
-@model UserRegisterDto
+@using EcommerceShop.Contracts.Dtos.UserDtos;
+@model UserUpdateDto
 @{
     ViewData["Title"] = "Tạo người dùng";
+    var doB = String.Format("{0:yyyy-MM-dd}", Model.DoB);
 }
 <div class="container-fluid px-4">
     <h1 class="mt-4">Tables</h1>
@@ -20,52 +21,50 @@
             DataTable Example
         </div> *@
         <div class="card-body">
-            <form class="row g-3" asp-controller="User" asp-action="Create">
+            <form class="row g-3" asp-controller="User" asp-action="Update" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col-md-6" hidden>
+                    <label asp-for="Id" class="form-label">Tên</label>
+                    <input asp-for="Id" type="text" class="form-control"value="@Model.Id">
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
                 <div class="col-md-6">
                     <label asp-for="FirstName" for="inputFirstName" class="form-label">Tên</label>
-                    <input asp-for="FirstName" type="text" class="form-control" id="inputFirstName">
+                    <input asp-for="FirstName" type="text" class="form-control" id="inputFirstName" value="@Model.FirstName">
                     <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
                     <label asp-for="LastName" for="inputLastName" class="form-label">Họ</label>
-                    <input asp-for="LastName" type="text" class="form-control" id="inputLastName">
+                    <input asp-for="LastName" type="text" class="form-control" id="inputLastName" value="@Model.LastName">
                     <span asp-validation-for="LastName" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
-                    <label asp-for="UserName" for="inputUserName" class="form-label">Tên tài khoản</label>
-                    <input asp-for="UserName" type="text" class="form-control" id="inputUserName">
-                    <span asp-validation-for="UserName" class="text-danger"></span>
-                </div>
-                <div class="col-md-6">
                     <label asp-for="Email" for="inputEmail" class="form-label">Email</label>
-                    <input asp-for="Email" type="text" class="form-control" id="inputEmail">
+                    <input asp-for="Email" type="text" class="form-control" id="inputEmail" value="@Model.Email">
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
                     <label asp-for="PhoneNumber" for="inputPhoneNumber" class="form-label">Số điện thoại</label>
-                    <input asp-for ="PhoneNumber" type="text" class="form-control" id="inputPhoneNumber">
+                    <input asp-for ="PhoneNumber" type="text" class="form-control" id="inputPhoneNumber" value="@Model.PhoneNumber">
                     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
                     <label asp-for="DoB" for="inputDoB" class="form-label">Ngày sinh</label>
-                    <input asp-for="DoB" type="date" class="form-control" id="inputDoB">
+                    <input asp-for="DoB" type="date" class="form-control" id="inputDoB" value="@doB">
                     <span asp-validation-for="DoB" class="text-danger"></span>
                 </div>
-                <div class="col-md-6">
-                    <label asp-for="Password" for="inputPassword" class="form-label">Mật khẩu</label>
-                    <input asp-for="Password" type="password" class="form-control" id="inputPassword">
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
-                <div class="col-md-6">
-                    <label asp-for="ConfirmPassword" for="inputConfirmPassword" class="form-label">Xác nhận mật khẩu</label>
-                    <input asp-for="ConfirmPassword" type="password" class="form-control" id="inputConfirmPassword">
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Lưu</button>
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+@section Scripts
+{
+    <script asp-append-version="true">
+        $(document).ready(function(){
+            $("#inputDoB").val = Convert.ToDateTime(dt.Rows[0][5]).ToString("yyyy-MM-dd");
+        });
+    </script>
+}

@@ -64,5 +64,24 @@ namespace EcommerceShop.Business.Services
             }
             return true;
         }
+
+        public async Task<ApiResponse<bool>> UpdateUserAsync(Guid userId, UserUpdateDto userUpdate)
+        {
+            var checkEmail = await _userManager.Users.AnyAsync(x => x.Email == userUpdate.Email && x.Id != userId);
+            if(checkEmail)
+            {
+                return new ApiErrorResponse<bool>("Email đã tồn tại");
+            }
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if(user == null)
+                return new ApiErrorResponse<bool>("Nguời dùng không tồn tại");
+            _mapper.Map(userUpdate, user);
+            var result = await _userManager.UpdateAsync(user);
+            if(!result.Succeeded)
+            {
+                return new ApiErrorResponse<bool>("Cập nhật không thành công");
+            }
+            return new ApiSuccessResponse<bool>();
+        }
     }
 }

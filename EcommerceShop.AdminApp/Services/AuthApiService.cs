@@ -28,7 +28,7 @@ namespace EcommerceShop.AdminApp.Services
             return JsonConvert.DeserializeObject<ApiErrorResponse<string>>(data);;
         }
 
-        public async Task<ApiResponse<bool>> RegisterAsync(UserRegisterDto userRegisterDto)
+        public async Task<ApiResponse<bool  >> RegisterAsync(UserRegisterDto userRegisterDto)
         {
             throw new NotImplementedException();
         }

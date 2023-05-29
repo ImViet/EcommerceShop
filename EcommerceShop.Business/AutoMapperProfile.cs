@@ -29,6 +29,9 @@ namespace EcommerceShop.Business
             //ProductImage
             CreateMap<ProductImageCreateDto, ProductImage>();
             CreateMap<ProductImageUpdateDto, ProductImage>();
+            //User
+            CreateMap<UserUpdateDto, AppUser>()
+                .ForMember(d => d.Id, t => t.Ignore());
         }
         private void FromDataAccessorLayer()
         {

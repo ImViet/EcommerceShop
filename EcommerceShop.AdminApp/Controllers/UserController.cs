@@ -2,6 +2,7 @@ using EcommerceShop.AdminApp.Controllers;
 using EcommerceShop.AdminApp.Interfaces;
 using EcommerceShop.Contracts.Dtos.AuthDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
+using EcommerceShop.Contracts.Dtos.UserDtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.AdminApp.Controllers
@@ -45,6 +46,32 @@ namespace Ecommerce.AdminApp.Controllers
         {
             var data = await _userService.GetUser(userId);
             return new JsonResult(data.ResponseObject);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid userId)
+        {
+            var data = await _userService.GetUser(userId);
+            var userUpdate = new UserUpdateDto()
+            {
+                Id = data.ResponseObject.Id,
+                FirstName = data.ResponseObject.FirstName,
+                LastName = data.ResponseObject.LastName,
+                Email = data.ResponseObject.Email,
+                PhoneNumber = data.ResponseObject.PhoneNumber,
+                DoB = data.ResponseObject.DoB
+            };
+            return View(userUpdate);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(UserUpdateDto userUpdate)
+        {
+            if(!ModelState.IsValid)
+                return View(userUpdate);
+            var data = await _userService.UpdateUser(userUpdate.Id, userUpdate);
+            if(data.IsSuccessed)
+                return RedirectToAction("Index", "User");
+            ModelState.AddModelError("", data.Message);
+            return View(userUpdate);
         }
     }
 }

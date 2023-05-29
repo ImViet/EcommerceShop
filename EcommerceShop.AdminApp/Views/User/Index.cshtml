@@ -24,10 +24,10 @@
             <table id="datatablesSimple">
                 <thead>
                     <tr>
-                        <th>UserName</th>
-                        <th>FirstName</th>
-                        <th>LastName</th>
-                        <th>PhoneNumber</th>
+                        <th>Tên tài khoản</th>
+                        <th>Tên</th>
+                        <th>Họ</th>
+                        <th>Số điện thoại</th>
                         <th>Email</th>
                         <th></th>
                     </tr>
@@ -52,9 +52,9 @@
                         <td>@item.PhoneNumber</td>
                         <td>@item.Email</td>
                         <td>
-                            <button type="button" class="btn btn-outline-primary">Cập nhật</button>
-                            <button type="button" class="btn btn-outline-danger">Xoá</button>
-                            <button type="button" class="btn btn-outline-info">Chi tiết</button>
+                            <a class="btn btn-outline-primary" asp-controller="User" asp-action="Update" asp-route-userId="@item.Id">Cập nhật</a>
+                            <a class="btn btn-outline-danger">Xoá</a>
+                            <a class="btn btn-outline-info">Chi tiết</a>
                             @* <button type="button" class="btn btn-outline-warning">Warning</button> *@
                         </td>
                     </tr>

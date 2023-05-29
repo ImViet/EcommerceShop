@@ -11,5 +11,6 @@ namespace EcommerceShop.AdminApp.Interfaces
         Task<ApiResponse<PagedResultDto<UserDto>>> GetAllUser(GetUserPagingRequestDto request);
         Task<ApiResponse<bool>> CreateUser(UserRegisterDto userRegister);
         Task<ApiResponse<UserDto>> GetUser(Guid userId);
+        Task<ApiResponse<bool>> UpdateUser(Guid userId, UserUpdateDto userUpdate);
     }
 }

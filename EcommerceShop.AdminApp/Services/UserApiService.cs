@@ -59,5 +59,20 @@ namespace EcommerceShop.AdminApp.Services
                 return JsonConvert.DeserializeObject<ApiSuccessResponse<UserDto>>(data);
             return JsonConvert.DeserializeObject<ApiErrorResponse<UserDto>>(data);
         }
+
+        public async Task<ApiResponse<bool>> UpdateUser(Guid userId, UserUpdateDto userUpdate)
+        {
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient("myclient");
+            var url = $"/api/user/updateuser?userid={userId}";
+            var json = JsonConvert.SerializeObject(userUpdate);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await client.PutAsync(url, httpContent);
+            var data = await response.Content.ReadAsStringAsync();
+            if(response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResponse<bool>>(data);
+            return JsonConvert.DeserializeObject<ApiErrorResponse<bool>>(data);
+        }
     }
 }

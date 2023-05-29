@@ -1,5 +1,6 @@
 using EcommerceShop.Business.Interfaces;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
+using EcommerceShop.Contracts.Dtos.UserDtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +39,19 @@ namespace EcommerceShop.BackendAPI.Controllers
             if(data == null)
             {
                 return BadRequest("Cannot find user with id = {userId}");
+            }
+            return Ok(data);
+        }
+        [HttpPut]
+        [Route("UpdateUser")]
+        public async Task<IActionResult> UpdateUser(Guid userId, [FromBody]UserUpdateDto userUpdate)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest();
+            var data = await _userService.UpdateUserAsync(userId, userUpdate);
+            if(data == null)
+            {
+                return BadRequest();
             }
             return Ok(data);
         }
