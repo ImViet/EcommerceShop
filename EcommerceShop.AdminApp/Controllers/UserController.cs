@@ -14,7 +14,7 @@ namespace Ecommerce.AdminApp.Controllers
         {
             _userService = userService;
         }
-        public async Task<IActionResult> Index(string search = null, int pageIndex = 1, int pageSize = 10, string isActionSuccess = null)
+        public async Task<IActionResult> Index(string search = null, int pageIndex = 1, int pageSize = 2, string isActionSuccess = null)
         {
             var request = new GetUserPagingRequestDto()
             {
@@ -25,7 +25,7 @@ namespace Ecommerce.AdminApp.Controllers
             var data = await _userService.GetAllUser(request);
             ViewData["ListUsers"] = data.ResponseObject.Items;
             ViewData["ModalSuccess"] = isActionSuccess;
-            return View();
+            return View(data.ResponseObject);
         }
         [HttpGet]
         public async Task<IActionResult> Create()

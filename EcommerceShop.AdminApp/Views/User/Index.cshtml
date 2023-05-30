@@ -1,5 +1,6 @@
 @using EcommerceShop.Contracts.Dtos;
 @using EcommerceShop.Contracts.Dtos.UserDtos;
+@model PagedResultDto<UserDto>;
 @{
     var listUser = ViewData["ListUsers"] as List<UserDto>;
     var checkModalSuccess = (string)ViewData["ModalSuccess"];
@@ -64,6 +65,7 @@
                     }                 
                 </tbody>
             </table>
+            @await Component.InvokeAsync("Paging", Model)
         </div>
     </div>
 </div>
