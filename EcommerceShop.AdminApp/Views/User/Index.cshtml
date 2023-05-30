@@ -2,10 +2,11 @@
 @using EcommerceShop.Contracts.Dtos.UserDtos;
 @{
     var listUser = ViewData["ListUsers"] as List<UserDto>;
+    var checkModalSuccess = true;
 }
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Tables</h1>
+    <h1 class="mt-5">Quản lý người dùng</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Tổng quan</a></li>
         <li class="breadcrumb-item active">Danh sách người dùng</li>
@@ -24,6 +25,7 @@
             <table id="datatablesSimple">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Tên tài khoản</th>
                         <th>Tên</th>
                         <th>Họ</th>
@@ -46,6 +48,7 @@
                     @foreach (var item in listUser)
                     {
                     <tr>
+                        <td>@item.Id</td>
                         <td>@item.UserName</td>
                         <td>@item.FirstName</td>
                         <td>@item.LastName</td>
@@ -53,7 +56,7 @@
                         <td>@item.Email</td>
                         <td>
                             <a class="btn btn-outline-primary" asp-controller="User" asp-action="Update" asp-route-userId="@item.Id">Cập nhật</a>
-                            <a class="btn btn-outline-danger">Xoá</a>
+                            <a class="btn btn-outline-danger btn-delete-user" data-userid="@item.Id">Xoá</a>
                             <a class="btn btn-outline-info">Chi tiết</a>
                             @* <button type="button" class="btn btn-outline-warning">Warning</button> *@
                         </td>
@@ -64,11 +67,7 @@
         </div>
     </div>
 </div>
-
 @section Scripts
 {
     <script src="/js/users/user.js" asp-append-version="true"></script>
-    <script asp-append-version="true">
-       
-    </script>
 }

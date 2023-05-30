@@ -55,5 +55,16 @@ namespace EcommerceShop.BackendAPI.Controllers
             }
             return Ok(data);
         }
+        [HttpDelete]
+        [Route("DeleteUser")]
+        public async Task<IActionResult> DeleteUser(Guid userId)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest();
+            var data = await _userService.DeleteUserAsync(userId);
+            if(data == null)
+                return BadRequest();
+            return Ok(data);
+        }
     }
 }

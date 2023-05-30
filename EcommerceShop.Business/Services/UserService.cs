@@ -83,5 +83,17 @@ namespace EcommerceShop.Business.Services
             }
             return new ApiSuccessResponse<bool>();
         }
+
+        public async Task<ApiResponse<bool>> DeleteUserAsync(Guid userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if(user == null)
+                return new ApiErrorResponse<bool>("Người dùng không tồn tại");
+            var result = await _userManager.DeleteAsync(user);
+            if(!result.Succeeded)
+                return new ApiErrorResponse<bool>("Xoá thất bại");
+            return new ApiSuccessResponse<bool>();
+        }
+
     }
 }

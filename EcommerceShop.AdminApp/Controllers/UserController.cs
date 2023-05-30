@@ -24,6 +24,7 @@ namespace Ecommerce.AdminApp.Controllers
             };
             var data = await _userService.GetAllUser(request);
             ViewData["ListUsers"] = data.ResponseObject.Items;
+            ViewData["ModalSuccess"] = false;
             return View();
         }
         [HttpGet]
@@ -34,12 +35,18 @@ namespace Ecommerce.AdminApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(UserRegisterDto userRegister)
         {
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
-                var result = _userService.CreateUser(userRegister);
+                return View(userRegister);
+            }
+            var result = await _userService.CreateUser(userRegister);
+            if(result.IsSuccessed)
+            {
+                ViewData["ModalSuccess"] = true;
                 return RedirectToAction("Index", "User");
             }
-                return View();
+            ModelState.AddModelError("", result.Message);
+            return View(userRegister);
         }
         [HttpGet]
         public async Task<JsonResult> GetUser(Guid userId)
@@ -72,6 +79,16 @@ namespace Ecommerce.AdminApp.Controllers
                 return RedirectToAction("Index", "User");
             ModelState.AddModelError("", data.Message);
             return View(userUpdate);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid userId)
+        {
+            if(!ModelState.IsValid)
+                return View();
+            var data = await _userService.DeleteUser(userId);
+            if(data.IsSuccessed)
+                return RedirectToAction("Index", "User");
+            return View();  
         }
     }
 }

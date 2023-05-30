@@ -1,19 +1,39 @@
+//Event delete user
 $(document).ready(function(){
-  $(".btn-update-user").click(function(){
-      $.ajax({
-          url: "/User/GetUser",
-          type: "get",
-          data: {
-          userId: $(this).data("id")
-          },
-          success: function(data){
-            $("#user-username").val(data.userName)
-            $("#user-email").val(data.email)
-            $("#user-password").val(data.userName)
-            $("#user-confirmpassword").val(data.userName)
-            $("#user-phonenumber").val(data.userName)
-            $("#user-username").val(data.userName)
-          }
-      });
+  $(".btn-delete-user").click(function(){
+    console.log($(this).data("userid")),
+    Swal.fire({
+      title: 'Bạn muốn xoá?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Xoá'
+      }).then((result) => {
+        if(result.isConfirmed){
+          $.ajax({
+            url: "/User/Delete",
+            type: 'POST',
+            data: {
+                userId: $(this).data("userid"),
+            },
+            success: function(data){
+              Swal.fire({
+                icon: 'success',
+                title: 'Đã xoá thành công',
+                showConfirmButton: false,
+                timer: 2000
+              }),
+              setTimeout(() => {
+                location.href = "/User/Index"
+              }, 2000);
+            },
+            error: function(){
+              Swal.fire('Xoá thất bại')
+            }
+          });
+      }});
+  });
 });
-});
+
+//Event create user

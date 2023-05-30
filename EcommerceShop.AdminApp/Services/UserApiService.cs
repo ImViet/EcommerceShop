@@ -74,5 +74,17 @@ namespace EcommerceShop.AdminApp.Services
                 return JsonConvert.DeserializeObject<ApiSuccessResponse<bool>>(data);
             return JsonConvert.DeserializeObject<ApiErrorResponse<bool>>(data);
         }
+        public async Task<ApiResponse<bool>> DeleteUser(Guid userId)
+        {
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient("myclient");
+            var url = $"/api/user/deleteuser?userid={userId}";
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await client.DeleteAsync(url);
+            var data = await response.Content.ReadAsStringAsync();
+            if(response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResponse<bool>>(data);
+            return JsonConvert.DeserializeObject<ApiErrorResponse<bool>>(data);
+        }
     }
 }
