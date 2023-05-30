@@ -39,7 +39,9 @@ namespace EcommerceShop.Business.Services
                                     .ToListAsync();
             var pagedResult = new PagedResultDto<UserDto>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
                 Items = _mapper.Map<List<UserDto>>(data)
             };
             return new ApiSuccessResponse<PagedResultDto<UserDto>>(pagedResult);
