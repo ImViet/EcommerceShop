@@ -14,7 +14,7 @@ namespace Ecommerce.AdminApp.Controllers
         {
             _userService = userService;
         }
-        public async Task<IActionResult> Index(string search = null, int pageIndex = 1, int pageSize = 2, string isActionSuccess = null)
+        public async Task<IActionResult> Index(string search = null, int pageIndex = 1, int pageSize = 1, string isActionSuccess = null)
         {
             var request = new GetUserPagingRequestDto()
             {

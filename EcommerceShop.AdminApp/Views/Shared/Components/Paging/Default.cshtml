@@ -8,6 +8,10 @@
       {
           continue;
       }
+      if(key == "isActionSuccess")
+      {
+        continue;
+      }
       if (request.Query[key].Count > 1)
       {
           foreach (var item in (string[])request.Query[key])
@@ -20,8 +24,8 @@
           urlTemplate += "&" + key + "=" + request.Query[key];
       }
   }
-  var startIndex = Math.Max(Model.PageIndex - 5, 1);
-  var finishIndex = Math.Min(Model.PageIndex + 5, Model.TotalPages);
+  var startIndex = Math.Max(Model.PageIndex - 2, 1);
+  var finishIndex = Math.Min(Model.PageIndex + 2, Model.TotalPages);
 }
 @if (Model.TotalPages > 1)
 {
