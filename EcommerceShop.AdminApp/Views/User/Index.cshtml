@@ -2,7 +2,7 @@
 @using EcommerceShop.Contracts.Dtos.UserDtos;
 @{
     var listUser = ViewData["ListUsers"] as List<UserDto>;
-    var checkModalSuccess = (bool)ViewData["ModalSuccess"];
+    var checkModalSuccess = (string)ViewData["ModalSuccess"];
 }
 
 <div class="container-fluid px-4">
@@ -70,13 +70,13 @@
 @section Scripts
 {
         <script asp-append-version="true">
-           @if(checkModalSuccess == true)
+           @if(checkModalSuccess != null)
            {
             <text>
             $(document).ready(function(){
                         Swal.fire({
                             icon: 'success',
-                            title: 'Your work has been saved',
+                            title: "@checkModalSuccess",
                             showConfirmButton: false,
                             timer: 1500
                             })

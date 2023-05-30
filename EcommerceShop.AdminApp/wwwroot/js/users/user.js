@@ -5,10 +5,11 @@ $(document).ready(function(){
     Swal.fire({
       title: 'Bạn muốn xoá?',
       icon: 'warning',
-      showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Xoá'
+      confirmButtonText: 'Xoá',
+      showCancelButton: true,
+      cancelButtonText: 'Huỷ'
       }).then((result) => {
         if(result.isConfirmed){
           $.ajax({
