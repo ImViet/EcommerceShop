@@ -23,7 +23,7 @@ $(document).ready(function(){
                 title: 'Đã xoá thành công',
                 showConfirmButton: false,
                 timer: 2000
-              }),
+              })
               setTimeout(() => {
                 location.href = "/User/Index"
               }, 2000);

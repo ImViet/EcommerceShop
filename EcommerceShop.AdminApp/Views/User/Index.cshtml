@@ -2,7 +2,7 @@
 @using EcommerceShop.Contracts.Dtos.UserDtos;
 @{
     var listUser = ViewData["ListUsers"] as List<UserDto>;
-    var checkModalSuccess = true;
+    var checkModalSuccess = (bool)ViewData["ModalSuccess"];
 }
 
 <div class="container-fluid px-4">
@@ -69,5 +69,20 @@
 </div>
 @section Scripts
 {
+        <script asp-append-version="true">
+           @if(checkModalSuccess == true)
+           {
+            <text>
+            $(document).ready(function(){
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Your work has been saved',
+                            showConfirmButton: false,
+                            timer: 1500
+                            })
+                        });
+            </text>  
+           }
+        </script>
     <script src="/js/users/user.js" asp-append-version="true"></script>
 }

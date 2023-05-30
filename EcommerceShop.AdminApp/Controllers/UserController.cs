@@ -14,7 +14,7 @@ namespace Ecommerce.AdminApp.Controllers
         {
             _userService = userService;
         }
-        public async Task<IActionResult> Index(string search = null, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string search = null, int pageIndex = 1, int pageSize = 10, bool isSuccess = false)
         {
             var request = new GetUserPagingRequestDto()
             {
@@ -24,7 +24,7 @@ namespace Ecommerce.AdminApp.Controllers
             };
             var data = await _userService.GetAllUser(request);
             ViewData["ListUsers"] = data.ResponseObject.Items;
-            ViewData["ModalSuccess"] = false;
+            ViewData["ModalSuccess"] = isSuccess;
             return View();
         }
         [HttpGet]
@@ -43,7 +43,7 @@ namespace Ecommerce.AdminApp.Controllers
             if(result.IsSuccessed)
             {
                 ViewData["ModalSuccess"] = true;
-                return RedirectToAction("Index", "User");
+                return RedirectToAction("Index", "User", new {isSuccess = true});
             }
             ModelState.AddModelError("", result.Message);
             return View(userRegister);
@@ -76,7 +76,10 @@ namespace Ecommerce.AdminApp.Controllers
                 return View(userUpdate);
             var data = await _userService.UpdateUser(userUpdate.Id, userUpdate);
             if(data.IsSuccessed)
-                return RedirectToAction("Index", "User");
+            {
+                ViewData["ModalSuccess"] = true;
+                return RedirectToAction("Index", "User", new{ isSuccess = true });
+            }
             ModelState.AddModelError("", data.Message);
             return View(userUpdate);
         }
