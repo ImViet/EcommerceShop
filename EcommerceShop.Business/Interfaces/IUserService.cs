@@ -1,6 +1,7 @@
 using EcommerceShop.Contracts;
 using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
+using EcommerceShop.Contracts.Dtos.RoleDtos;
 using EcommerceShop.Contracts.Dtos.UserDtos;
 
 namespace EcommerceShop.Business.Interfaces
@@ -12,5 +13,6 @@ namespace EcommerceShop.Business.Interfaces
         Task<bool> IsUserNameUniqueAsync(string userName);
         Task<ApiResponse<bool>> UpdateUserAsync(Guid userId, UserUpdateDto userUpdate);
         Task<ApiResponse<bool>> DeleteUserAsync(Guid userId);
+        Task<ApiResponse<bool>> RoleAssignAsync(Guid userId, RoleAssignDto roleAssign);
     }
 }

@@ -69,7 +69,8 @@
                         <td>
                             <a class="btn btn-outline-primary" asp-controller="User" asp-action="Update" asp-route-userId="@item.Id">Cập nhật</a>
                             <a class="btn btn-outline-danger btn-delete-user" data-userid="@item.Id">Xoá</a>
-                            <a class="btn btn-outline-info btn-detail-user" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Chi tiết</a>
+                            <a class="btn btn-outline-info btn-detail-user" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#modalDetailUser">Chi tiết</a>
+                            <a class="btn btn-outline-secondary btn-role-user" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#modalRoleAssign">Quyền</a>
                         </td>
                     </tr>
                     }                 
@@ -80,11 +81,24 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalDetailUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Chi tiết</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalRoleAssign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Gán quyền</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
