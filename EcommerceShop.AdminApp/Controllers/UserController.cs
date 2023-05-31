@@ -25,6 +25,7 @@ namespace Ecommerce.AdminApp.Controllers
             var data = await _userService.GetAllUser(request);
             ViewData["ListUsers"] = data.ResponseObject.Items;
             ViewData["ModalSuccess"] = isActionSuccess;
+            ViewData["searchKeyword"] = search;
             return View(data.ResponseObject);
         }
         [HttpGet]

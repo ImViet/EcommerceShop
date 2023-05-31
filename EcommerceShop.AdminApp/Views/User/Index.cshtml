@@ -4,6 +4,7 @@
 @{
     var listUser = ViewData["ListUsers"] as List<UserDto>;
     var checkModalSuccess = (string)ViewData["ModalSuccess"];
+    var search = ViewData["searchKeyword"];
 }
 
 <div class="container-fluid px-4">
@@ -13,17 +14,27 @@
         <li class="breadcrumb-item active">Danh sách người dùng</li>
     </ol>
     <div class="card mb-4">
-        <div class="card-body">
-            <a type="button" class="btn btn-outline-success" asp-controller="User" asp-action="Create">Tạo mới</a>
+        <div class="card-header mb-1 bg-transparent">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo mới</a>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <form class="d-flex">
+                        <input class="form-control me-1" value="@search" name="search" type="search" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
+                        <button class="btn btn-outline-success" type="submit">Tìm</button>
+                    </form>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="card mb-4">
+    <div class="card">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
             Danh sách
         </div>
         <div class="card-body">
-            <table id="datatablesSimple">
+            <div class="table-responsive">
+                <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th></th>
@@ -64,6 +75,7 @@
                     }                 
                 </tbody>
             </table>
+            </div>
             @await Component.InvokeAsync("Paging", Model)
         </div>
     </div>
