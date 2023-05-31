@@ -14,5 +14,6 @@ namespace EcommerceShop.Contracts.Dtos.UserDtos
 
         public string Email { get; set; }
         public DateTime DoB { get; set;}
+        public IList<string> Roles {get; set;}
     }
 }

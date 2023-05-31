@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 //
 builder.Services.AddTransient<IAuthApiService, AuthApiService>();
 builder.Services.AddTransient<IUserApiService, UserApiService>();
+builder.Services.AddTransient<IRoleService, RoleApiService>();
 builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
 // Add services to the container.

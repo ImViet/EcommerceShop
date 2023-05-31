@@ -55,3 +55,21 @@ $(document).ready(function(){
       });
   });
  });
+ 
+//Event role assigned
+$(document).ready(function(){
+  $(".btn-role-user").click(function(){
+    $.ajax({
+      url: "/User/GetRole",
+          type:'POST',
+          data: {
+              userId : $(this).data("id"),
+          },
+          success: function(result){
+              $(".modal-body").html(result);
+              
+              console.log("Ok");
+          }
+    });
+  });
+});

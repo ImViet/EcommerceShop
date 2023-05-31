@@ -1,5 +1,6 @@
 using EcommerceShop.Business.Interfaces;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
+using EcommerceShop.Contracts.Dtos.RoleDtos;
 using EcommerceShop.Contracts.Dtos.UserDtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ namespace EcommerceShop.BackendAPI.Controllers
             if(!ModelState.IsValid)
                 return BadRequest();
             var data = await _userService.GetAllUserAsync(request);
-            if(data == null)
+            if(!data.IsSuccessed)
             {
                 return BadRequest("Cannot find any user");
             }
@@ -36,7 +37,7 @@ namespace EcommerceShop.BackendAPI.Controllers
             if(!ModelState.IsValid)
                 return BadRequest();
             var data = await _userService.GetUserByIdAsync(userId);
-            if(data == null)
+            if(!data.IsSuccessed)
             {
                 return BadRequest("Cannot find user with id = {userId}");
             }
@@ -49,7 +50,7 @@ namespace EcommerceShop.BackendAPI.Controllers
             if(!ModelState.IsValid)
                 return BadRequest();
             var data = await _userService.UpdateUserAsync(userId, userUpdate);
-            if(data == null)
+            if(!data.IsSuccessed)
             {
                 return BadRequest();
             }
@@ -62,7 +63,18 @@ namespace EcommerceShop.BackendAPI.Controllers
             if(!ModelState.IsValid)
                 return BadRequest();
             var data = await _userService.DeleteUserAsync(userId);
-            if(data == null)
+            if(!data.IsSuccessed)
+                return BadRequest();
+            return Ok(data);
+        }
+        [HttpPut]
+        [Route("RoleAssign")]
+        public async Task<IActionResult> RoleAssign(Guid userId, [FromBody]RoleAssignDto roleAssign)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest();
+            var data = await _userService.RoleAssignAsync(userId, roleAssign);
+            if(!data.IsSuccessed)
                 return BadRequest();
             return Ok(data);
         }

@@ -5,6 +5,7 @@ using EcommerceShop.Contracts;
 using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.AuthDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
+using EcommerceShop.Contracts.Dtos.RoleDtos;
 using EcommerceShop.Contracts.Dtos.UserDtos;
 using Newtonsoft.Json;
 
@@ -81,6 +82,20 @@ namespace EcommerceShop.AdminApp.Services
             var url = $"/api/user/deleteuser?userid={userId}";
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await client.DeleteAsync(url);
+            var data = await response.Content.ReadAsStringAsync();
+            if(response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResponse<bool>>(data);
+            return JsonConvert.DeserializeObject<ApiErrorResponse<bool>>(data);
+        }
+        public async Task<ApiResponse<bool>> AssignRole(Guid userId, RoleAssignDto roleAssign)
+        {
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient("myclient");
+            var url = $"/api/user/roleassign?userid={userId}";
+            var json = JsonConvert.SerializeObject(roleAssign);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await client.PutAsync(url, httpContent);
             var data = await response.Content.ReadAsStringAsync();
             if(response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ApiSuccessResponse<bool>>(data);

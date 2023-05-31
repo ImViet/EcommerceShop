@@ -1,7 +1,9 @@
 using EcommerceShop.AdminApp.Controllers;
 using EcommerceShop.AdminApp.Interfaces;
+using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.AuthDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
+using EcommerceShop.Contracts.Dtos.RoleDtos;
 using EcommerceShop.Contracts.Dtos.UserDtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +12,12 @@ namespace Ecommerce.AdminApp.Controllers
     public class UserController: BaseController
     {
         private readonly IUserApiService _userService;
-        public UserController(IUserApiService userService)
+        private readonly IRoleService _roleService;
+
+        public UserController(IUserApiService userService, IRoleService roleService)
         {
             _userService = userService;
+            _roleService = roleService;
         }
         public async Task<IActionResult> Index(string search = null, int pageIndex = 1, int pageSize = 3)
         {
@@ -92,6 +97,42 @@ namespace Ecommerce.AdminApp.Controllers
             if(data.IsSuccessed)
                 return RedirectToAction("Index", "User");
             return View();  
+        }
+        [HttpPost]
+        public async Task<ViewComponentResult> GetRole(Guid userId)
+        {
+            var roleAssigned = await GetRoleAssigned(userId);
+            return ViewComponent("RoleAssign", roleAssigned);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AssignRole(RoleAssignDto roleAssign)
+        {
+            if(!ModelState.IsValid)
+                return View();
+            var data = await _userService.AssignRole(roleAssign.UserId, roleAssign);
+            if(data.IsSuccessed)
+            {
+                TempData["ModalSuccess"] = "Cập nhật quyền thành công";
+                return RedirectToAction("Index", "User");
+            }
+            ModelState.AddModelError("", data.Message);
+            return View();
+        }
+        private async Task<RoleAssignDto> GetRoleAssigned(Guid userId)
+        {
+            var user = await _userService.GetUser(userId);
+            var roles = await _roleService.GetAllRole();
+            var roleAssigned = new RoleAssignDto();
+            foreach (var role in roles.ResponseObject)
+            {
+                roleAssigned.Roles.Add(new RoleSelectedDto()
+                {
+                    RoleId = role.RoleId.ToString(),
+                    RoleName = role.RoleName,
+                    Selected = user.ResponseObject.Roles.Contains(role.RoleName)
+                });
+            }
+            return roleAssigned;
         }
     }
 }

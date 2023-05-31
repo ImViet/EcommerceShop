@@ -55,7 +55,9 @@ namespace EcommerceShop.Business.Services
             {
                 throw new EcommerceShopException($"Cannot find user with id = {userId}");
             }
-            return new ApiSuccessResponse<UserDto>(_mapper.Map<UserDto>(user));
+            var result = _mapper.Map<UserDto>(user);
+            result.Roles = await _userManager.GetRolesAsync(user);
+            return new ApiSuccessResponse<UserDto>(result);
         }
         //Check username is unique
         public async Task<bool> IsUserNameUniqueAsync(string userName)
