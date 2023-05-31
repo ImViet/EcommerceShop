@@ -4,9 +4,10 @@
     ViewData["Title"] = "Tạo người dùng";
 }
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Tables</h1>
+    <h1 class="mt-5">Tạo người dùng</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Tổng quan</a></li>
+        <li class="breadcrumb-item"><a asp-controller="User" asp-action="Index">Người dùng</a></li>
         <li class="breadcrumb-item active">Tạo người dùng</li>
     </ol>
     <div class="card mb-4">
@@ -20,8 +21,8 @@
             DataTable Example
         </div> *@
         <div class="card-body">
-            <form class="row g-3" asp-controller="User" asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <form id="form-create-user" class="row g-3" asp-controller="User" asp-action="Create">
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="col-md-6">
                     <label asp-for="FirstName" for="inputFirstName" class="form-label">Tên</label>
                     <input asp-for="FirstName" type="text" class="form-control" id="inputFirstName">
@@ -69,3 +70,6 @@
         </div>
     </div>
 </div>
+@section Scripts{
+    <script src="/js/users/user.js" asp-append-version="true"></script>
+}

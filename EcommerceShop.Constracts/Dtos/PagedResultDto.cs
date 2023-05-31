@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace EcommerceShop.Contracts.Dtos
 {
-    public class PagedResultDto<T>
+    public class PagedResultDto<T>: PagedResultBaseDto
     {
-        public int TotalRecord { get; set; }
         public List<T> Items { get; set; }
     }
 }

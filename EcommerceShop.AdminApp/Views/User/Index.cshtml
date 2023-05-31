@@ -1,29 +1,43 @@
 @using EcommerceShop.Contracts.Dtos;
 @using EcommerceShop.Contracts.Dtos.UserDtos;
+@model PagedResultDto<UserDto>;
 @{
     var listUser = ViewData["ListUsers"] as List<UserDto>;
+    var checkModalSuccess = (string)TempData["ModalSuccess"];
+    var search = ViewData["searchKeyword"];
 }
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Tables</h1>
+    <h1 class="mt-5">Quản lý người dùng</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Tổng quan</a></li>
         <li class="breadcrumb-item active">Danh sách người dùng</li>
     </ol>
     <div class="card mb-4">
-        <div class="card-body">
-            <a type="button" class="btn btn-outline-success" asp-controller="User" asp-action="Create">Tạo mới</a>
+        <div class="card-header mb-1 bg-transparent">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo mới</a>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <form class="d-flex">
+                        <input class="form-control me-1" value="@search" name="search" type="search" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
+                        <button class="btn btn-outline-success" type="submit">Tìm</button>
+                    </form>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="card mb-4">
+    <div class="card">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
             Danh sách
         </div>
         <div class="card-body">
-            <table id="datatablesSimple">
+            <div class="table-responsive">
+                <table class="table table-bordered">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Tên tài khoản</th>
                         <th>Tên</th>
                         <th>Họ</th>
@@ -46,6 +60,7 @@
                     @foreach (var item in listUser)
                     {
                     <tr>
+                        <td>@item.Id</td>
                         <td>@item.UserName</td>
                         <td>@item.FirstName</td>
                         <td>@item.LastName</td>
@@ -53,22 +68,47 @@
                         <td>@item.Email</td>
                         <td>
                             <a class="btn btn-outline-primary" asp-controller="User" asp-action="Update" asp-route-userId="@item.Id">Cập nhật</a>
-                            <a class="btn btn-outline-danger">Xoá</a>
-                            <a class="btn btn-outline-info">Chi tiết</a>
-                            @* <button type="button" class="btn btn-outline-warning">Warning</button> *@
+                            <a class="btn btn-outline-danger btn-delete-user" data-userid="@item.Id">Xoá</a>
+                            <a class="btn btn-outline-info btn-detail-user" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Chi tiết</a>
                         </td>
                     </tr>
                     }                 
                 </tbody>
             </table>
+            </div>
+            @await Component.InvokeAsync("Paging", Model)
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+    </div>
+  </div>
+</div>
 @section Scripts
 {
+        <script asp-append-version="true">
+           @if(checkModalSuccess != null)
+           {
+            <text>
+            $(document).ready(function(){
+                        Swal.fire({
+                            icon: 'success',
+                            title: "@checkModalSuccess",
+                            showConfirmButton: false,
+                            timer: 1500
+                            })
+                        });
+            </text>  
+           }
+        </script>
     <script src="/js/users/user.js" asp-append-version="true"></script>
-    <script asp-append-version="true">
-       
-    </script>
 }

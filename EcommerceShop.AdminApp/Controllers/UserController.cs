@@ -14,7 +14,7 @@ namespace Ecommerce.AdminApp.Controllers
         {
             _userService = userService;
         }
-        public async Task<IActionResult> Index(string search = null, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string search = null, int pageIndex = 1, int pageSize = 3)
         {
             var request = new GetUserPagingRequestDto()
             {
@@ -24,7 +24,8 @@ namespace Ecommerce.AdminApp.Controllers
             };
             var data = await _userService.GetAllUser(request);
             ViewData["ListUsers"] = data.ResponseObject.Items;
-            return View();
+            ViewData["searchKeyword"] = search;
+            return View(data.ResponseObject);
         }
         [HttpGet]
         public async Task<IActionResult> Create()
@@ -34,18 +35,24 @@ namespace Ecommerce.AdminApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(UserRegisterDto userRegister)
         {
-            if(ModelState.IsValid)
+            if(!ModelState.IsValid)
             {
-                var result = _userService.CreateUser(userRegister);
+                return View(userRegister);
+            }
+            var result = await _userService.CreateUser(userRegister);
+            if(result.IsSuccessed)
+            {
+                TempData["ModalSuccess"] = "Tạo thành công";
                 return RedirectToAction("Index", "User");
             }
-                return View();
+            ModelState.AddModelError("", result.Message);
+            return View(userRegister);
         }
-        [HttpGet]
-        public async Task<JsonResult> GetUser(Guid userId)
+        [HttpPost]
+        public async Task<ViewComponentResult> GetUser(Guid userId)
         {
             var data = await _userService.GetUser(userId);
-            return new JsonResult(data.ResponseObject);
+            return ViewComponent("UserDetail", data.ResponseObject);
         }
         [HttpGet]
         public async Task<IActionResult> Update(Guid userId)
@@ -69,9 +76,22 @@ namespace Ecommerce.AdminApp.Controllers
                 return View(userUpdate);
             var data = await _userService.UpdateUser(userUpdate.Id, userUpdate);
             if(data.IsSuccessed)
+            {
+                TempData["ModalSuccess"] = "Cập nhật thành công";
                 return RedirectToAction("Index", "User");
+            }
             ModelState.AddModelError("", data.Message);
             return View(userUpdate);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid userId)
+        {
+            if(!ModelState.IsValid)
+                return View();
+            var data = await _userService.DeleteUser(userId);
+            if(data.IsSuccessed)
+                return RedirectToAction("Index", "User");
+            return View();  
         }
     }
 }

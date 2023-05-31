@@ -54,7 +54,9 @@ namespace EcommerceShop.Business.Services
             //Select
             var pagedResult = new PagedResultDto<ProductDto>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageIndex = pageIndex,
+                PageSize = pageSize,
                 Items = data,
             };
             return pagedResult;

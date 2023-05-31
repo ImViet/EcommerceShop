@@ -12,5 +12,6 @@ namespace EcommerceShop.AdminApp.Interfaces
         Task<ApiResponse<bool>> CreateUser(UserRegisterDto userRegister);
         Task<ApiResponse<UserDto>> GetUser(Guid userId);
         Task<ApiResponse<bool>> UpdateUser(Guid userId, UserUpdateDto userUpdate);
+        Task<ApiResponse<bool>> DeleteUser(Guid userId);
     }
 }

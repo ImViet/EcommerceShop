@@ -52,7 +52,7 @@ namespace EcommerceShop.Business.Services
             var userName = await _userManager.FindByNameAsync(userRegister.UserName);
             if(userName != null)
             {
-                return new ApiErrorResponse<bool>("Tài khoản đã tồn tại");
+                return new ApiErrorResponse<bool>("Tên tài khoản đã tồn tại");
             }
             var email = await _userManager.FindByEmailAsync(userRegister.Email);
             if(email != null)
