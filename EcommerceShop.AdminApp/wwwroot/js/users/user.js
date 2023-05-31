@@ -37,4 +37,21 @@ $(document).ready(function(){
   });
 });
 
-//Event create user
+//Event detail user
+$(document).ready(function(){
+  $(".btn-detail-user").click(function(){
+      console.log($(this).data("id"));    
+      $.ajax({
+          url: "/User/GetUser",
+          type:'POST',
+          data: {
+              userId : $(this).data("id"),
+          },
+          success: function(result){
+              $(".modal-body").html(result);
+              
+              console.log("Ok");
+          }
+      });
+  });
+ });

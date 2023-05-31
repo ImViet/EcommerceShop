@@ -58,8 +58,7 @@
                         <td>
                             <a class="btn btn-outline-primary" asp-controller="User" asp-action="Update" asp-route-userId="@item.Id">Cập nhật</a>
                             <a class="btn btn-outline-danger btn-delete-user" data-userid="@item.Id">Xoá</a>
-                            <a class="btn btn-outline-info">Chi tiết</a>
-                            @* <button type="button" class="btn btn-outline-warning">Warning</button> *@
+                            <a class="btn btn-outline-info btn-detail-user" data-id="@item.Id" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Chi tiết</a>
                         </td>
                     </tr>
                     }                 
@@ -68,6 +67,19 @@
             @await Component.InvokeAsync("Paging", Model)
         </div>
     </div>
+</div>
+<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+    </div>
+  </div>
 </div>
 @section Scripts
 {

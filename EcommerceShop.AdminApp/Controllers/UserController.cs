@@ -14,7 +14,7 @@ namespace Ecommerce.AdminApp.Controllers
         {
             _userService = userService;
         }
-        public async Task<IActionResult> Index(string search = null, int pageIndex = 1, int pageSize = 1, string isActionSuccess = null)
+        public async Task<IActionResult> Index(string search = null, int pageIndex = 1, int pageSize = 3, string isActionSuccess = null)
         {
             var request = new GetUserPagingRequestDto()
             {
@@ -47,11 +47,11 @@ namespace Ecommerce.AdminApp.Controllers
             ModelState.AddModelError("", result.Message);
             return View(userRegister);
         }
-        [HttpGet]
-        public async Task<JsonResult> GetUser(Guid userId)
+        [HttpPost]
+        public async Task<ViewComponentResult> GetUser(Guid userId)
         {
             var data = await _userService.GetUser(userId);
-            return new JsonResult(data.ResponseObject);
+            return ViewComponent("UserDetail", data.ResponseObject);
         }
         [HttpGet]
         public async Task<IActionResult> Update(Guid userId)
