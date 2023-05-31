@@ -3,6 +3,7 @@ using EcommerceShop.Business.Interfaces;
 using EcommerceShop.Contracts;
 using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
+using EcommerceShop.Contracts.Dtos.RoleDtos;
 using EcommerceShop.Contracts.Dtos.UserDtos;
 using EcommerceShop.Contracts.Exceptions;
 using EcommerceShop.Data.Entities;
@@ -22,7 +23,7 @@ namespace EcommerceShop.Business.Services
             _signInManager = signInManager;
             _mapper = mapper;
         }
-
+        //Get all user paging
         public async Task<ApiResponse<PagedResultDto<UserDto>>> GetAllUserAsync(GetUserPagingRequestDto request)
         {
             var query = _userManager.Users;
@@ -46,7 +47,7 @@ namespace EcommerceShop.Business.Services
             };
             return new ApiSuccessResponse<PagedResultDto<UserDto>>(pagedResult);
         }
-
+        //Get user by id
         public async Task<ApiResponse<UserDto>> GetUserByIdAsync(Guid userId)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == userId);
@@ -56,7 +57,7 @@ namespace EcommerceShop.Business.Services
             }
             return new ApiSuccessResponse<UserDto>(_mapper.Map<UserDto>(user));
         }
-
+        //Check username is unique
         public async Task<bool> IsUserNameUniqueAsync(string userName)
         {
             var checkUserName = await _userManager.FindByNameAsync(userName);
@@ -66,7 +67,7 @@ namespace EcommerceShop.Business.Services
             }
             return true;
         }
-
+        //Update user
         public async Task<ApiResponse<bool>> UpdateUserAsync(Guid userId, UserUpdateDto userUpdate)
         {
             var checkEmail = await _userManager.Users.AnyAsync(x => x.Email == userUpdate.Email && x.Id != userId);
@@ -85,7 +86,7 @@ namespace EcommerceShop.Business.Services
             }
             return new ApiSuccessResponse<bool>();
         }
-
+        //Delete user
         public async Task<ApiResponse<bool>> DeleteUserAsync(Guid userId)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString());
@@ -96,6 +97,27 @@ namespace EcommerceShop.Business.Services
                 return new ApiErrorResponse<bool>("Xoá thất bại");
             return new ApiSuccessResponse<bool>();
         }
-
+        //Grant role for user
+        public async Task<ApiResponse<bool>> RoleAssignAsync(Guid userId, RoleAssignDto roleSelected)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if(user == null)
+                return new ApiErrorResponse<bool>("Người dùng không tồn tại");
+            var removedRoles = roleSelected.Roles.Where(x => x.Selected == false).Select(x => x.RoleName).ToList();
+            foreach (var role in removedRoles)
+            {
+                var userInRole = await _userManager.IsInRoleAsync(user, role);
+                if(userInRole == true)
+                    await _userManager.RemoveFromRoleAsync(user, role);
+            } 
+            var addedRoles = roleSelected.Roles.Where(x => x.Selected == true).Select(x => x.RoleName).ToList();
+            foreach (var role in addedRoles)
+            {
+                var userInRole = await _userManager.IsInRoleAsync(user, role);
+                if(userInRole == false)
+                    await _userManager.AddToRoleAsync(user, role);
+            } 
+            return new ApiSuccessResponse<bool>();
+        }
     }
 }

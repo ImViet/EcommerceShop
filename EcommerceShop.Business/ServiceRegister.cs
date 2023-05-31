@@ -28,6 +28,8 @@ namespace EcommerceShop.Business
             services.AddTransient<IStorageService, FileStorageService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IRoleService, RoleService>();
+
         }
     }
 }
