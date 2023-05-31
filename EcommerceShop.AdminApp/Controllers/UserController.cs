@@ -14,7 +14,7 @@ namespace Ecommerce.AdminApp.Controllers
         {
             _userService = userService;
         }
-        public async Task<IActionResult> Index(string search = null, int pageIndex = 1, int pageSize = 3, string isActionSuccess = null)
+        public async Task<IActionResult> Index(string search = null, int pageIndex = 1, int pageSize = 3)
         {
             var request = new GetUserPagingRequestDto()
             {
@@ -24,7 +24,6 @@ namespace Ecommerce.AdminApp.Controllers
             };
             var data = await _userService.GetAllUser(request);
             ViewData["ListUsers"] = data.ResponseObject.Items;
-            ViewData["ModalSuccess"] = isActionSuccess;
             ViewData["searchKeyword"] = search;
             return View(data.ResponseObject);
         }
@@ -43,7 +42,8 @@ namespace Ecommerce.AdminApp.Controllers
             var result = await _userService.CreateUser(userRegister);
             if(result.IsSuccessed)
             {
-                return RedirectToAction("Index", "User", new {isActionSuccess = "Tạo thành công"});
+                TempData["ModalSuccess"] = "Tạo thành công";
+                return RedirectToAction("Index", "User");
             }
             ModelState.AddModelError("", result.Message);
             return View(userRegister);
@@ -77,7 +77,8 @@ namespace Ecommerce.AdminApp.Controllers
             var data = await _userService.UpdateUser(userUpdate.Id, userUpdate);
             if(data.IsSuccessed)
             {
-                return RedirectToAction("Index", "User", new{ isActionSuccess = "Cập nhật thành công" });
+                TempData["ModalSuccess"] = "Cập nhật thành công";
+                return RedirectToAction("Index", "User");
             }
             ModelState.AddModelError("", data.Message);
             return View(userUpdate);

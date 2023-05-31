@@ -3,7 +3,7 @@
 @model PagedResultDto<UserDto>;
 @{
     var listUser = ViewData["ListUsers"] as List<UserDto>;
-    var checkModalSuccess = (string)ViewData["ModalSuccess"];
+    var checkModalSuccess = (string)TempData["ModalSuccess"];
     var search = ViewData["searchKeyword"];
 }
 
