@@ -29,7 +29,7 @@ namespace EcommerceShop.Business
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IRoleService, RoleService>();
-
+            services.AddTransient<ILanguageService, LanguageService>();
         }
     }
 }

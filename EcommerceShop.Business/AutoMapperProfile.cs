@@ -1,4 +1,5 @@
 ﻿using EcommerceShop.Contracts.Dtos.AuthDtos;
+using EcommerceShop.Contracts.Dtos.LanguageDtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.ProductImageDtos;
 using EcommerceShop.Contracts.Dtos.RoleDtos;
@@ -44,6 +45,8 @@ namespace EcommerceShop.Business
             CreateMap<AppRole, RoleDto>()
                 .ForMember(d => d.RoleId, t => t.MapFrom(src => src.Id))
                 .ForMember(d => d.RoleName, t => t.MapFrom(src => src.Name));
+            //Language
+            CreateMap<Language, LanguageDto>();
         }
         
     }
