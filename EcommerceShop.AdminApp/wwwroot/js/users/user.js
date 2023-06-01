@@ -48,17 +48,26 @@ $(document).ready(function(){
               userId : $(this).data("id"),
           },
           success: function(result){
-              $(".modal-body").html(result);
+              $("#modal-body-detail").html(result);
               
               console.log("Ok");
           }
       });
   });
  });
+ //Clear detail user
+ $(document).add(function(){
+  $(document).on("click", function(event){
+    if(event.target.matches("#btn-close-detail") || !event.target.matches("#modal-dialog-detail-user"))
+    {
+      $("#modal-body-detail").empty();
+    }
+  })
+ });
  
 //Event role assigned
 $(document).ready(function(){
-  $(".btn-role-user").click(function(){
+  $(".btn-role-user").on("click",function(){
     $.ajax({
       url: "/User/GetRole",
           type:'POST',
@@ -66,10 +75,17 @@ $(document).ready(function(){
               userId : $(this).data("id"),
           },
           success: function(result){
-              $(".modal-body").html(result);
-              
-              console.log("Ok");
+              $("#modal-body-roleassign").html(result);
           }
-    });
-  });
+        });
+      });
 });
+ //Clear role assigned
+ $(document).add(function(){
+  $(document).on("click", function(event){
+    if(event.target.matches("#btn-close-role") || !event.target.matches("#modal-dialog-role-assign"))
+    {
+      $("#modal-body-roleassign").empty();
+    }
+  })
+ });
