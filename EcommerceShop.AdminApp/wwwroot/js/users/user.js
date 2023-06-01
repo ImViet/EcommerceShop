@@ -58,7 +58,7 @@ $(document).ready(function(){
  //Clear detail user
  $(document).add(function(){
   $(document).on("click", function(event){
-    if(event.target.matches("#btn-close-detail") || !event.target.matches("#modal-dialog-detail-user"))
+    if(event.target.matches("#btn-close-detail"))
     {
       $("#modal-body-detail").empty();
     }
@@ -83,7 +83,7 @@ $(document).ready(function(){
  //Clear role assigned
  $(document).add(function(){
   $(document).on("click", function(event){
-    if(event.target.matches("#btn-close-role") || !event.target.matches("#modal-dialog-role-assign"))
+    if(event.target.matches("#btn-close-role"))
     {
       $("#modal-body-roleassign").empty();
     }
