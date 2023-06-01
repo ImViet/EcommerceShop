@@ -1,4 +1,5 @@
 ﻿using EcommerceShop.AdminApp.Controllers;
+using EcommerceShop.AdminApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,13 @@ namespace Ecommerce.AdminApp.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+        [HttpPost]
+        public IActionResult Language(LanguageViewModel viewModel)
+        {
+            HttpContext.Session.SetString("Language", viewModel.CurrentLanguageId);
+
+            return RedirectToAction("Index");
         }
     }
 }
