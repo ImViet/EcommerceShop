@@ -54,6 +54,7 @@ namespace Ecommerce.AdminApp.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Remove("Token");
+            HttpContext.Session.Remove("Language");
             return RedirectToAction("Login", "Auth");
         }
         private ClaimsPrincipal ValidateToken(string jwtToken)
