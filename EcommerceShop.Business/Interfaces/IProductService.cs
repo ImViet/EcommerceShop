@@ -11,11 +11,12 @@ using System.Threading.Tasks;
 
 namespace EcommerceShop.Business.Interfaces
 {
-    public interface IManageProductService
+    public interface IProductService
     {
         //Product
         Task<List<ProductDto>> GetAllAsync();
         Task<PagedResultDto<ProductDto>> GetAllPagingAsync(ProductPagingRequestDto request);
+        Task<PagedResultDto<ProductDto>> GetAllByCategoryIdAsync(int categoryId, int pageIndex, int pageSize);
         Task<ProductDto> GetProductByIdAsync(int productId, string languageId);
         Task<bool> CreateProductAsync(ProductCreateDto productCreateDto);
         Task<bool> UpdateProductAsync(ProductUpdateDto productUpdateDto);
