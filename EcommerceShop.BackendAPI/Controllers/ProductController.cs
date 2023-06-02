@@ -1,6 +1,7 @@
 ﻿using EcommerceShop.Business.Interfaces;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.ProductImageDtos;
+using EcommerceShop.Contracts.Dtos.RequestDtos;
 using EcommerceShop.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,11 +21,13 @@ namespace EcommerceShop.BackendAPI.Controllers
             _productService = productService;
             _manageProductService = manageProductService;
         }
+        //ADMIN
         //Product
         [HttpGet]
-        public async Task<IActionResult> GetProductByCategory(int categoryId, int pageIndex, int pageSize)
+        [Route("GetAllPaging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery]ProductPagingRequestDto request)
         {
-            var products = await _productService.GetAllByCategoryIdAsync(categoryId, pageIndex, pageSize);
+            var products = await _manageProductService.GetAllPagingAsync(request);
             return Ok(products);
         }
         [HttpGet("{productId}/{languageId}")]
@@ -126,5 +129,7 @@ namespace EcommerceShop.BackendAPI.Controllers
             }
             return Ok();
         }
+
+        //PUBLIC - USER
     }
 }

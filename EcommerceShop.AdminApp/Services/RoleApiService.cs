@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace EcommerceShop.AdminApp.Services
 {
-    public class RoleApiService : BaseHttpClientService, IRoleService
+    public class RoleApiService : BaseHttpClientService, IRoleApiService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IHttpClientFactory _httpClientFactory;

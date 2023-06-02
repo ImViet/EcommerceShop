@@ -40,13 +40,14 @@ namespace EcommerceShop.Business.Services
                         join pt in _context.ProductTranslations on p.ProductId equals pt.ProductId
                         join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId
                         join c in _context.Categories on pic.CategoryId equals c.CategoryId
+                        where pt.LanguageId == request.LanguageId
                         select new {p, pt, pic};
             //Filter
             if(!string.IsNullOrEmpty(request.search))
             {
                 query = query.Where(p => p.pt.Name.Contains(request.search));
             }
-            if(request.CategoryIds.Count() > 0) 
+            if(request.CategoryIds.Count() > 0 &&request.CategoryIds != null) 
             {
                 query = query.Where(p => request.CategoryIds.Contains(p.pic.CategoryId));
             }
