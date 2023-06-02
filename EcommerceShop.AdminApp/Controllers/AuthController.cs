@@ -43,6 +43,7 @@ namespace Ecommerce.AdminApp.Controllers
                 IsPersistent = false,
             };
             HttpContext.Session.SetString("Token", result.ResponseObject);
+            HttpContext.Session.SetString("Language", LanguageSetting.DefaultLanguageId);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                 userPrincipal,
                 authProperties

@@ -12,9 +12,9 @@ namespace Ecommerce.AdminApp.Controllers
     public class UserController: BaseController
     {
         private readonly IUserApiService _userService;
-        private readonly IRoleService _roleService;
+        private readonly IRoleApiService _roleService;
 
-        public UserController(IUserApiService userService, IRoleService roleService)
+        public UserController(IUserApiService userService, IRoleApiService roleService)
         {
             _userService = userService;
             _roleService = roleService;
