@@ -14,12 +14,10 @@ namespace EcommerceShop.BackendAPI.Controllers
     [Authorize]
     public class ProductController : ControllerBase
     {
-        private readonly IPublicProductService _productService;
-        private readonly IManageProductService _manageProductService;
-        public ProductController(IPublicProductService productService, IManageProductService manageProductService)
+        private readonly IProductService _productService;
+        public ProductController(IProductService productService)
         {
             _productService = productService;
-            _manageProductService = manageProductService;
         }
         //ADMIN
         //Product
@@ -27,13 +25,13 @@ namespace EcommerceShop.BackendAPI.Controllers
         [Route("GetAllPaging")]
         public async Task<IActionResult> GetAllPaging([FromQuery]ProductPagingRequestDto request)
         {
-            var products = await _manageProductService.GetAllPagingAsync(request);
+            var products = await _productService.GetAllPagingAsync(request);
             return Ok(products);
         }
         [HttpGet("{productId}/{languageId}")]
         public async Task<IActionResult> GetProductById(int productId, string languageId)
         {
-            var product = await _manageProductService.GetProductByIdAsync(productId, languageId);
+            var product = await _productService.GetProductByIdAsync(productId, languageId);
             if(product == null)
             {
                 return BadRequest($"Cannot find product with id = {productId}");
@@ -44,7 +42,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateProduct([FromForm]ProductCreateDto productCreateDto)
         {
-            var result = await _manageProductService.CreateProductAsync(productCreateDto);
+            var result = await _productService.CreateProductAsync(productCreateDto);
             if(result == false)
             {
                 return BadRequest("Cannot create new product");
@@ -55,7 +53,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         [Route("Update")]
         public async Task<IActionResult> UpdateProduct([FromForm]ProductUpdateDto productUpdateDto)
         {
-            var result = await _manageProductService.UpdateProductAsync(productUpdateDto);
+            var result = await _productService.UpdateProductAsync(productUpdateDto);
             if(result == false)
             {
                 return BadRequest($"Cannot update product with id = {productUpdateDto.ProductId}");
@@ -66,7 +64,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         [Route("Delete")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
-            var result = await _manageProductService.DeleteProductAsync(productId);
+            var result = await _productService.DeleteProductAsync(productId);
             if(result == false)
             {
                 return BadRequest($"Cannnot delete product with id = {productId}");
@@ -77,7 +75,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         [Route("UpdatePrice")]
         public async Task<IActionResult> UpdatePrice(int productId, decimal newPrice)
         {
-            var result = await _manageProductService.UpdatePriceAsync(productId, newPrice);
+            var result = await _productService.UpdatePriceAsync(productId, newPrice);
             if(result == false)
             {
                 return BadRequest($"Cannot update product with id = {productId}");
@@ -89,7 +87,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         [Route("GetAllImage")]
         public async Task<IActionResult> GetProductImage(int productId)
         {
-            var result = await _manageProductService.GetProductImageAsync(productId);
+            var result = await _productService.GetProductImageAsync(productId);
             if (result == null)
             {
                 return BadRequest("Cannot find image");
@@ -100,7 +98,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         [Route("AddImage")]
         public async Task<IActionResult> AddProductImage(int productId, ProductImageCreateDto productImageCreateDto )
         {
-            var result = await _manageProductService.AddImageAsync(productId, productImageCreateDto);
+            var result = await _productService.AddImageAsync(productId, productImageCreateDto);
             if(result == false)
             {
                 return BadRequest("Cannot add image");
@@ -111,7 +109,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         [Route("UpdateImage")]
         public async Task<IActionResult> UpdateProductImage(int imageId, ProductImageUpdateDto productImageUpdateDto)
         {
-            var result = await _manageProductService.UpdateImageAsync(imageId, productImageUpdateDto);
+            var result = await _productService.UpdateImageAsync(imageId, productImageUpdateDto);
             if (result == false)
             {
                 return BadRequest("Cannot update image");
@@ -122,7 +120,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         [Route("DeleteImage")]
         public async Task<IActionResult> DeleteProductImage(int imageId)
         {
-            var result = await _manageProductService.DeleteImageAsync(imageId);
+            var result = await _productService.DeleteImageAsync(imageId);
             if(result == false)
             {
                 return BadRequest("Cannot update image");

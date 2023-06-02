@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EcommerceShop.Business.Interfaces;
+using EcommerceShop.Contracts;
 using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.ProductImageDtos;
@@ -33,7 +34,7 @@ namespace EcommerceShop.Business.Services
         {
             throw new NotImplementedException();
         }
-        public async Task<PagedResultDto<ProductDto>> GetAllPagingAsync(ProductPagingRequestDto request)
+        public async Task<ApiResponse<PagedResultDto<ProductDto>>> GetAllPagingAsync(ProductPagingRequestDto request)
         {
             //Join table
             var query = from p in _context.Products
@@ -47,7 +48,7 @@ namespace EcommerceShop.Business.Services
             {
                 query = query.Where(p => p.pt.Name.Contains(request.search));
             }
-            if(request.CategoryIds.Count() > 0 &&request.CategoryIds != null) 
+            if(request.CategoryIds != null && request.CategoryIds.Count() > 0) 
             {
                 query = query.Where(p => request.CategoryIds.Contains(p.pic.CategoryId));
             }
@@ -79,7 +80,7 @@ namespace EcommerceShop.Business.Services
                 PageSize = request.PageSize,
                 Items = data,
             };
-            return pagedResult;
+            return new ApiSuccessResponse<PagedResultDto<ProductDto>>(pagedResult);
         }
         public async Task<PagedResultDto<ProductDto>> GetAllByCategoryIdAsync(int categoryId, int pageIndex, int pageSize)
         {

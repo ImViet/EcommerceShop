@@ -1,0 +1,81 @@
+@using EcommerceShop.Contracts.Dtos
+@using EcommerceShop.Contracts.Dtos.ProductDtos
+@model PagedResultDto<ProductDto>
+@{
+    var checkModalSuccess = (string)TempData["ModalSuccess"];
+    var search = ViewData["searchKeyword"];
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-5">Quản lý sản phẩm</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Tổng quan</a></li>
+        <li class="breadcrumb-item active">Danh sách sản phẩm</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header mb-1 bg-transparent">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <a class="btn btn-success" asp-action="Create" asp-controller="Product">Tạo mới</a>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <form class="d-flex">
+                        <input class="form-control me-1" value="@search" name="searchKeyword" type="search" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
+                        <button class="btn btn-outline-success" type="submit">Tìm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <div class="card">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Danh sách
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Tên sản phẩm</th>
+                        <th>Ngày tạo</th>
+                        <th>Giá gốc</th>
+                        <th>Giá bán</th>
+                        <th>Kho</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                @* <tfoot>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Office</th>
+                        <th>Age</th>
+                        <th>Start date</th>
+                        <th>Salary</th>
+                    </tr>
+                </tfoot> *@
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                    <tr>
+                        <td>@item.ProductId</td>
+                        <td>@item.Name</td>
+                        <td>@item.DateCreated</td>
+                        <td>@item.OriginalPrice</td>
+                        <td>@item.Price</td>
+                        <td>@item.Stock</td>
+                        <td>
+                            <a class="btn btn-outline-primary" asp-controller="" asp-action="" asp-route-userId="@item.ProductId">Cập nhật</a>
+                            <a class="btn btn-outline-danger btn-delete-user" data-userid="@item.ProductId">Xoá</a>
+                            <a class="btn btn-outline-info btn-detail-user" data-id="@item.ProductId">Chi tiết</a>
+                            <a class="btn btn-outline-secondary btn-role-user" data-id="@item.ProductId">Quyền</a>
+                        </td>
+                    </tr>
+                    }                 
+                </tbody>
+            </table>
+            </div>
+            @await Component.InvokeAsync("Paging", Model)
+        </div>
+    </div>
+</div>
