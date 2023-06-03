@@ -26,5 +26,10 @@ namespace EcommerceShop.AdminApp.Controllers
             ViewData["searchKeyword"] = request.search;
             return View(data.ResponseObject);
         }
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            return View();
+        }
     }
 }

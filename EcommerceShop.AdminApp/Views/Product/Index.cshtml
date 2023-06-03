@@ -2,6 +2,7 @@
 @using EcommerceShop.Contracts.Dtos.ProductDtos
 @model PagedResultDto<ProductDto>
 @{
+    ViewData["Title"] = "Danh sách sản phẩm";
     var checkModalSuccess = (string)TempData["ModalSuccess"];
     var search = ViewData["searchKeyword"];
 }
@@ -61,8 +62,8 @@
                         <td>@item.ProductId</td>
                         <td>@item.Name</td>
                         <td>@item.DateCreated</td>
-                        <td>@item.OriginalPrice</td>
-                        <td>@item.Price</td>
+                        <td>@string.Format("{0:0,0 vnđ}", item.OriginalPrice)</td>
+                        <td>@string.Format("{0:0,0 vnđ}", item.Price)</td>
                         <td>@item.Stock</td>
                         <td>
                             <a class="btn btn-outline-primary" asp-controller="" asp-action="" asp-route-userId="@item.ProductId">Cập nhật</a>
