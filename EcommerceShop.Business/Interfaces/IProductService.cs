@@ -1,4 +1,5 @@
-﻿using EcommerceShop.Contracts.Dtos;
+﻿using EcommerceShop.Contracts;
+using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.ProductImageDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
@@ -11,11 +12,12 @@ using System.Threading.Tasks;
 
 namespace EcommerceShop.Business.Interfaces
 {
-    public interface IManageProductService
+    public interface IProductService
     {
         //Product
         Task<List<ProductDto>> GetAllAsync();
-        Task<PagedResultDto<ProductDto>> GetAllPagingAsync(ProductPagingRequestDto request);
+        Task<ApiResponse<PagedResultDto<ProductDto>>> GetAllPagingAsync(ProductPagingRequestDto request);
+        Task<PagedResultDto<ProductDto>> GetAllByCategoryIdAsync(int categoryId, int pageIndex, int pageSize);
         Task<ProductDto> GetProductByIdAsync(int productId, string languageId);
         Task<bool> CreateProductAsync(ProductCreateDto productCreateDto);
         Task<bool> UpdateProductAsync(ProductUpdateDto productUpdateDto);

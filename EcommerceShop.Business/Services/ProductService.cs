@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using EcommerceShop.Business.Interfaces;
+using EcommerceShop.Contracts;
 using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.ProductImageDtos;
@@ -18,12 +19,12 @@ using System.Threading.Tasks;
 
 namespace EcommerceShop.Business.Services
 {
-    public class ManageProductService : IManageProductService
+    public class ProductService : IProductService
     {
         private readonly EcommerceShopDbContext _context;
         private readonly IMapper _mapper;
         private readonly IStorageService _fileStorageService;
-        public ManageProductService(EcommerceShopDbContext context, IMapper mapper, IStorageService storageService) 
+        public ProductService(EcommerceShopDbContext context, IMapper mapper, IStorageService storageService) 
         {
             _context = context;
             _mapper = mapper;
@@ -33,7 +34,7 @@ namespace EcommerceShop.Business.Services
         {
             throw new NotImplementedException();
         }
-        public async Task<PagedResultDto<ProductDto>> GetAllPagingAsync(ProductPagingRequestDto request)
+        public async Task<ApiResponse<PagedResultDto<ProductDto>>> GetAllPagingAsync(ProductPagingRequestDto request)
         {
             //Join table
             var query = from p in _context.Products
@@ -47,7 +48,7 @@ namespace EcommerceShop.Business.Services
             {
                 query = query.Where(p => p.pt.Name.Contains(request.search));
             }
-            if(request.CategoryIds.Count() > 0 &&request.CategoryIds != null) 
+            if(request.CategoryIds != null && request.CategoryIds.Count() > 0) 
             {
                 query = query.Where(p => request.CategoryIds.Contains(p.pic.CategoryId));
             }
@@ -77,6 +78,49 @@ namespace EcommerceShop.Business.Services
                 TotalRecords = totalRow,
                 PageIndex = request.PageIndex,
                 PageSize = request.PageSize,
+                Items = data,
+            };
+            return new ApiSuccessResponse<PagedResultDto<ProductDto>>(pagedResult);
+        }
+        public async Task<PagedResultDto<ProductDto>> GetAllByCategoryIdAsync(int categoryId, int pageIndex, int pageSize)
+        {
+            //Join table
+            var query = from p in _context.Products
+                        join pt in _context.ProductTranslations on p.ProductId equals pt.ProductId
+                        join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId
+                        join c in _context.Categories on pic.CategoryId equals c.CategoryId
+                        select new { p, pt, pic };
+            //Filter
+            if (categoryId > 0)
+            {
+                query = query.Where(p => p.pic.CategoryId == categoryId);
+            }
+            //Paging
+            int totalRow = await query.CountAsync();
+            var data = await query.Skip((pageIndex - 1) * pageSize)
+                                    .Take(pageSize)
+                                    .Select(x => new ProductDto()
+                                    {
+                                        ProductId = x.p.ProductId,
+                                        Price = x.p.Price,
+                                        OriginalPrice = x.p.OriginalPrice,
+                                        Stock = x.p.Stock,
+                                        ViewCount = x.p.ViewCount,
+                                        DateCreated = x.p.DateCreated,
+                                        Name = x.pt.Name,
+                                        Description = x.pt.Description,
+                                        Details = x.pt.Details,
+                                        SeoAlias = x.pt.SeoAlias,
+                                        SeoDescription = x.pt.SeoDescription,
+                                        SeoTitle = x.pt.SeoTitle,
+                                        LanguageId = x.pt.LanguageId,
+                                    }).ToListAsync();
+            //Select
+            var pagedResult = new PagedResultDto<ProductDto>()
+            {
+                TotalRecords = totalRow,
+                PageIndex = pageIndex,
+                PageSize = pageSize,
                 Items = data,
             };
             return pagedResult;

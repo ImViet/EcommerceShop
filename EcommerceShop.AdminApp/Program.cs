@@ -13,6 +13,7 @@ builder.Services.AddTransient<IAuthApiService, AuthApiService>();
 builder.Services.AddTransient<IUserApiService, UserApiService>();
 builder.Services.AddTransient<IRoleApiService, RoleApiService>();
 builder.Services.AddTransient<ILanguageApiService, LanguageApiService>();
+builder.Services.AddTransient<IProductApiService, ProductApiService>();
 builder.Services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
 // Add services to the container.
