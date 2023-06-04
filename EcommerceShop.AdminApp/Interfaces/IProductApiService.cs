@@ -9,5 +9,6 @@ namespace EcommerceShop.AdminApp.Interfaces
     {
         Task<ApiResponse<PagedResultDto<ProductDto>>> GetAllProduct(ProductPagingRequestDto request);
         Task<ApiResponse<bool>> CreateProduct(ProductCreateDto product);
+        Task<ApiResponse<ProductDto>> GetProductById(int productId, string languageId);
     }
 }

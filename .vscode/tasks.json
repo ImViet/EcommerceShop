@@ -13,6 +13,12 @@
             ],
             "problemMatcher": "$msCompile"
         },
+        // {
+        //     "label": "build",
+        //     "type": "shell",
+        //     "command": "dotnet clean",
+        //     "args": []
+        // },
         {
             "label": "publish",
             "command": "dotnet",

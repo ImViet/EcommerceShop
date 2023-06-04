@@ -28,8 +28,8 @@ namespace EcommerceShop.BackendAPI.Controllers
             var products = await _productService.GetAllPagingAsync(request);
             return Ok(products);
         }
-        [HttpGet("{productId}/{languageId}")]
-        public async Task<IActionResult> GetProductById(int productId, string languageId)
+        [HttpGet("GetProductById")]
+        public async Task<IActionResult> GetProductById([FromQuery]int productId, [FromQuery]string languageId)
         {
             var product = await _productService.GetProductByIdAsync(productId, languageId);
             if(product == null)

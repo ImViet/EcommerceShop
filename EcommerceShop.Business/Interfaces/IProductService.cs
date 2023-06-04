@@ -18,7 +18,7 @@ namespace EcommerceShop.Business.Interfaces
         Task<List<ProductDto>> GetAllAsync();
         Task<ApiResponse<PagedResultDto<ProductDto>>> GetAllPagingAsync(ProductPagingRequestDto request);
         Task<PagedResultDto<ProductDto>> GetAllByCategoryIdAsync(int categoryId, int pageIndex, int pageSize);
-        Task<ProductDto> GetProductByIdAsync(int productId, string languageId);
+        Task<ApiResponse<ProductDto>> GetProductByIdAsync(int productId, string languageId);
         Task<ApiResponse<bool>> CreateProductAsync(ProductCreateDto productCreateDto);
         Task<ApiResponse<bool>> UpdateProductAsync(ProductUpdateDto productUpdateDto);
         Task<ApiResponse<bool>> DeleteProductAsync(int productId);

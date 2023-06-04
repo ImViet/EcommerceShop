@@ -47,5 +47,21 @@ namespace EcommerceShop.AdminApp.Controllers
             ModelState.AddModelError("", data.Message);
             return View(product);
         }
+        [HttpGet]
+        public async Task<IActionResult> Update(int productId)
+        {
+            var languageId = HttpContext.Session.GetString("Language");
+            var data = await _productService.GetProductById(productId, languageId);
+            var productUpdate = new ProductUpdateDto()
+            {
+                Name = data.ResponseObject.Name,
+                Details = data.ResponseObject.Details,
+                Description = data.ResponseObject.Description,
+                SeoAlias = data.ResponseObject.SeoAlias,
+                SeoTitle = data.ResponseObject.SeoTitle,
+                SeoDescription = data.ResponseObject.SeoDescription,
+            };
+            return View(productUpdate);
+        }
     }
 }

@@ -63,5 +63,11 @@ namespace EcommerceShop.AdminApp.Services
                 return JsonConvert.DeserializeObject<ApiSuccessResponse<bool>>(data);
             return JsonConvert.DeserializeObject<ApiErrorResponse<bool>>(data);
         }
+        public async Task<ApiResponse<ProductDto>> GetProductById(int productId, string languageId)
+        {
+            var url = $"/api/product/getproductbyid?productId={productId}&languageId={languageId}";
+            var result = await GetAsync<ApiResponse<ProductDto>>(url);
+            return result;
+        }
     }
 }

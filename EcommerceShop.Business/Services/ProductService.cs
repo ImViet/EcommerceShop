@@ -126,7 +126,7 @@ namespace EcommerceShop.Business.Services
             };
             return pagedResult;
         }
-        public async Task<ProductDto> GetProductByIdAsync(int productId, string languageId)
+        public async Task<ApiResponse<ProductDto>> GetProductByIdAsync(int productId, string languageId)
         {
             var product = await _context.Products.FindAsync(productId);
             var productTranslation = await _context.ProductTranslations
@@ -147,7 +147,7 @@ namespace EcommerceShop.Business.Services
                 Stock = product.Stock,
                 ViewCount = product.ViewCount
             };
-            return productDto;
+            return new ApiSuccessResponse<ProductDto>(productDto);
 
         }
         public async Task<ApiResponse<bool>> CreateProductAsync(ProductCreateDto productCreateDto)

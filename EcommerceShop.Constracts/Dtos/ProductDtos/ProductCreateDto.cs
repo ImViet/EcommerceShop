@@ -19,7 +19,6 @@ namespace EcommerceShop.Contracts.Dtos.ProductDtos
         public string? SeoTitle { set; get; }
         public string? SeoAlias { get; set; }
         public string? LanguageId { set; get; }
-        public DateTime DateCreated { get; set; }
         public IFormFile? ThumbnailImage { set; get; }
     }
 }
