@@ -1,4 +1,5 @@
 using EcommerceShop.AdminApp.Interfaces;
+using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +13,7 @@ namespace EcommerceShop.AdminApp.Controllers
             _productService = productService;
         }
         [HttpGet]
-        public async Task<IActionResult> Index(string searchKeyword, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string searchKeyword, int pageIndex = 1, int pageSize = 5)
         {
             var languageId = HttpContext.Session.GetString("Language");
             var request = new ProductPagingRequestDto()
@@ -30,6 +31,21 @@ namespace EcommerceShop.AdminApp.Controllers
         public async Task<IActionResult> Create()
         {
             return View();
+        }
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Create([FromForm]ProductCreateDto product)
+        {
+            if(!ModelState.IsValid)
+                return View(product);
+            var data = await _productService.CreateProduct(product);
+            if(data.IsSuccessed)
+            {
+                TempData["ModalSuccess"] = "Thêm sản phẩm thành công";
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError("", data.Message);
+            return View(product);
         }
     }
 }

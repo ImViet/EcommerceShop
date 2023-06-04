@@ -80,3 +80,21 @@
         </div>
     </div>
 </div>
+@section Scripts
+{
+        <script asp-append-version="true">
+           @if(checkModalSuccess != null)
+           {
+            <text>
+            $(document).ready(function(){
+                        Swal.fire({
+                            icon: 'success',
+                            title: "@checkModalSuccess",
+                            showConfirmButton: false,
+                            timer: 1500
+                            })
+                        });
+            </text>  
+           }
+        </script>
+}

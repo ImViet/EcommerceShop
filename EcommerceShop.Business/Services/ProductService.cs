@@ -39,19 +39,20 @@ namespace EcommerceShop.Business.Services
             //Join table
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.ProductId equals pt.ProductId
-                        join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId
-                        join c in _context.Categories on pic.CategoryId equals c.CategoryId
+                        // join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId
+                        // join c in _context.Categories on pic.CategoryId equals c.CategoryId
                         where pt.LanguageId == request.LanguageId
-                        select new {p, pt, pic};
+                        // select new {p, pt, pic};
+                        select new {p, pt};
             //Filter
             if(!string.IsNullOrEmpty(request.search))
             {
                 query = query.Where(p => p.pt.Name.Contains(request.search));
             }
-            if(request.CategoryIds != null && request.CategoryIds.Count() > 0) 
-            {
-                query = query.Where(p => request.CategoryIds.Contains(p.pic.CategoryId));
-            }
+            // if(request.CategoryIds != null && request.CategoryIds.Count() > 0) 
+            // {
+            //     query = query.Where(p => request.CategoryIds.Contains(p.pic.CategoryId));
+            // }
             //Paging
             int totalRow = await query.CountAsync();
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
@@ -149,9 +150,10 @@ namespace EcommerceShop.Business.Services
             return productDto;
 
         }
-        public async Task<bool> CreateProductAsync(ProductCreateDto productCreateDto)
+        public async Task<ApiResponse<bool>> CreateProductAsync(ProductCreateDto productCreateDto)
         {
             var product = _mapper.Map<Product>(productCreateDto);
+            product.DateCreated = DateTime.Now;
             product.ProductTranslations = new List<ProductTranslation>()
             {
                 new ProductTranslation()
@@ -183,10 +185,13 @@ namespace EcommerceShop.Business.Services
                 };
             }
             _context.Products.Add(product);
-            return await _context.SaveChangesAsync() > 0;
+            var result = await _context.SaveChangesAsync();
+            if(result > 0)
+                return new ApiSuccessResponse<bool>();
+            return new ApiErrorResponse<bool>("Tạo sản phẩm thất bại");
 
         }
-        public async Task<bool> UpdateProductAsync(ProductUpdateDto productUpdateDto)
+        public async Task<ApiResponse<bool>> UpdateProductAsync(ProductUpdateDto productUpdateDto)
         {
             var product = await _context.Products.FindAsync(productUpdateDto.ProductId);
             var productTranslation = await _context.ProductTranslations
@@ -208,10 +213,13 @@ namespace EcommerceShop.Business.Services
                     _context.ProductImages.Update(thumbnailImage);
                 }
             }
-            return await _context.SaveChangesAsync() > 0;
+            var result = await _context.SaveChangesAsync();
+            if(result > 0)
+                return new ApiSuccessResponse<bool>();
+            return new ApiErrorResponse<bool>("Cập nhật sản phẩm thất bại");
         }
 
-        public async Task<bool> DeleteProductAsync(int productId)
+        public async Task<ApiResponse<bool>> DeleteProductAsync(int productId)
         {
             var product = await _context.Products.FindAsync(productId);
             if(product == null)
@@ -225,7 +233,10 @@ namespace EcommerceShop.Business.Services
                 await _fileStorageService.DeleteFileAsync(item.ImagePath);
             }
             _context.Products.Remove(product);
-            return await _context.SaveChangesAsync() > 0;
+            var result = await _context.SaveChangesAsync();
+            if(result > 0)
+                return new ApiSuccessResponse<bool>();
+            return new ApiErrorResponse<bool>("Xoá sản phẩm thất bại");
         }
 
         public async Task<bool> UpdatePriceAsync(int productId, decimal newPrice)

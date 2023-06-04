@@ -1,1 +1,79 @@
-<h1>Form create</h1>
+@using EcommerceShop.Contracts.Dtos.ProductDtos
+@model ProductCreateDto
+<div class="container-fluid px-4">
+    <h1 class="mt-5">Tạo người dùng</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Tổng quan</a></li>
+        <li class="breadcrumb-item"><a asp-controller="Product" asp-action="Create">Danh sách sản phẩm</a></li>
+        <li class="breadcrumb-item active">Tạo người dùng</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-body">
+            <a class="btn btn-outline-success" asp-controller="Product" asp-action="Index">Danh sách</a>
+        </div>
+    </div>
+    <div class="card mb-4">
+        @* <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            DataTable Example
+        </div> *@
+        <div class="card-body">
+            <form id="form-create-product" class="row g-3" asp-controller="Product" asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="col-md-6">
+                    <label asp-for="Name" for="inputName" class="form-label">Tên sản phẩm</label>
+                    <input asp-for="Name" type="text" class="form-control" id="inputName">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Stock" for="inputStock" class="form-label">Số lượng trong kho</label>
+                    <input asp-for="Stock" type="text" class="form-control" id="inputStock">
+                    <span asp-validation-for="Stock" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="Price" for="inputPrice" class="form-label">Giá bán</label>
+                    <input asp-for="Price" type="text" class="form-control" id="inputPrice">
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="OriginalPrice" for="inputEmail" class="form-label">Giá gốc</label>
+                    <input asp-for="OriginalPrice" type="text" class="form-control" id="inputOriginalPrice">
+                    <span asp-validation-for="OriginalPrice" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <label asp-for="Details" for="inputDetails" class="form-label">Chi tiết</label>
+                    <input asp-for ="Details" type="text" class="form-control" id="inputDetails">
+                    <span asp-validation-for="Details" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <label asp-for="Description" for="inputDescription" class="form-label">Mô tả</label>
+                    <input asp-for="Description" type="text" class="form-control" id="inputDescription">
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="SeoAlias" for="inputSeoAlias" class="form-label">Seo Alias</label>
+                    <input asp-for="SeoAlias" type="text" class="form-control" id="inputSeoAlias">
+                    <span asp-validation-for="SeoAlias" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="SeoTitle" for="inputSeoTitle" class="form-label">Seo Title</label>
+                    <input asp-for="SeoTitle" type="text" class="form-control" id="inputSeoTitle">
+                    <span asp-validation-for="SeoTitle" class="text-danger"></span>
+                </div>
+                <div class="col-md-12">
+                    <label asp-for="SeoDescription" for="inputSeoDescription" class="form-label">Mô tả Seo</label>
+                    <input asp-for="SeoDescription" type="text" class="form-control" id="inputSeoDescription">
+                    <span asp-validation-for="SeoDescription" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="ThumbnailImage" for="inputThumbnailImage" class="form-label">Seo Title</label>
+                    <input asp-for="ThumbnailImage" type="file" class="form-control" id="inputThumbnailImage">
+                    <span asp-validation-for="ThumbnailImage" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

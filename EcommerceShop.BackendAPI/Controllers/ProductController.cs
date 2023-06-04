@@ -43,33 +43,33 @@ namespace EcommerceShop.BackendAPI.Controllers
         public async Task<IActionResult> CreateProduct([FromForm]ProductCreateDto productCreateDto)
         {
             var result = await _productService.CreateProductAsync(productCreateDto);
-            if(result == false)
+            if(!result.IsSuccessed)
             {
                 return BadRequest("Cannot create new product");
             }
-            return Ok();
+            return Ok(result);
         }
         [HttpPut]
         [Route("Update")]
         public async Task<IActionResult> UpdateProduct([FromForm]ProductUpdateDto productUpdateDto)
         {
             var result = await _productService.UpdateProductAsync(productUpdateDto);
-            if(result == false)
+            if(!result.IsSuccessed)
             {
                 return BadRequest($"Cannot update product with id = {productUpdateDto.ProductId}");
             }
-            return Ok();
+            return Ok(result);
         }
         [HttpDelete]
         [Route("Delete")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
             var result = await _productService.DeleteProductAsync(productId);
-            if(result == false)
+            if(!result.IsSuccessed)
             {
                 return BadRequest($"Cannnot delete product with id = {productId}");
             }
-            return Ok();
+            return Ok(result);
         }
         [HttpPatch]
         [Route("UpdatePrice")]

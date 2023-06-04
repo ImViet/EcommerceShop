@@ -8,5 +8,6 @@ namespace EcommerceShop.AdminApp.Interfaces
     public interface IProductApiService
     {
         Task<ApiResponse<PagedResultDto<ProductDto>>> GetAllProduct(ProductPagingRequestDto request);
+        Task<ApiResponse<bool>> CreateProduct(ProductCreateDto product);
     }
 }
