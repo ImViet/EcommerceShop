@@ -4,8 +4,8 @@
     <h1 class="mt-5">Tạo người dùng</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Tổng quan</a></li>
-        <li class="breadcrumb-item"><a asp-controller="Product" asp-action="Create">Danh sách sản phẩm</a></li>
-        <li class="breadcrumb-item active">Tạo người dùng</li>
+        <li class="breadcrumb-item"><a asp-controller="Product" asp-action="Index">Danh sách sản phẩm</a></li>
+        <li class="breadcrumb-item active">Tạo sản phẩm</li>
     </ol>
     <div class="card mb-4">
         <div class="card-body">
@@ -42,12 +42,12 @@
                 </div>
                 <div class="col-md-12">
                     <label asp-for="Details" for="inputDetails" class="form-label">Chi tiết</label>
-                    <input asp-for ="Details" type="text" class="form-control" id="inputDetails">
+                    <textarea asp-for ="Details" type="text" class="form-control" id="inputDetails"></textarea>
                     <span asp-validation-for="Details" class="text-danger"></span>
                 </div>
                 <div class="col-md-12">
                     <label asp-for="Description" for="inputDescription" class="form-label">Mô tả</label>
-                    <input asp-for="Description" type="text" class="form-control" id="inputDescription">
+                    <textarea asp-for="Description" type="text" class="form-control" id="inputDescription"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
@@ -77,3 +77,14 @@
         </div>
     </div>
 </div>
+@section Scripts
+{
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
+    <script>
+    ClassicEditor
+        .create( document.querySelector( '#inputDetails' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
+}
