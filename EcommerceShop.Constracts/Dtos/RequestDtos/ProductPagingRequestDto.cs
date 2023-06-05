@@ -8,8 +8,8 @@ namespace EcommerceShop.Contracts.Dtos.RequestDtos
 {
     public class ProductPagingRequestDto: PagingRequestDto
     {
-        public string? search { get; set; }
-        public List<int>? CategoryIds { get; set; }
+        public string? Search { get; set; }
+        public int? CategoryId { get; set; }
         public string LanguageId {get; set;}
     }
 }
