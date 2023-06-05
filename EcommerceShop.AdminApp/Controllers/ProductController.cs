@@ -2,29 +2,39 @@ using EcommerceShop.AdminApp.Interfaces;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EcommerceShop.AdminApp.Controllers
 {
     public class ProductController: BaseController
     {
         private readonly IProductApiService _productService;
-        public ProductController(IProductApiService productService)
+        private readonly ICategoryApiService _categoryService;
+        public ProductController(IProductApiService productService, ICategoryApiService categoryService)
         {
             _productService = productService;
+            _categoryService = categoryService;
         }
         [HttpGet]
-        public async Task<IActionResult> Index(string searchKeyword, int pageIndex = 1, int pageSize = 5)
+        public async Task<IActionResult> Index(string searchKeyword, int? categoryId, int pageIndex = 1, int pageSize = 5)
         {
             var languageId = HttpContext.Session.GetString("Language");
             var request = new ProductPagingRequestDto()
             {
-                search =searchKeyword,
+                Search =searchKeyword,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
                 LanguageId = languageId,
+                CategoryId = categoryId
             };
             var data = await _productService.GetAllProduct(request);
-            ViewData["searchKeyword"] = request.search;
+            ViewData["searchKeyword"] = request.Search;
+            var categories = await _categoryService.GetListCategory(languageId);
+            ViewBag.Categories = categories.ResponseObject.Select(x => new SelectListItem(){
+                Text = x.CategoryName,
+                Value = x.CategoryId.ToString(),
+                Selected = categoryId.HasValue && categoryId.Value == x.CategoryId
+            });
             return View(data.ResponseObject);
         }
         [HttpGet]

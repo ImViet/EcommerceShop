@@ -39,20 +39,19 @@ namespace EcommerceShop.Business.Services
             //Join table
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.ProductId equals pt.ProductId
-                        // join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId
-                        // join c in _context.Categories on pic.CategoryId equals c.CategoryId
+                        join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId
+                        join c in _context.Categories on pic.CategoryId equals c.CategoryId
                         where pt.LanguageId == request.LanguageId
-                        // select new {p, pt, pic};
-                        select new {p, pt};
+                        select new {p, pt, pic};
             //Filter
-            if(!string.IsNullOrEmpty(request.search))
+            if(!string.IsNullOrEmpty(request.Search))
             {
-                query = query.Where(p => p.pt.Name.Contains(request.search));
+                query = query.Where(p => p.pt.Name.Contains(request.Search));
             }
-            // if(request.CategoryIds != null && request.CategoryIds.Count() > 0) 
-            // {
-            //     query = query.Where(p => request.CategoryIds.Contains(p.pic.CategoryId));
-            // }
+            if(request.CategoryId != null && request.CategoryId != 0) 
+            {
+                query = query.Where(p => p.pic.CategoryId == request.CategoryId);
+            }
             //Paging
             int totalRow = await query.CountAsync();
             var data = await query.Skip((request.PageIndex - 1) * request.PageSize)

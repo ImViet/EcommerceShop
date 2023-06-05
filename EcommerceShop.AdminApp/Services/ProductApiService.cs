@@ -22,8 +22,8 @@ namespace EcommerceShop.AdminApp.Services
         }
         public async Task<ApiResponse<PagedResultDto<ProductDto>>> GetAllProduct(ProductPagingRequestDto request)
         {
-            var url = $"/api/product/getallpaging?search={request.search}"
-            + $"&pageIndex={request.PageIndex}&pageSize={request.PageSize}&languageId={request.LanguageId}";
+            var url = $"/api/product/getallpaging?search={request.Search}"
+            + $"&pageIndex={request.PageIndex}&pageSize={request.PageSize}&languageId={request.LanguageId}&categoryId={request.CategoryId}";
             var result = await GetAsync<ApiResponse<PagedResultDto<ProductDto>>>(url);
             return result;
         }
