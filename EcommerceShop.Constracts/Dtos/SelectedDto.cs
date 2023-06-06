@@ -1,9 +1,9 @@
 namespace EcommerceShop.Contracts.Dtos
 {
-    public class RoleSelectedDto
+    public class SelectedDto
     {
-        public string RoleId {get; set;}
-        public string RoleName {get; set;}
+        public string Id {get; set;}
+        public string Name {get; set;}
         public bool Selected {get; set;}
         public object Select()
         {

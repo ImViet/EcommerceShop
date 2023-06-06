@@ -105,14 +105,14 @@ namespace EcommerceShop.Business.Services
             var user = await _userManager.FindByIdAsync(userId.ToString());
             if(user == null)
                 return new ApiErrorResponse<bool>("Người dùng không tồn tại");
-            var removedRoles = roleSelected.Roles.Where(x => x.Selected == false).Select(x => x.RoleName).ToList();
+            var removedRoles = roleSelected.Roles.Where(x => x.Selected == false).Select(x => x.Name).ToList();
             foreach (var role in removedRoles)
             {
                 var userInRole = await _userManager.IsInRoleAsync(user, role);
                 if(userInRole == true)
                     await _userManager.RemoveFromRoleAsync(user, role);
             } 
-            var addedRoles = roleSelected.Roles.Where(x => x.Selected == true).Select(x => x.RoleName).ToList();
+            var addedRoles = roleSelected.Roles.Where(x => x.Selected == true).Select(x => x.Name).ToList();
             foreach (var role in addedRoles)
             {
                 var userInRole = await _userManager.IsInRoleAsync(user, role);

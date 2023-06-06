@@ -21,7 +21,7 @@
                 <div class="col-md-6 col-xs-12">
                     <form class="d-flex">
                         <select class="form-control me-1" name="categoryId" id="" onchange="this.form.submit()" asp-items="@ViewBag.Categories">
-                            <option>--Chọn danh mục--</option>
+                            <option>--Lọc theo danh mục--</option>
                         </select>
                         <input class="form-control me-1" value="@search" name="searchKeyword" type="search" placeholder="Tìm kiếm..." aria-label="Tìm kiếm">
                         <button class="btn btn-outline-success" type="submit">Tìm</button>
@@ -72,7 +72,7 @@
                             <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Update" asp-route-productId="@item.ProductId">Cập nhật</a>
                             <a class="btn btn-outline-danger btn-delete-user" data-userid="@item.ProductId">Xoá</a>
                             <a class="btn btn-outline-info btn-detail-user" data-id="@item.ProductId">Chi tiết</a>
-                            <a class="btn btn-outline-secondary btn-role-user" data-id="@item.ProductId">Quyền</a>
+                            <a class="btn btn-outline-secondary btn-cate-assigned" data-id="@item.ProductId" data-bs-toggle="modal" data-bs-target="#modalCateAssigned">Danh mục</a>
                         </td>
                     </tr>
                     }                 
@@ -83,21 +83,35 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modalCateAssigned" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" id="modal-dialog-category-assgined">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Danh mục</h1>
+        <button type="button" id="btn-close-cateassigned" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modal-body-cateassigned">
+        
+      </div>
+    </div>
+  </div>
+</div>
 @section Scripts
 {
-        <script asp-append-version="true">
-           @if(checkModalSuccess != null)
-           {
-            <text>
-            $(document).ready(function(){
-                        Swal.fire({
-                            icon: 'success',
-                            title: "@checkModalSuccess",
-                            showConfirmButton: false,
-                            timer: 1500
-                            })
-                        });
-            </text>  
-           }
-        </script>
+    <script asp-append-version="true">
+        @if(checkModalSuccess != null)
+        {
+        <text>
+        $(document).ready(function(){
+                    Swal.fire({
+                        icon: 'success',
+                        title: "@checkModalSuccess",
+                        showConfirmButton: false,
+                        timer: 1500
+                        })
+                    });
+        </text>  
+        }
+    </script>
+    <script src="/js/products/product.js" asp-append-version="true"></script>
 }

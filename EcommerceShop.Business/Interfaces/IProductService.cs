@@ -1,5 +1,6 @@
 ﻿using EcommerceShop.Contracts;
 using EcommerceShop.Contracts.Dtos;
+using EcommerceShop.Contracts.Dtos.CategoryDtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.ProductImageDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
@@ -30,5 +31,6 @@ namespace EcommerceShop.Business.Interfaces
         Task<bool> DeleteImageAsync(int imageId);
         Task<bool> UpdateImageAsync(int imageId, ProductImageUpdateDto productImageUpdateDto);
         Task<List<ProductImageDto>> GetProductImageAsync(int productId);
+        Task<ApiResponse<bool>> CategoryAssignAsync(int productId, CategoryAssignDto categoryAssign);
     }
 }

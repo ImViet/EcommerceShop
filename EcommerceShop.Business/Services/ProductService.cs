@@ -2,6 +2,7 @@
 using EcommerceShop.Business.Interfaces;
 using EcommerceShop.Contracts;
 using EcommerceShop.Contracts.Dtos;
+using EcommerceShop.Contracts.Dtos.CategoryDtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.ProductImageDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
@@ -39,8 +40,10 @@ namespace EcommerceShop.Business.Services
             //Join table
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.ProductId equals pt.ProductId
-                        join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId
-                        join c in _context.Categories on pic.CategoryId equals c.CategoryId
+                        join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId into ppic
+                        from pic in ppic.DefaultIfEmpty()
+                        join c in _context.Categories on pic.CategoryId equals c.CategoryId into picc
+                        from c in picc.DefaultIfEmpty()
                         where pt.LanguageId == request.LanguageId
                         select new {p, pt, pic};
             //Filter
@@ -130,6 +133,12 @@ namespace EcommerceShop.Business.Services
             var product = await _context.Products.FindAsync(productId);
             var productTranslation = await _context.ProductTranslations
                                                 .FirstOrDefaultAsync(x => x.ProductId == productId && x.LanguageId == languageId);
+            var categories = await (from c in _context.Categories
+                                    join ct in _context.CategoryTranslations on c.CategoryId equals ct.CategoryId
+                                    join pic in _context.ProductInCategories on c.CategoryId equals pic.CategoryId
+                                    where pic.ProductId == productId && ct.LanguageId == languageId
+                                    select ct.Name
+                                    ).ToListAsync();
             var productDto = new ProductDto()
             {
                 ProductId = product.ProductId,
@@ -144,7 +153,8 @@ namespace EcommerceShop.Business.Services
                 SeoDescription = productTranslation != null ? productTranslation.SeoDescription : null,
                 SeoTitle = productTranslation != null ? productTranslation.SeoTitle : null,
                 Stock = product.Stock,
-                ViewCount = product.ViewCount
+                ViewCount = product.ViewCount,
+                Categories = categories
             };
             return new ApiSuccessResponse<ProductDto>(productDto);
 
@@ -328,6 +338,33 @@ namespace EcommerceShop.Business.Services
             productImage.FileSize = productImage.ImagePath.Length;
             _context.ProductImages.Update(productImage);
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<ApiResponse<bool>> CategoryAssignAsync(int productId, CategoryAssignDto categoryAssign)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            if(product == null)
+                return new ApiErrorResponse<bool>("Không tìm thấy sản phẩm");
+            foreach (var category in categoryAssign.Categories)
+            {
+                var productInCategory = await _context.ProductInCategories
+                                            .FirstOrDefaultAsync(x => x.CategoryId == int.Parse(category.Id) && x.ProductId == productId);
+                if(productInCategory != null && category.Selected == false)
+                {
+                    _context.ProductInCategories.Remove(productInCategory);
+                }
+                else if(productInCategory == null && category.Selected == true)
+                {
+                    await _context.ProductInCategories.AddAsync(new ProductInCategory(){
+                        CategoryId = int.Parse(category.Id),
+                        ProductId = productId
+                    });
+                }
+            }
+            var result = await _context.SaveChangesAsync();
+            if(result > 0)
+                return new ApiSuccessResponse<bool>();
+            return new ApiErrorResponse<bool>("Cập nhật danh mục cho sản phẩm thất bại");
         }
     }
 }

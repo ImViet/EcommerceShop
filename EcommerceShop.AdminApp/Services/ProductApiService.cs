@@ -1,9 +1,11 @@
 using System.Net.Http.Headers;
+using System.Text;
 using EcommerceShop.AdminApp.Extensions;
 using EcommerceShop.AdminApp.Interfaces;
 using EcommerceShop.Contracts;
 using EcommerceShop.Contracts.Constants;
 using EcommerceShop.Contracts.Dtos;
+using EcommerceShop.Contracts.Dtos.CategoryDtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
 using Newtonsoft.Json;
@@ -68,6 +70,21 @@ namespace EcommerceShop.AdminApp.Services
             var url = $"/api/product/getproductbyid?productId={productId}&languageId={languageId}";
             var result = await GetAsync<ApiResponse<ProductDto>>(url);
             return result;
+        }
+
+        public async Task<ApiResponse<bool>> AssignCategory(int productId, CategoryAssignDto categoryAssign)
+        {
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient("myclient");
+            var url = $"/api/product/categoryassign?productid={productId}";
+            var json = JsonConvert.SerializeObject(categoryAssign);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await client.PutAsync(url, httpContent);
+            var data = await response.Content.ReadAsStringAsync();
+            if(response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResponse<bool>>(data);
+            return JsonConvert.DeserializeObject<ApiErrorResponse<bool>>(data);
         }
     }
 }

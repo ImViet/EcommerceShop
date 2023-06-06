@@ -1,4 +1,5 @@
 ﻿using EcommerceShop.Business.Interfaces;
+using EcommerceShop.Contracts.Dtos.CategoryDtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.ProductImageDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
@@ -127,7 +128,17 @@ namespace EcommerceShop.BackendAPI.Controllers
             }
             return Ok();
         }
-
-        //PUBLIC - USER
+        [HttpPut]
+        [Route("CategoryAssign")]
+        public async Task<IActionResult> RoleAssign(int productId, [FromBody]CategoryAssignDto categoryAssign)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest();
+            var data = await _productService.CategoryAssignAsync(productId, categoryAssign);
+            if(!data.IsSuccessed)
+                return BadRequest();
+            return Ok(data);
+        }
+        //PUBLIC - for USER
     }
 }
