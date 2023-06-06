@@ -33,9 +33,14 @@ namespace Ecommerce.AdminApp.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(userLoginDto);
             }
             var result = await _authApiService.LoginAsync(userLoginDto);
+            if(!result.IsSuccessed)
+            {
+                ModelState.AddModelError("", result.Message);
+                return View(userLoginDto);
+            }
             var userPrincipal = ValidateToken(result.ResponseObject);
             var authProperties = new AuthenticationProperties()
             {

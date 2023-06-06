@@ -125,10 +125,10 @@ namespace Ecommerce.AdminApp.Controllers
             var roleAssigned = new RoleAssignDto();
             foreach (var role in roles.ResponseObject)
             {
-                roleAssigned.Roles.Add(new RoleSelectedDto()
+                roleAssigned.Roles.Add(new SelectedDto()
                 {
-                    RoleId = role.RoleId.ToString(),
-                    RoleName = role.RoleName,
+                    Id = role.RoleId.ToString(),
+                    Name = role.RoleName,
                     Selected = user.ResponseObject.Roles.Contains(role.RoleName)
                 });
             }

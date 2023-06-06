@@ -4,6 +4,6 @@ namespace EcommerceShop.Contracts.Dtos.RoleDtos
     public class RoleAssignDto
     {
         public Guid UserId {get; set;}
-        public List<RoleSelectedDto> Roles {get; set;} = new List<RoleSelectedDto>();
+        public List<SelectedDto> Roles {get; set;} = new List<SelectedDto>();
     }
 }

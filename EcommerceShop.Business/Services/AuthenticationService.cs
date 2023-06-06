@@ -36,7 +36,7 @@ namespace EcommerceShop.Business.Services
             var user = await _userManager.FindByNameAsync(userLogin.UserName);
             if(user == null)
             {
-                return null;
+                return new ApiErrorResponse<string>("Tài khoản không tồn tại");
             }
             var resultLogin = await _signInManager.PasswordSignInAsync(user, userLogin.Password, userLogin.RememberMe, true);
             if(!resultLogin.Succeeded)
