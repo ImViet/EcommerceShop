@@ -1,4 +1,6 @@
 using EcommerceShop.AdminApp.Interfaces;
+using EcommerceShop.Contracts.Dtos;
+using EcommerceShop.Contracts.Dtos.CategoryDtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
 using Microsoft.AspNetCore.Mvc;
@@ -72,6 +74,43 @@ namespace EcommerceShop.AdminApp.Controllers
                 SeoDescription = data.ResponseObject.SeoDescription,
             };
             return View(productUpdate);
+        }
+        [HttpPost]
+        public async Task<ViewComponentResult> GetCateAssigned(int productId)
+        {
+            var categories = await GetCategoryAssigned(productId);
+            return ViewComponent("CategoryAssign", categories);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AssignCategory(CategoryAssignDto cate)
+        {
+            if(!ModelState.IsValid)
+                return View(cate);
+            var data = await _productService.AssignCategory(cate.ProductId, cate);
+            if(data.IsSuccessed)
+            {
+                TempData["ModalSuccess"] = "Cập nhật danh mục thành công";
+                return RedirectToAction("Index", "Product");
+            }
+            ModelState.AddModelError("", data.Message);
+            return View();
+        }
+        private async Task<CategoryAssignDto> GetCategoryAssigned(int productId)
+        {
+            var languageId = HttpContext.Session.GetString("Language");
+            var product = await _productService.GetProductById(productId, languageId);
+            var categories = await _categoryService.GetListCategory(languageId);
+            var categoryAssigned = new CategoryAssignDto();
+            foreach (var category in categories.ResponseObject)
+            {
+                categoryAssigned.Categories.Add(new SelectedDto()
+                {
+                    Id = category.CategoryId.ToString(),
+                    Name = category.CategoryName,
+                    Selected = product.ResponseObject.Categories.Contains(category.CategoryName)
+                });
+            }
+            return categoryAssigned;
         }
     }
 }
