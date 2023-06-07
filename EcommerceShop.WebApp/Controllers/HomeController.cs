@@ -1,4 +1,5 @@
-﻿using EcommerceShop.WebApp.Models;
+﻿using EcommerceShop.Contracts.Constants;
+using EcommerceShop.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -13,8 +14,10 @@ namespace EcommerceShop.WebApp.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int categoryId)
         {
+            HttpContext.Session.SetString("Language", LanguageSetting.DefaultLanguageId);
+            HttpContext.Session.SetString("CurrentCategory", categoryId.ToString());
             return View();
         }
 

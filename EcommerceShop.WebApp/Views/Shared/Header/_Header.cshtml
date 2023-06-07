@@ -49,18 +49,7 @@
                                 <img src="/images/logo/dark.png" alt="Header Logo">
                             </a>
                             <div class="header-search-area d-none d-lg-block">
-                                <form action="#" class="header-searchbox">
-                                    <select class="nice-select select-search-category wide">
-                                        <option value="all">All Category</option>
-                                        <option value="product-item">Product Item</option>
-                                        <option value="product-item-2">Product Item 02</option>
-                                        <option value="product-item-3">Product Item 03</option>
-                                        <option value="product-item-4">Product Item 04</option>
-                                        <option value="product-item-5">Product Item 05</option>
-                                    </select>
-                                    <input class="input-field" type="text" placeholder="Search Products">
-                                    <button class="btn btn-outline-whisper btn-primary-hover" type="submit"><i class="pe-7s-search"></i></button>
-                                </form>
+                                @await Component.InvokeAsync("CategoryHeader")
                             </div>
                             <div class="header-right">
                                 <ul>
