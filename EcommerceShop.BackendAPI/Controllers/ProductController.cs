@@ -150,5 +150,15 @@ namespace EcommerceShop.BackendAPI.Controllers
             var data = await _productService.GetFeatureProductAsync(languageId, categoryId, take);
             return Ok(data);
         }
+        [HttpGet]
+        [Route("GetLastestProduct")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLastestProduct(string languageId, int take)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest();
+            var data = await _productService.GetLastestProductAsync(languageId, take);
+            return Ok(data);
+        }
     }
 }

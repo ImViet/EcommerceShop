@@ -29,6 +29,7 @@ namespace EcommerceShop.Business.Interfaces
         Task<bool> UpdateStockAsync(int productId, int addQuantity);
         //PUBLIC - USER
         Task<ApiResponse<List<ProductDto>>> GetFeatureProductAsync(string languageId, int categoryId, int take);
+        Task<ApiResponse<List<ProductDto>>> GetLastestProductAsync(string languageId, int take);
         //Image
         Task<bool> AddImageAsync(int productId, ProductImageCreateDto productImageCreateDto);
         Task<bool> DeleteImageAsync(int imageId);
