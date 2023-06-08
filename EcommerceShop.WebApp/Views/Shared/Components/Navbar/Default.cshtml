@@ -1,0 +1,46 @@
+@using EcommerceShop.Contracts.Dtos.CategoryDtos
+@model List<CategoryDto>
+<div class="main-header header-sticky" data-bg-color="#bac34e">
+    <div class="container">
+        <div class="main-header_nav position-relative">
+            <div class="row align-items-center">
+                <div class="col-lg-12 d-none d-lg-block">
+                    <div class="main-menu">
+                        <nav class="main-nav">
+                            <ul>
+                                <li class="drop-holder">
+                                    <a href="#">Trang chủ
+                                    </a>
+                                </li>
+                                <li class="drop-holder">
+                                    <a href="javascript:void(0)">Sản phẩm
+                                        <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                    <ul class="drop-menu">
+                                        @foreach (var item in Model)
+                                        {
+                                            <li>
+                                                <a href="index.html">@item.CategoryName</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </li>
+                                <li class="drop-holder">
+                                    <a href="#">Blog
+                                        @* <i class="fa fa-chevron-down"></i> *@
+                                    </a>
+                                </li>
+                                    <li>
+                                    <a href="contact.html">Về chúng tôi</a>
+                                </li>
+                                <li>
+                                    <a href="contact.html">Liên hệ</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

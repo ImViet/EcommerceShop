@@ -6,7 +6,7 @@
                     <div class="col-6">
                         <div class="header-top-left">
                             <ul class="dropdown-wrap text-matterhorn">
-                                @await Component.InvokeAsync("LanguageNav")
+                                @await Component.InvokeAsync("LanguageHeader")
                                 @* <li class="dropdown">
                                     <button class="btn btn-link dropdown-toggle ht-btn" type="button" id="currencyButton" data-bs-toggle="dropdown" aria-expanded="false">
                                         USD
@@ -81,7 +81,7 @@
                 </div>
             </div>
         </div>
-        <partial name="Header/NavBar/_Navbar"/>
+        @await Component.InvokeAsync("Navbar")
         <div class="offcanvas-minicart_wrapper" id="miniCart">
             <div class="harmic-offcanvas-body">
                 <div class="minicart-content">

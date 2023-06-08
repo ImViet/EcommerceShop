@@ -2,12 +2,12 @@ using EcommerceShop.WebApp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace EcommerceShop.WebApp.Views.Shared.Components.LanguageNav
+namespace EcommerceShop.WebApp.Views.Shared.Components.LanguageHeader
 {
-    public class LanguageNavViewComponent: ViewComponent
+    public class LanguageHeaderViewComponent: ViewComponent
     {
         private readonly ILanguageApiService _languageService;
-        public LanguageNavViewComponent(ILanguageApiService languageService)
+        public LanguageHeaderViewComponent(ILanguageApiService languageService)
         {
             _languageService = languageService;
         }
