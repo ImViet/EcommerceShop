@@ -1,0 +1,48 @@
+@using EcommerceShop.Contracts.Dtos.ProductDtos
+@model List<ProductDto>
+@foreach (var product in Model)
+{
+    <div class="swiper-slide">
+    <div class="product-item">
+        <div class="product-img img-zoom-effect">
+            <a href="single-product.html">
+                <img class="img-full" src="/images/product/medium-size/1-9-270x300.jpg" alt="Product Images">
+            </a>
+            <div class="product-add-action">
+                <ul>
+                    <li>
+                        <a href="cart.html">
+                            <i class="pe-7s-cart"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="compare.html">
+                            <i class="pe-7s-shuffle"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="wishlist.html">
+                            <i class="pe-7s-like"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="product-content texx">
+            <a class="product-name" href="single-product.html">@product.Name</a>
+            <div class="price-box pb-1">
+                <span class="new-price">$80.00</span>
+            </div>
+            <div class="rating-box">
+                <ul>
+                    <li><i class="pe-7s-star"></i></li>
+                    <li><i class="pe-7s-star"></i></li>
+                    <li><i class="pe-7s-star"></i></li>
+                    <li><i class="pe-7s-star"></i></li>
+                    <li><i class="pe-7s-star"></i></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+}

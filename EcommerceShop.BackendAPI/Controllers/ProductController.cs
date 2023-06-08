@@ -30,6 +30,7 @@ namespace EcommerceShop.BackendAPI.Controllers
             return Ok(products);
         }
         [HttpGet("GetProductById")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetProductById([FromQuery]int productId, [FromQuery]string languageId)
         {
             var product = await _productService.GetProductByIdAsync(productId, languageId);
@@ -158,6 +159,16 @@ namespace EcommerceShop.BackendAPI.Controllers
             if(!ModelState.IsValid)
                 return BadRequest();
             var data = await _productService.GetLastestProductAsync(languageId, take);
+            return Ok(data);
+        }
+        [HttpGet]
+        [Route("GetRelatedProduct")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetRelatedProduct(string languageId, int productId, int take)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest();
+            var data = await _productService.GetRelatedProductAsync(languageId, productId, take);
             return Ok(data);
         }
     }

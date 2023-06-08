@@ -19,10 +19,11 @@ namespace EcommerceShop.WebApp.Controllers
             return ViewComponent("ProductHomeByCate", productByCate.ResponseObject);
         }
         [HttpGet]
-        public async Task<IActionResult> GetProduct(string languageId, int productId)
+        public async Task<IActionResult> ProductDetail(int productId)
         {
             var languageId = HttpContext.Session.GetString("Language");
-            return View();
+            var product = await _productService.GetProductById(languageId, productId);
+            return View(product.ResponseObject);
         }
     }
 }
