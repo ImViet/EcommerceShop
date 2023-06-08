@@ -18,5 +18,10 @@ namespace EcommerceShop.WebApp.Controllers
             var productByCate = await _productService.GetFeatureProduct(languageId, categoryId, ProductSetting.ProductInHome);
             return ViewComponent("ProductHomeByCate", productByCate.ResponseObject);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetProduct(string languageId, int productId)
+        {
+            return View();
+        }
     }
 }
