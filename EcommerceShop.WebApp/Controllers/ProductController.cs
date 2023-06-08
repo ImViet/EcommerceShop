@@ -21,6 +21,7 @@ namespace EcommerceShop.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> GetProduct(string languageId, int productId)
         {
+            var languageId = HttpContext.Session.GetString("Language");
             return View();
         }
     }
