@@ -6,17 +6,8 @@
                     <div class="col-6">
                         <div class="header-top-left">
                             <ul class="dropdown-wrap text-matterhorn">
-                                <li class="dropdown">
-                                    <button class="btn btn-link dropdown-toggle ht-btn" type="button" id="languageButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        English
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="languageButton">
-                                        <li><a class="dropdown-item" href="#">French</a></li>
-                                        <li><a class="dropdown-item" href="#">Italian</a></li>
-                                        <li><a class="dropdown-item" href="#">Spanish</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
+                                @await Component.InvokeAsync("LanguageHeader")
+                                @* <li class="dropdown">
                                     <button class="btn btn-link dropdown-toggle ht-btn" type="button" id="currencyButton" data-bs-toggle="dropdown" aria-expanded="false">
                                         USD
                                     </button>
@@ -24,9 +15,9 @@
                                         <li><a class="dropdown-item" href="#">GBP</a></li>
                                         <li><a class="dropdown-item" href="#">ISO</a></li>
                                     </ul>
-                                </li>
+                                </li> *@
                                 <li>
-                                    Call Us
+                                    Liên hệ
                                     <a href="tel://3965410">3965410</a>
                                 </li>
                             </ul>
@@ -34,7 +25,7 @@
                     </div>
                     <div class="col-6">
                         <div class="header-top-right text-matterhorn">
-                            <p class="shipping mb-0">Free delivery on order over <span>$200</span></p>
+                            <p class="shipping mb-0">Miễn phí vận chuyển với đơn hàng <span>200.000 vnđ</span></p>
                         </div>
                     </div>
                 </div>
@@ -49,18 +40,7 @@
                                 <img src="/images/logo/dark.png" alt="Header Logo">
                             </a>
                             <div class="header-search-area d-none d-lg-block">
-                                <form action="#" class="header-searchbox">
-                                    <select class="nice-select select-search-category wide">
-                                        <option value="all">All Category</option>
-                                        <option value="product-item">Product Item</option>
-                                        <option value="product-item-2">Product Item 02</option>
-                                        <option value="product-item-3">Product Item 03</option>
-                                        <option value="product-item-4">Product Item 04</option>
-                                        <option value="product-item-5">Product Item 05</option>
-                                    </select>
-                                    <input class="input-field" type="text" placeholder="Search Products">
-                                    <button class="btn btn-outline-whisper btn-primary-hover" type="submit"><i class="pe-7s-search"></i></button>
-                                </form>
+                                @await Component.InvokeAsync("CategoryHeader")
                             </div>
                             <div class="header-right">
                                 <ul>
@@ -69,8 +49,8 @@
                                             <i class="pe-7s-users"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingButton">
-                                            <li><a class="dropdown-item" href="my-account.html">My account</a></li>
-                                            <li><a class="dropdown-item" href="login-register.html">Login | Register</a></li>
+                                            <li><a class="dropdown-item" href="my-account.html">Tài khoản của tôi</a></li>
+                                            <li><a class="dropdown-item" href="login-register.html">Đăng nhập || Đăng ký</a></li>
                                         </ul>
                                     </li>
                                     <li class="d-none d-md-block">
@@ -101,12 +81,12 @@
                 </div>
             </div>
         </div>
-        <partial name="Header/NavBar/_Navbar"/>
+        @await Component.InvokeAsync("Navbar")
         <div class="offcanvas-minicart_wrapper" id="miniCart">
             <div class="harmic-offcanvas-body">
                 <div class="minicart-content">
                     <div class="minicart-heading">
-                        <h4 class="mb-0">Shopping Cart</h4>
+                        <h4 class="mb-0">Giỏ hàng</h4>
                         <a href="#" class="button-close"><i class="pe-7s-close"></i></a>
                     </div>
                     <ul class="minicart-list">
@@ -151,8 +131,8 @@
                     <span class="ammount">$240.00</span>
                 </div>
                 <div class="group-btn_wrap d-grid gap-2">
-                    <a href="cart.html" class="btn btn-secondary btn-primary-hover">View Cart</a>
-                    <a href="checkout.html" class="btn btn-secondary btn-primary-hover">Checkout</a>
+                    <a href="cart.html" class="btn btn-secondary btn-primary-hover">Xem giỏ hàng</a>
+                    <a href="checkout.html" class="btn btn-secondary btn-primary-hover">Thanh toán</a>
                 </div>
             </div>
         </div>

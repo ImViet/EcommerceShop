@@ -366,5 +366,63 @@ namespace EcommerceShop.Business.Services
                 return new ApiSuccessResponse<bool>();
             return new ApiErrorResponse<bool>("Cập nhật danh mục cho sản phẩm thất bại");
         }
+
+        //PUBLIC - USER
+        public async Task<ApiResponse<List<ProductDto>>> GetFeatureProductAsync(string languageId, int categoryId, int take)
+        {
+            var query = from p in _context.Products
+                        join pt in _context.ProductTranslations on p.ProductId equals pt.ProductId
+                        join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId
+                        join c in _context.Categories on pic.CategoryId equals c.CategoryId
+                        where pt.LanguageId == languageId
+                        select new {p, pt, pic};
+            if(categoryId != 0)
+            {
+                query = query.Where(x => x.pic.CategoryId == categoryId);
+            }
+            var data = await query.Take(take).Select(x => new ProductDto()
+                                    {
+                                        ProductId = x.p.ProductId,
+                                        Price = x.p.Price,
+                                        OriginalPrice = x.p.OriginalPrice,
+                                        Stock = x.p.Stock,
+                                        ViewCount = x.p.ViewCount,
+                                        DateCreated = x.p.DateCreated,
+                                        Name = x.pt.Name,
+                                        Description = x.pt.Description,
+                                        Details = x.pt.Details,
+                                        SeoAlias = x.pt.SeoAlias,
+                                        SeoDescription = x.pt.SeoDescription,
+                                        SeoTitle = x.pt.SeoTitle,
+                                        LanguageId = x.pt.LanguageId,
+                                    }).ToListAsync();
+            return new ApiSuccessResponse<List<ProductDto>>(data);
+        }
+        public async Task<ApiResponse<List<ProductDto>>> GetLastestProductAsync(string languageId, int take)
+        {
+            var query = from p in _context.Products
+                        join pt in _context.ProductTranslations on p.ProductId equals pt.ProductId
+                        join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId
+                        join c in _context.Categories on pic.CategoryId equals c.CategoryId
+                        where pt.LanguageId == languageId
+                        select new {p, pt, pic};
+            var data = await query.Take(take).OrderByDescending(x => x.p.DateCreated).Select(x => new ProductDto()
+                                    {
+                                        ProductId = x.p.ProductId,
+                                        Price = x.p.Price,
+                                        OriginalPrice = x.p.OriginalPrice,
+                                        Stock = x.p.Stock,
+                                        ViewCount = x.p.ViewCount,
+                                        DateCreated = x.p.DateCreated,
+                                        Name = x.pt.Name,
+                                        Description = x.pt.Description,
+                                        Details = x.pt.Details,
+                                        SeoAlias = x.pt.SeoAlias,
+                                        SeoDescription = x.pt.SeoDescription,
+                                        SeoTitle = x.pt.SeoTitle,
+                                        LanguageId = x.pt.LanguageId,
+                                    }).ToListAsync();
+            return new ApiSuccessResponse<List<ProductDto>>(data);
+        }
     }
 }

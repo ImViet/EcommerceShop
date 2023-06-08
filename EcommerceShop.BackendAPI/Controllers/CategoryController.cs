@@ -16,6 +16,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         }
         [HttpGet]
         [Route("GetAll")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllCategory(string languageId)
         {
             if(!ModelState.IsValid)

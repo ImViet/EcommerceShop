@@ -1,0 +1,26 @@
+@using EcommerceShop.Contracts.Dtos.LanguageDtos
+@{
+    var currentLanguage = (string)ViewData["currentLanguage"];
+    var listLanguage = ViewData["listLanguage"] as List<LanguageDto>;
+}
+    <li class="dropdown">
+        @foreach (var language in listLanguage)
+        {
+            if(language.LanguageId == currentLanguage)
+            {
+                <button class="btn btn-link dropdown-toggle ht-btn" type="button" id="languageButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    @language.Name
+                </button>
+            }
+        }
+        <ul class="dropdown-menu" aria-labelledby="languageButton">
+        @foreach (var language in listLanguage)
+        {
+            if(language.LanguageId != currentLanguage)
+            {
+                <li><a class="dropdown-item" asp-controller="Home" asp-action="Index"
+                 asp-route-languageId="@language.LanguageId">@language.Name</a></li>    
+            }
+        }
+        </ul>
+    </li>

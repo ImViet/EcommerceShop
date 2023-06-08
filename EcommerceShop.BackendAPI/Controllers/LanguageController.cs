@@ -6,7 +6,6 @@ namespace EcommerceShop.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class LanguageController: ControllerBase
     {
         private readonly ILanguageService _languageService;
