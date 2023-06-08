@@ -130,7 +130,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         }
         [HttpPut]
         [Route("CategoryAssign")]
-        public async Task<IActionResult> RoleAssign(int productId, [FromBody]CategoryAssignDto categoryAssign)
+        public async Task<IActionResult> CategoryAssign(int productId, [FromBody]CategoryAssignDto categoryAssign)
         {
             if(!ModelState.IsValid)
                 return BadRequest();
@@ -140,5 +140,15 @@ namespace EcommerceShop.BackendAPI.Controllers
             return Ok(data);
         }
         //PUBLIC - for USER
+        [HttpGet]
+        [Route("GetFeatureProduct")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetFeatureProduct(string languageId, int categoryId, int take)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest();
+            var data = await _productService.GetFeatureProductAsync(languageId, categoryId, take);
+            return Ok(data);
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿@{
+﻿@using EcommerceShop.WebApp.Models
+@model ProductHomeViewModel
+@{
     ViewData["Title"] = "Trang chủ";
 }
 <div class="slider-area">
@@ -108,8 +110,8 @@
                         <img src="/images/shipping/icon/plane.png" alt="Shipping Icon">
                     </div>
                     <div class="shipping-content">
-                        <h5 class="title">Free Shipping</h5>
-                        <p class="short-desc mb-0">Free Home Delivery Offer</p>
+                        <h5 class="title">Miễn phí giao hàng</h5>
+                        <p class="short-desc mb-0">Ưu đãi giao hàng tại nhà</p>
                     </div>
                 </div>
             </div>
@@ -119,8 +121,8 @@
                         <img src="/images/shipping/icon/earphones.png" alt="Shipping Icon">
                     </div>
                     <div class="shipping-content">
-                        <h5 class="title">Online Support</h5>
-                        <p class="short-desc mb-0">24/7 Online Support Provide</p>
+                        <h5 class="title">Hỗ trợ online</h5>
+                        <p class="short-desc mb-0">Đội ngũ hỗ trợ online 24/7</p>
                     </div>
                 </div>
             </div>
@@ -130,8 +132,8 @@
                         <img src="/images/shipping/icon/shield.png" alt="Shipping Icon">
                     </div>
                     <div class="shipping-content">
-                        <h5 class="title">Secure Payment</h5>
-                        <p class="short-desc mb-0">Fully Secure Payment System</p>
+                        <h5 class="title">Thanh toán an toàn</h5>
+                        <p class="short-desc mb-0">Hệ thống thanh toán an toàn</p>
                     </div>
                 </div>
             </div>
@@ -163,7 +165,7 @@
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a id="vegetable-tab" data-bs-toggle="tab" href="#vegetable" role="tab" aria-controls="vegetable" aria-selected="false">
+                        <a id="vegetable-tab" data-bs-toggle="tab" href="#all-items" role="tab" aria-controls="vegetable" aria-selected="false">
                             <div class="product-tab-icon">
                                 <img src="/images/product/icon/3.png" alt="Product Icon">
                             </div>
@@ -188,354 +190,7 @@
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="all-items" role="tabpanel" aria-labelledby="all-items-tab">
-                        <div class="product-item-wrap row">
-                            <div class="col-xl-3 col-lg-4 col-sm-6">
-                                <div class="product-item">
-                                    <div class="product-img img-zoom-effect">
-                                        <a href="single-product.html">
-                                            <img class="img-full" src="/images/product/medium-size/1-1-270x300.jpg" alt="Product Images">
-                                        </a>
-                                        <div class="product-add-action">
-                                            <ul>
-                                                <li>
-                                                    <a href="cart.html">
-                                                        <i class="pe-7s-cart"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="compare.html">
-                                                        <i class="pe-7s-shuffle"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="wishlist.html">
-                                                        <i class="pe-7s-like"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product-content">
-                                        <a class="product-name" href="single-product.html">Black Pepper Grains</a>
-                                        <div class="price-box pb-1">
-                                            <span class="new-price">$80.00</span>
-                                        </div>
-                                        <div class="rating-box">
-                                            <ul>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6 pt-6 pt-sm-0">
-                                <div class="product-item">
-                                    <div class="product-img img-zoom-effect">
-                                        <a href="single-product.html">
-                                            <img class="img-full" src="/images/product/medium-size/1-2-270x300.jpg" alt="Product Images">
-                                        </a>
-                                        <div class="product-add-action">
-                                            <ul>
-                                                <li>
-                                                    <a href="cart.html">
-                                                        <i class="pe-7s-cart"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="compare.html">
-                                                        <i class="pe-7s-shuffle"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="wishlist.html">
-                                                        <i class="pe-7s-like"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product-content">
-                                        <a class="product-name" href="single-product.html">Peanut Big Bean</a>
-                                        <div class="price-box pb-1">
-                                            <span class="new-price">$80.00</span>
-                                        </div>
-                                        <div class="rating-box">
-                                            <ul>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6 pt-6 pt-lg-0">
-                                <div class="product-item">
-                                    <div class="product-img img-zoom-effect">
-                                        <a href="single-product.html">
-                                            <img class="img-full" src="/images/product/medium-size/1-3-270x300.jpg" alt="Product Images">
-                                        </a>
-                                        <div class="product-add-action">
-                                            <ul>
-                                                <li>
-                                                    <a href="cart.html">
-                                                        <i class="pe-7s-cart"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="compare.html">
-                                                        <i class="pe-7s-shuffle"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="wishlist.html">
-                                                        <i class="pe-7s-like"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product-content">
-                                        <a class="product-name" href="single-product.html">Dried Lemon Green</a>
-                                        <div class="price-box pb-1">
-                                            <span class="new-price">$80.00</span>
-                                        </div>
-                                        <div class="rating-box">
-                                            <ul>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6 pt-6 pt-xl-0">
-                                <div class="product-item">
-                                    <div class="product-img img-zoom-effect">
-                                        <a href="single-product.html">
-                                            <img class="img-full" src="/images/product/medium-size/1-4-270x300.jpg" alt="Product Images">
-                                        </a>
-                                        <div class="product-add-action">
-                                            <ul>
-                                                <li>
-                                                    <a href="cart.html">
-                                                        <i class="pe-7s-cart"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="compare.html">
-                                                        <i class="pe-7s-shuffle"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="wishlist.html">
-                                                        <i class="pe-7s-like"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product-content">
-                                        <a class="product-name" href="single-product.html">Natural Coconut</a>
-                                        <div class="price-box pb-1">
-                                            <span class="new-price">$80.00</span>
-                                        </div>
-                                        <div class="rating-box">
-                                            <ul>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
-                                <div class="product-item">
-                                    <div class="product-img img-zoom-effect">
-                                        <a href="single-product.html">
-                                            <img class="img-full" src="/images/product/medium-size/1-5-270x300.jpg" alt="Product Images">
-                                        </a>
-                                        <div class="product-add-action">
-                                            <ul>
-                                                <li>
-                                                    <a href="cart.html">
-                                                        <i class="pe-7s-cart"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="compare.html">
-                                                        <i class="pe-7s-shuffle"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="wishlist.html">
-                                                        <i class="pe-7s-like"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product-content">
-                                        <a class="product-name" href="single-product.html">Black Peppepr Read</a>
-                                        <div class="price-box pb-1">
-                                            <span class="new-price">$80.00</span>
-                                        </div>
-                                        <div class="rating-box">
-                                            <ul>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
-                                <div class="product-item">
-                                    <div class="product-img img-zoom-effect">
-                                        <a href="single-product.html">
-                                            <img class="img-full" src="/images/product/medium-size/1-6-270x300.jpg" alt="Product Images">
-                                        </a>
-                                        <div class="product-add-action">
-                                            <ul>
-                                                <li>
-                                                    <a href="cart.html">
-                                                        <i class="pe-7s-cart"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="compare.html">
-                                                        <i class="pe-7s-shuffle"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="wishlist.html">
-                                                        <i class="pe-7s-like"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product-content">
-                                        <a class="product-name" href="single-product.html">Green Vegetable</a>
-                                        <div class="price-box pb-1">
-                                            <span class="new-price">$80.00</span>
-                                        </div>
-                                        <div class="rating-box">
-                                            <ul>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
-                                <div class="product-item">
-                                    <div class="product-img img-zoom-effect">
-                                        <a href="single-product.html">
-                                            <img class="img-full" src="/images/product/medium-size/1-7-270x300.jpg" alt="Product Images">
-                                        </a>
-                                        <div class="product-add-action">
-                                            <ul>
-                                                <li>
-                                                    <a href="cart.html">
-                                                        <i class="pe-7s-cart"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="compare.html">
-                                                        <i class="pe-7s-shuffle"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="wishlist.html">
-                                                        <i class="pe-7s-like"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product-content">
-                                        <a class="product-name" href="single-product.html">Lemon Juice</a>
-                                        <div class="price-box pb-1">
-                                            <span class="new-price">$80.00</span>
-                                        </div>
-                                        <div class="rating-box">
-                                            <ul>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-sm-6 pt-6">
-                                <div class="product-item">
-                                    <div class="product-img img-zoom-effect">
-                                        <a href="single-product.html">
-                                            <img class="img-full" src="/images/product/medium-size/1-8-270x300.jpg" alt="Product Images">
-                                        </a>
-                                        <div class="product-add-action">
-                                            <ul>
-                                                <li>
-                                                    <a href="cart.html">
-                                                        <i class="pe-7s-cart"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="compare.html">
-                                                        <i class="pe-7s-shuffle"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="wishlist.html">
-                                                        <i class="pe-7s-like"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product-content">
-                                        <a class="product-name" href="single-product.html">Cow Milk & Meat</a>
-                                        <div class="price-box pb-1">
-                                            <span class="new-price">$80.00</span>
-                                        </div>
-                                        <div class="rating-box">
-                                            <ul>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                                <li><i class="pe-7s-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @await Component.InvokeAsync("ProductHomeByCate", Model.Products)
                     <div class="tab-pane fade" id="fresh-fruits" role="tabpanel" aria-labelledby="fresh-fruits-tab">
                         <div class="product-item-wrap row">
                             <div class="col-xl-3 col-lg-4 col-sm-6">

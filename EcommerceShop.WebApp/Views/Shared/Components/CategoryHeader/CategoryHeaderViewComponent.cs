@@ -19,7 +19,7 @@ namespace EcommerceShop.WebApp.Views.Shared.Components.CategoryHeader
             ViewBag.categories= result.ResponseObject.Select(x => new SelectListItem(){
                 Text = x.CategoryName,
                 Value = x.CategoryId.ToString(),
-                Selected = int.Parse(currentCategoryId) == x.CategoryId
+                Selected = x.CategoryId == int.Parse(currentCategoryId) 
             });
             // ViewBag.categories = result.ResponseObject;
             return View();

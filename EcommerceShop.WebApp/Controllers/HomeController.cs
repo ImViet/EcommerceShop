@@ -1,4 +1,5 @@
 ﻿using EcommerceShop.Contracts.Constants;
+using EcommerceShop.WebApp.Interfaces;
 using EcommerceShop.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -7,20 +8,25 @@ namespace EcommerceShop.WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IProductApiService _productService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IProductApiService productService)
         {
-            _logger = logger;
+            _productService = productService;
         }
 
-        public IActionResult Index(int categoryId)
+        public async Task<IActionResult> Index(int categoryId, string languageId = LanguageSetting.DefaultLanguageId)
         {
-            HttpContext.Session.SetString("Language", LanguageSetting.DefaultLanguageId);
+            HttpContext.Session.SetString("Language", languageId);
             HttpContext.Session.SetString("CurrentCategory", categoryId.ToString());
-            return View();
+            var data = await _productService.GetFeatureProduct(languageId, categoryId = 1, ProductSetting.ProductInHome);
+            var productVM = new ProductHomeViewModel()
+            {
+                Products = data.ResponseObject,
+                LastestProduct = null
+            };
+            return View(productVM);
         }
-
         public IActionResult Privacy()
         {
             return View();

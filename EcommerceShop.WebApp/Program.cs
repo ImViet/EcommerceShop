@@ -5,6 +5,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddTransient<ICategoryApiService, CategoryApiService>();
+builder.Services.AddTransient<IProductApiService, ProductApiService>();
+builder.Services.AddTransient<ILanguageApiService, LanguageApiService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient("myclient", client =>{
