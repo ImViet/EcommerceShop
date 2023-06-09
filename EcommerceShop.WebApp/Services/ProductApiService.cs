@@ -29,5 +29,17 @@ namespace EcommerceShop.WebApp.Services
             var data = await GetAsync<ApiResponse<List<ProductDto>>>(url);
             return data;
         }
+        public async Task<ApiResponse<ProductDto>> GetProductById(string languageId, int productId)
+        {
+            var url = $"/api/product/getproductbyid?languageId={languageId}&productId={productId}";
+            var data = await GetAsync<ApiResponse<ProductDto>>(url);
+            return data;
+        }
+        public async Task<ApiResponse<List<ProductDto>>> GetRelatedProduct(string languageId, int productId, int take)
+        {
+            var url = $"/api/product/getrelatedproduct?languageId={languageId}&productId={productId}&take={take}";
+            var data = await GetAsync<ApiResponse<List<ProductDto>>>(url);
+            return data;
+        }
     }
 }

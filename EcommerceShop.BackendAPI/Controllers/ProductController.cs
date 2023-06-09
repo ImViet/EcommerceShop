@@ -30,6 +30,7 @@ namespace EcommerceShop.BackendAPI.Controllers
             return Ok(products);
         }
         [HttpGet("GetProductById")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetProductById([FromQuery]int productId, [FromQuery]string languageId)
         {
             var product = await _productService.GetProductByIdAsync(productId, languageId);
@@ -40,7 +41,7 @@ namespace EcommerceShop.BackendAPI.Controllers
             return Ok(product);
         }
         [HttpPost]
-        [Route("Create")]
+        [Route("CreateProduct")]
         public async Task<IActionResult> CreateProduct([FromForm]ProductCreateDto productCreateDto)
         {
             var result = await _productService.CreateProductAsync(productCreateDto);
@@ -51,7 +52,7 @@ namespace EcommerceShop.BackendAPI.Controllers
             return Ok(result);
         }
         [HttpPut]
-        [Route("Update")]
+        [Route("UpdateProduct")]
         public async Task<IActionResult> UpdateProduct([FromForm]ProductUpdateDto productUpdateDto)
         {
             var result = await _productService.UpdateProductAsync(productUpdateDto);
@@ -62,7 +63,7 @@ namespace EcommerceShop.BackendAPI.Controllers
             return Ok(result);
         }
         [HttpDelete]
-        [Route("Delete")]
+        [Route("DeleteProduct")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
             var result = await _productService.DeleteProductAsync(productId);
@@ -158,6 +159,16 @@ namespace EcommerceShop.BackendAPI.Controllers
             if(!ModelState.IsValid)
                 return BadRequest();
             var data = await _productService.GetLastestProductAsync(languageId, take);
+            return Ok(data);
+        }
+        [HttpGet]
+        [Route("GetRelatedProduct")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetRelatedProduct(string languageId, int productId, int take)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest();
+            var data = await _productService.GetRelatedProductAsync(languageId, productId, take);
             return Ok(data);
         }
     }

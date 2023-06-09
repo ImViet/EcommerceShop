@@ -241,6 +241,8 @@ namespace EcommerceShop.Business.Services
             {
                 await _fileStorageService.DeleteFileAsync(item.ImagePath);
             }
+            var productInCategory = _context.ProductInCategories.Where(x => x.ProductId == productId);
+            _context.ProductInCategories.RemoveRange(productInCategory);
             _context.Products.Remove(product);
             var result = await _context.SaveChangesAsync();
             if(result > 0)
@@ -406,6 +408,37 @@ namespace EcommerceShop.Business.Services
                         join c in _context.Categories on pic.CategoryId equals c.CategoryId
                         where pt.LanguageId == languageId
                         select new {p, pt, pic};
+            var data = await query.Take(take).OrderByDescending(x => x.p.DateCreated).Select(x => new ProductDto()
+                                    {
+                                        ProductId = x.p.ProductId,
+                                        Price = x.p.Price,
+                                        OriginalPrice = x.p.OriginalPrice,
+                                        Stock = x.p.Stock,
+                                        ViewCount = x.p.ViewCount,
+                                        DateCreated = x.p.DateCreated,
+                                        Name = x.pt.Name,
+                                        Description = x.pt.Description,
+                                        Details = x.pt.Details,
+                                        SeoAlias = x.pt.SeoAlias,
+                                        SeoDescription = x.pt.SeoDescription,
+                                        SeoTitle = x.pt.SeoTitle,
+                                        LanguageId = x.pt.LanguageId,
+                                    }).ToListAsync();
+            return new ApiSuccessResponse<List<ProductDto>>(data);
+        }
+        public async Task<ApiResponse<List<ProductDto>>> GetRelatedProductAsync(string languageId, int productId, int take)
+        {
+            var cateOfProduct = await _context.ProductInCategories.Where(x => x.ProductId == productId).Select(x => x.CategoryId).ToListAsync();
+            var query = from p in _context.Products
+                        join pt in _context.ProductTranslations on p.ProductId equals pt.ProductId
+                        join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId
+                        join c in _context.Categories on pic.CategoryId equals c.CategoryId
+                        where pt.LanguageId == languageId && p.ProductId != productId
+                        select new {p, pt, pic};
+            if(cateOfProduct != null)
+            {
+                query = query.Where(x => cateOfProduct.Contains(x.pic.CategoryId));
+            }
             var data = await query.Take(take).OrderByDescending(x => x.p.DateCreated).Select(x => new ProductDto()
                                     {
                                         ProductId = x.p.ProductId,

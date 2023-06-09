@@ -1,5 +1,39 @@
+//Event delete product
 $(document).ready(function(){
-
+  $(".btn-delete-product").click(function(){
+    Swal.fire({
+      title: 'Bạn muốn xoá?',
+      icon: 'warning',
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Xoá',
+      showCancelButton: true,
+      cancelButtonText: 'Huỷ'
+      }).then((result) => {
+        if(result.isConfirmed){
+          $.ajax({
+            url: "/Product/Delete",
+            type: "POST",
+            data: {
+              productId: $(this).data("productid")
+            },
+            success: function(data){
+              Swal.fire({
+                icon: 'success',
+                title: 'Đã xoá thành công',
+                showConfirmButton: false,
+                timer: 2000
+              })
+              setTimeout(() => {
+                location.href = window.location.href
+              }, 2000);
+            },
+            error: function(){
+              Swal.fire('Xoá thất bại')
+            }
+          })}
+    });
+  });
 });
 
 //Event role assigned

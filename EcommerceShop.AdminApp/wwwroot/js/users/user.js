@@ -1,7 +1,6 @@
 //Event delete user
 $(document).ready(function(){
   $(".btn-delete-user").click(function(){
-    console.log($(this).data("userid")),
     Swal.fire({
       title: 'Bạn muốn xoá?',
       icon: 'warning',

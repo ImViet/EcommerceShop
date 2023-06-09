@@ -1,6 +1,11 @@
 @using EcommerceShop.AdminApp.Models
 @model LanguageViewModel
+@{
+    var location = new Uri($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}");  
+    var url = location.PathAndQuery;  
+}
 <form id="frmChangeLanguage" asp-controller="Home" asp-action="Language" class="d-none d-md-inline-block form-inline ms-0 me-0 me-md-3 my-2 my-md-0">
+    <input type="hidden" name="CurrentUrl" value="@url">
     <select class="form-control" onchange="this.form.submit()" asp-for="CurrentLanguageId"
         asp-items="@(new SelectList(Model.Languages,"LanguageId", "Name", Model.CurrentLanguageId))">
     </select>

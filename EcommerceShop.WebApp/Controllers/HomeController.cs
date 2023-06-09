@@ -18,9 +18,11 @@ namespace EcommerceShop.WebApp.Controllers
             _categoryService = categoryService;
         }
 
-        public async Task<IActionResult> Index(int categoryId, string languageId = LanguageSetting.DefaultLanguageId)
+        public async Task<IActionResult> Index(int categoryId)
         {
-            HttpContext.Session.SetString("Language", languageId);
+            var languageId = HttpContext.Session.GetString("Language");
+            if(languageId == null)
+                HttpContext.Session.SetString("Language", LanguageSetting.DefaultLanguageId);
             HttpContext.Session.SetString("CurrentCategory", categoryId.ToString());
             var products = await _productService.GetFeatureProduct(languageId, categoryId = 0, ProductSetting.ProductInHome);
             var productsLastest = await _productService.GetLastestProduct(languageId, ProductSetting.ProductInHome);

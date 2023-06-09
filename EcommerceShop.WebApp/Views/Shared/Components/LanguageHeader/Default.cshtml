@@ -2,6 +2,8 @@
 @{
     var currentLanguage = (string)ViewData["currentLanguage"];
     var listLanguage = ViewData["listLanguage"] as List<LanguageDto>;
+    var location = new Uri($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}");  
+    var url = location.PathAndQuery;  
 }
     <li class="dropdown">
         @foreach (var language in listLanguage)
@@ -18,8 +20,8 @@
         {
             if(language.LanguageId != currentLanguage)
             {
-                <li><a class="dropdown-item" asp-controller="Home" asp-action="Index"
-                 asp-route-languageId="@language.LanguageId">@language.Name</a></li>    
+                <li><a class="dropdown-item" asp-controller="Language" asp-action="SetLanguage"
+                 asp-route-languageId="@language.LanguageId" asp-route-currentUrl="@url">@language.Name</a></li>    
             }
         }
         </ul>
