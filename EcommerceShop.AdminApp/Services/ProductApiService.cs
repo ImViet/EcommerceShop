@@ -58,7 +58,7 @@ namespace EcommerceShop.AdminApp.Services
             requestContent.Add(new StringContent(product.SeoAlias.ToString()), "seoAlias");
             requestContent.Add(new StringContent(languageId), "languageId");
 
-            var url = $"/api/product/create";
+            var url = $"/api/product/createproduct";
             var response = await client.PostAsync(url, requestContent);
             var data = await response.Content.ReadAsStringAsync();
             if(response.IsSuccessStatusCode)
@@ -70,6 +70,18 @@ namespace EcommerceShop.AdminApp.Services
             var url = $"/api/product/getproductbyid?productId={productId}&languageId={languageId}";
             var result = await GetAsync<ApiResponse<ProductDto>>(url);
             return result;
+        }
+        public async Task<ApiResponse<bool>> DeleteProduct(int productId)
+        {
+            var token = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient("myclient");
+            var url = $"/api/product/deleteproduct?productid={productId}";
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await client.DeleteAsync(url);
+            var data = await response.Content.ReadAsStringAsync();
+            if(response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResponse<bool>>(data);
+            return JsonConvert.DeserializeObject<ApiErrorResponse<bool>>(data);
         }
 
         public async Task<ApiResponse<bool>> AssignCategory(int productId, CategoryAssignDto categoryAssign)

@@ -20,7 +20,7 @@ namespace Ecommerce.AdminApp.Controllers
         {
             HttpContext.Session.SetString("Language", viewModel.CurrentLanguageId);
 
-            return RedirectToAction("Index");
+            return Redirect(viewModel.CurrentUrl);
         }
     }
 }

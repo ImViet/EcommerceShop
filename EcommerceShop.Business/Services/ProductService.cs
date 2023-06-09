@@ -241,6 +241,8 @@ namespace EcommerceShop.Business.Services
             {
                 await _fileStorageService.DeleteFileAsync(item.ImagePath);
             }
+            var productInCategory = _context.ProductInCategories.Where(x => x.ProductId == productId);
+            _context.ProductInCategories.RemoveRange(productInCategory);
             _context.Products.Remove(product);
             var result = await _context.SaveChangesAsync();
             if(result > 0)

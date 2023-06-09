@@ -41,7 +41,7 @@ namespace EcommerceShop.BackendAPI.Controllers
             return Ok(product);
         }
         [HttpPost]
-        [Route("Create")]
+        [Route("CreateProduct")]
         public async Task<IActionResult> CreateProduct([FromForm]ProductCreateDto productCreateDto)
         {
             var result = await _productService.CreateProductAsync(productCreateDto);
@@ -52,7 +52,7 @@ namespace EcommerceShop.BackendAPI.Controllers
             return Ok(result);
         }
         [HttpPut]
-        [Route("Update")]
+        [Route("UpdateProduct")]
         public async Task<IActionResult> UpdateProduct([FromForm]ProductUpdateDto productUpdateDto)
         {
             var result = await _productService.UpdateProductAsync(productUpdateDto);
@@ -63,7 +63,7 @@ namespace EcommerceShop.BackendAPI.Controllers
             return Ok(result);
         }
         [HttpDelete]
-        [Route("Delete")]
+        [Route("DeleteProduct")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
             var result = await _productService.DeleteProductAsync(productId);

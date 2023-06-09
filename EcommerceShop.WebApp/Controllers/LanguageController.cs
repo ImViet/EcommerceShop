@@ -4,10 +4,10 @@ namespace EcommerceShop.WebApp.Controllers
 {
     public class LanguageController: ControllerBase
     {
-        public IActionResult SetLanguage(string languageId)
+        public IActionResult SetLanguage(string languageId, string currentUrl)
         {
             HttpContext.Session.SetString("Language", languageId);
-            return RedirectToAction("Index");
+            return Redirect(currentUrl);
         }
     }
 }

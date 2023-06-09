@@ -76,6 +76,16 @@ namespace EcommerceShop.AdminApp.Controllers
             return View(productUpdate);
         }
         [HttpPost]
+        public async Task<IActionResult> Delete(int productId)
+        {
+            if(!ModelState.IsValid)
+                return View();
+            var data = await _productService.DeleteProduct(productId);
+            if(data.IsSuccessed)
+                return RedirectToAction("Index", "Product");
+            return View();
+        }
+        [HttpPost]
         public async Task<ViewComponentResult> GetCateAssigned(int productId)
         {
             var categories = await GetCategoryAssigned(productId);
