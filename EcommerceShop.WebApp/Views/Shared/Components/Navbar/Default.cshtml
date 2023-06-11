@@ -20,7 +20,7 @@
                                         @foreach (var item in Model)
                                         {
                                             <li>
-                                                <a href="index.html">@item.CategoryName</a>
+                                                <a asp-controller="Product" asp-action="GetProductByCategory" asp-route-categoryId="@item.CategoryId">@item.CategoryName</a>
                                             </li>
                                         }
                                     </ul>

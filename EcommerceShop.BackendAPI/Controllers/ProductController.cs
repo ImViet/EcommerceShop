@@ -24,6 +24,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         //Product
         [HttpGet]
         [Route("GetAllPaging")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPaging([FromQuery]ProductPagingRequestDto request)
         {
             var products = await _productService.GetAllPagingAsync(request);
