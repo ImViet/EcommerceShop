@@ -66,6 +66,7 @@ namespace EcommerceShop.AdminApp.Controllers
             var data = await _productService.GetProductById(productId, languageId);
             var productUpdate = new ProductUpdateDto()
             {
+                ProductId = data.ResponseObject.ProductId,
                 Name = data.ResponseObject.Name,
                 Details = data.ResponseObject.Details,
                 Description = data.ResponseObject.Description,
@@ -74,6 +75,21 @@ namespace EcommerceShop.AdminApp.Controllers
                 SeoDescription = data.ResponseObject.SeoDescription,
             };
             return View(productUpdate);
+        }
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Update([FromForm]ProductUpdateDto product)
+        {
+            if(!ModelState.IsValid)
+                return View(product);
+            var data = await _productService.UpdateProduct(product);
+            if(data.IsSuccessed)
+            {
+                TempData["ModalSuccess"] = "Cập nhật sản phẩm thành công";
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError("", data.Message);
+            return View(product);
         }
         [HttpPost]
         public async Task<IActionResult> Delete(int productId)

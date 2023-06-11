@@ -1,5 +1,7 @@
 using EcommerceShop.Contracts;
+using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
+using EcommerceShop.Contracts.Dtos.RequestDtos;
 using EcommerceShop.WebApp.Extensions;
 using EcommerceShop.WebApp.Interfaces;
 
@@ -39,6 +41,12 @@ namespace EcommerceShop.WebApp.Services
         {
             var url = $"/api/product/getrelatedproduct?languageId={languageId}&productId={productId}&take={take}";
             var data = await GetAsync<ApiResponse<List<ProductDto>>>(url);
+            return data;
+        }
+        public async Task<ApiResponse<PagedResultDto<ProductDto>>> GetProductByCategory(ProductPagingRequestDto request)
+        {
+            var url = $"/api/product/getallpaging?languageId={request.LanguageId}&categoryId={request.CategoryId}&pageIndex={request.PageIndex}&pageSize={request.PageSize}";
+            var data = await GetAsync<ApiResponse<PagedResultDto<ProductDto>>>(url);
             return data;
         }
     }

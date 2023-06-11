@@ -29,6 +29,12 @@ namespace EcommerceShop.AdminApp.Services
             var result = await GetAsync<ApiResponse<PagedResultDto<ProductDto>>>(url);
             return result;
         }
+        public async Task<ApiResponse<ProductDto>> GetProductById(int productId, string languageId)
+        {
+            var url = $"/api/product/getproductbyid?productId={productId}&languageId={languageId}";
+            var result = await GetAsync<ApiResponse<ProductDto>>(url);
+            return result;
+        }
         public async Task<ApiResponse<bool>> CreateProduct(ProductCreateDto product)
         {
             var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
@@ -65,11 +71,39 @@ namespace EcommerceShop.AdminApp.Services
                 return JsonConvert.DeserializeObject<ApiSuccessResponse<bool>>(data);
             return JsonConvert.DeserializeObject<ApiErrorResponse<bool>>(data);
         }
-        public async Task<ApiResponse<ProductDto>> GetProductById(int productId, string languageId)
+        public async Task<ApiResponse<bool>> UpdateProduct(ProductUpdateDto product)
         {
-            var url = $"/api/product/getproductbyid?productId={productId}&languageId={languageId}";
-            var result = await GetAsync<ApiResponse<ProductDto>>(url);
-            return result;
+            var token = _httpContextAccessor.HttpContext?.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient("myclient");
+            var languageId = _httpContextAccessor.HttpContext?.Session.GetString("Language"); 
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var requestContent = new MultipartFormDataContent();
+            if (product.ThumbnailImage != null)
+            {
+                byte[] dataImg;
+                using (var br = new BinaryReader(product.ThumbnailImage.OpenReadStream()))
+                {
+                    dataImg = br.ReadBytes((int)product.ThumbnailImage.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(dataImg);
+                requestContent.Add(bytes, "thumbnailImage", product.ThumbnailImage.FileName);
+            }
+            requestContent.Add(new StringContent(product.ProductId.ToString()), "productId");
+            requestContent.Add(new StringContent(product.Name.ToString()), "name");
+            requestContent.Add(new StringContent(product.Description.ToString()), "description");
+
+            requestContent.Add(new StringContent(product.Details.ToString()), "details");
+            requestContent.Add(new StringContent(product.SeoDescription.ToString()), "seoDescription");
+            requestContent.Add(new StringContent(product.SeoTitle.ToString()), "seoTitle");
+            requestContent.Add(new StringContent(product.SeoAlias.ToString()), "seoAlias");
+            requestContent.Add(new StringContent(languageId), "languageId");
+
+            var url = $"/api/product/updateproduct?productid={product.ProductId}";
+            var response = await client.PutAsync(url, requestContent);
+            var data = await response.Content.ReadAsStringAsync();
+            if(response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResponse<bool>>(data);
+            return JsonConvert.DeserializeObject<ApiErrorResponse<bool>>(data);
         }
         public async Task<ApiResponse<bool>> DeleteProduct(int productId)
         {

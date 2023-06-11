@@ -53,7 +53,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         }
         [HttpPut]
         [Route("UpdateProduct")]
-        public async Task<IActionResult> UpdateProduct([FromForm]ProductUpdateDto productUpdateDto)
+        public async Task<IActionResult> UpdateProduct([FromQuery]int productId, [FromForm]ProductUpdateDto productUpdateDto)
         {
             var result = await _productService.UpdateProductAsync(productUpdateDto);
             if(!result.IsSuccessed)
