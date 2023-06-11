@@ -1,4 +1,5 @@
 using EcommerceShop.Contracts.Constants;
+using EcommerceShop.Contracts.Dtos.RequestDtos;
 using EcommerceShop.WebApp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,12 +12,19 @@ namespace EcommerceShop.WebApp.Controllers
         {
             _productService = productService;
         }
-        [HttpPost]
-        public async Task<ViewComponentResult> GetProductByCate(int categoryId)
+        [HttpGet]
+        public async Task<IActionResult> GetProductByCategory(int categoryId, int pageIndex)
         {
             var languageId = HttpContext.Session.GetString("Language");
-            var productByCate = await _productService.GetFeatureProduct(languageId, categoryId, ProductSetting.ProductInHome);
-            return ViewComponent("ProductHomeByCate", productByCate.ResponseObject);
+            var request = new ProductPagingRequestDto()
+            {
+                PageIndex = pageIndex,
+                PageSize = ProductSetting.ProductInCategory,
+                CategoryId = categoryId,
+                LanguageId = languageId
+            };
+            var product = await _productService.GetProductByCategory(request);
+            return View(product.ResponseObject);
         }
         [HttpGet]
         public async Task<IActionResult> ProductDetail(int productId)

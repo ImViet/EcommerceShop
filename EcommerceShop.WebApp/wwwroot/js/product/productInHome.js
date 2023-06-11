@@ -2,7 +2,7 @@ $(document).ready(function(){
     $(".nav-item-category").click(function(){
         console.log($(this).data("categoryid")) 
         $.ajax({
-            url: "/Product/GetProductByCate",
+            url: "/Home/GetProductByCate",
             type: "POST",
             data:{
                 categoryId : $(this).data("categoryid"),

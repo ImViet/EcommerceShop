@@ -11,7 +11,6 @@ namespace EcommerceShop.WebApp.Controllers
         private readonly IProductApiService _productService;
         private readonly ICategoryApiService _categoryService;
 
-
         public HomeController(IProductApiService productService, ICategoryApiService categoryService)
         {
             _productService = productService;
@@ -35,15 +34,12 @@ namespace EcommerceShop.WebApp.Controllers
             };
             return View(productVM);
         }
-        public IActionResult Privacy()
+        [HttpPost]
+        public async Task<ViewComponentResult> GetProductByCate(int categoryId)
         {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var languageId = HttpContext.Session.GetString("Language");
+            var productByCate = await _productService.GetFeatureProduct(languageId, categoryId, ProductSetting.ProductInHome);
+            return ViewComponent("ProductHomeByCate", productByCate.ResponseObject);
         }
     }
 }
