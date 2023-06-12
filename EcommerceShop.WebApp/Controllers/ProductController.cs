@@ -24,6 +24,7 @@ namespace EcommerceShop.WebApp.Controllers
                 CategoryId = categoryId,
                 LanguageId = languageId
             };
+            TempData["searchKeyword"] = searchKeyword == "" ? null : searchKeyword;
             var product = await _productService.GetProductByCategory(request);
             return View(product.ResponseObject);
         }

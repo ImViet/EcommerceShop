@@ -3,6 +3,8 @@
 @model PagedResultDto<ProductDto>
 @{
     var countProduct = Model.Items.Count();
+    var totalProduct = Model.TotalRecords;
+    var search = (string)TempData["searchKeyword"];
 }
 <main class="main-content">
     <div class="breadcrumb-area breadcrumb-height" data-bg-image="/images/breadcrumb/bg/1-1-1920x373.jpg">
@@ -43,7 +45,19 @@
                                 </ul>
                             </li>
                             <li class="page-count">
-                                <span>Có <span class="product-count">@countProduct</span> sản phẩm</span>
+                                @if(search != null)
+                                {
+                                    <span>Có <span class="product-count">@countProduct</span> sản phẩm được tìm thấy với từ khoá "@search"</span>
+                                }
+                                else
+                                {
+                                    <span>
+                                        Có 
+                                        <span class="product-count">@countProduct</span> 
+                                        sản phẩm trong tổng số
+                                        <span class="product-count">@totalProduct</span>
+                                    </span>
+                                }
                             </li>
                             <li class="short">
                                 <select class="nice-select wide rounded-0">
