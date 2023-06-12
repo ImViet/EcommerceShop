@@ -1,9 +1,0 @@
-@using EcommerceShop.WebApp.Models
-<form asp-controller="Home" asp-action="Index" class="header-searchbox">
-    <select class="nice-select select-search-category wide"
-             name="categoryId" onchange="this.form.submit()" asp-items="@ViewBag.Categories">
-        <option value="all">Tất cả sản phẩm</option>
-    </select>
-    <input class="input-field" type="text" placeholder="Tìm kiếm sản phẩm...">
-    <button class="btn btn-outline-whisper btn-primary-hover" type="submit"><i class="pe-7s-search"></i></button>
-</form>

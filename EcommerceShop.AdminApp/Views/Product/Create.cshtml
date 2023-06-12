@@ -1,7 +1,7 @@
 @using EcommerceShop.Contracts.Dtos.ProductDtos
 @model ProductCreateDto
 <div class="container-fluid px-4">
-    <h1 class="mt-5">Tạo người dùng</h1>
+    <h1 class="mt-5">Tạo sản phẩm</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Tổng quan</a></li>
         <li class="breadcrumb-item"><a asp-controller="Product" asp-action="Index">Danh sách sản phẩm</a></li>
@@ -81,10 +81,10 @@
 {
     <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/classic/ckeditor.js"></script>
     <script>
-    ClassicEditor
-        .create( document.querySelector( '#inputDetails' ) )
-        .catch( error => {
-            console.error( error );
-        } );
-</script>
+        ClassicEditor
+            .create( document.querySelector( '#inputDetails' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
 }

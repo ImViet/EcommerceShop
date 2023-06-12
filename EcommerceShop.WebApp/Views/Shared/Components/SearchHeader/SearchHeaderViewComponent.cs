@@ -2,12 +2,12 @@ using EcommerceShop.WebApp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace EcommerceShop.WebApp.Views.Shared.Components.CategoryHeader
+namespace EcommerceShop.WebApp.Views.Shared.Components.SearchHeader
 {
-    public class CategoryHeaderViewComponent: ViewComponent
+    public class SearchHeaderViewComponent: ViewComponent
     {
         private readonly ICategoryApiService _categoryService;
-        public CategoryHeaderViewComponent(ICategoryApiService categoryService)
+        public SearchHeaderViewComponent(ICategoryApiService categoryService)
         {
             _categoryService = categoryService;
         }
