@@ -1,0 +1,72 @@
+@using EcommerceShop.Contracts.Dtos
+@model PagedResultBaseDto
+@{
+    var url = Url.Action() + "?pageIndex={0}";
+    var request = ViewContext.HttpContext.Request;
+    foreach (var key in request.Query.Keys)
+    {
+        if(key == "pageIndex")
+        {
+            continue;
+        }
+        if(request.Query[key].Count > 1)
+        {
+            foreach (var item in (string[])request.Query[key])
+            {
+                url += "&" + key + "=" + item;
+            }
+        }
+        else
+        {
+            url += "&" + key + "=" + request.Query[key];
+        }
+    }
+    var startIndex = Math.Max(Model.PageIndex - 2, 1);
+    var finishIndex = Math.Min(Model.PageIndex + 2, Model.TotalPages);
+}
+@if(Model.TotalPages > 1)
+{
+    <div class="pagination-area pt-10">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                @if(Model.PageIndex != startIndex)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@url.Replace("{0}", "1")">
+                            Đầu
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="@url.Replace("{0}", (Model.PageIndex - 1).ToString())">
+                            <span class="fa fa-chevron-left"></span>
+                        </a>
+                    </li>
+                }
+                @for (int i = startIndex; i <= finishIndex; i++)
+                {
+                    if(i == Model.PageIndex)
+                    {
+                        <li class="page-item active"><a class="page-link" href="@url.Replace("{0}", i.ToString())">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" href="@url.Replace("{0}", i.ToString())">@i</a></li>
+                    }
+                }
+                @if (Model.PageIndex != finishIndex)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@url.Replace("{0}", (Model.PageIndex + 1).ToString())">
+                            <span class="fa fa-chevron-right"></span>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="@url.Replace("{0}", Model.TotalPages.ToString())">
+                            Cuối
+                        </a>
+                    </li>   
+                }
+            </ul>
+        </nav>
+    </div>
+}

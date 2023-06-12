@@ -13,13 +13,13 @@ namespace EcommerceShop.WebApp.Controllers
             _productService = productService;
         }
         [HttpGet]
-        public async Task<IActionResult> GetProductByCategory(int categoryId, int pageIndex)
+        public async Task<IActionResult> GetProductByCategory(int categoryId, int pageIndex = 1, int pageSize = ProductSetting.ProductInCategory)
         {
             var languageId = HttpContext.Session.GetString("Language");
             var request = new ProductPagingRequestDto()
             {
                 PageIndex = pageIndex,
-                PageSize = ProductSetting.ProductInCategory,
+                PageSize = pageSize,
                 CategoryId = categoryId,
                 LanguageId = languageId
             };
