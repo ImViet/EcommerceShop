@@ -19157,7 +19157,7 @@ blockquote .inner-content .user-name:before {
   color: #bac34e;
 }
 
-.product-topbar > ul li.page-count span {
+.product-topbar > ul li.page-count span.product-count {
   color: #bac34e;
 }
 
