@@ -15,13 +15,13 @@ namespace EcommerceShop.WebApp.Services
         }
         public List<CartDto>? GetCart()
         {
-            var jsonCart = _httpContextAccessor.HttpContext?.Request.Cookies["cart"];
-            if(jsonCart == null)
+            var jsonCart = _httpContextAccessor.HttpContext.Request.Cookies["cart"];
+            if (jsonCart == null)
                 return new List<CartDto>();
             return JsonConvert.DeserializeObject<List<CartDto>>(jsonCart);
         }
         public async void AddToCart(string languageId, int productId)
-        {
+         {
             var product = await _productService.GetProductById(languageId, productId);
             var cart = GetCart();
             var cartItem = cart.Find(x => x.Product.ProductId == productId);
@@ -38,12 +38,12 @@ namespace EcommerceShop.WebApp.Services
                 };
                 cart.Add(newItem);
             }
-            SaveCartSession(cart);
+            SaveCartCookies(cart);
         }
 
         public void ClearCart()
         {
-            _httpContextAccessor.HttpContext?.Response.Cookies.Delete("cart");
+            _httpContextAccessor.HttpContext.Response.Cookies.Delete("cart");
         }
 
         public int CountItem()
@@ -67,13 +67,19 @@ namespace EcommerceShop.WebApp.Services
             var cart = GetCart();
             var product = cart.Find(x => x.Product.ProductId == productId);
             cart.Remove(product);
-            SaveCartSession(cart);
+            SaveCartCookies(cart);
         }
 
-        public void SaveCartSession(List<CartDto> cart)
+        public void SaveCartCookies(List<CartDto> cart)
         {
             var jsonCart = JsonConvert.SerializeObject(cart);
-            _httpContextAccessor.HttpContext.Response.Cookies.Append("cart", jsonCart);
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(7),
+                HttpOnly = true,
+                IsEssential = true,
+            };
+            _httpContextAccessor.HttpContext.Response.Cookies.Append("cart", jsonCart, cookieOptions);
         }
     }
 }

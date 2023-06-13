@@ -1,5 +1,6 @@
 using EcommerceShop.WebApp.Interfaces;
 using EcommerceShop.WebApp.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,13 +8,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<ICategoryApiService, CategoryApiService>();
 builder.Services.AddTransient<IProductApiService, ProductApiService>();
 builder.Services.AddTransient<ILanguageApiService, LanguageApiService>();
-
+builder.Services.AddTransient<ICartService, CartService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient("myclient", client =>{
     client.BaseAddress = new Uri("https://localhost:7196");
 });
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddSession();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+builder.Services.AddSession(options =>{
+    options.Cookie.Name = "MyProjectSessionCookie";
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.IsEssential = true;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,8 +33,11 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseSession();
-app.UseRouting();
+
+//app.UseCookiePolicy();
+
 app.UseAuthentication();
+app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(

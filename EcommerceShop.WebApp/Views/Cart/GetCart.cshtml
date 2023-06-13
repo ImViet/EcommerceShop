@@ -1,0 +1,6 @@
+@using EcommerceShop.Contracts.Dtos.CartDtos
+@model List<CartDto>
+@foreach (var item in Model)
+{
+    <h3>@item.Product.Name</h3>
+}

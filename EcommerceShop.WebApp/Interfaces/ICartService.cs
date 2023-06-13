@@ -8,7 +8,7 @@ namespace EcommerceShop.WebApp.Interfaces
         void AddToCart(string languageId, int productId);
         void RemoveItem(int productId);
         void ClearCart();
-        void SaveCartSession(List<CartDto> cart);
+        void SaveCartCookies(List<CartDto> cart);
         int CountItem();
     }
 }
