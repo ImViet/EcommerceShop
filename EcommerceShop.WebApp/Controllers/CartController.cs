@@ -22,6 +22,11 @@ namespace EcommerceShop.WebApp.Controllers
             return View(listCart);
         }
         [HttpPost]
+        public async Task<ViewComponentResult> GetMiniCart()
+        {
+            return ViewComponent("MiniCart");
+        }
+        [HttpPost]
         public async Task<IActionResult> AddToCart(int productId)
         {
             var languageId = HttpContext.Session.GetString("Language");
