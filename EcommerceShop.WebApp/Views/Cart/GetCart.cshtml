@@ -44,7 +44,7 @@
                                                 totalPayment += product.Total;
                                                 <tr>
                                                     <td class="product_remove">
-                                                        <a href="javascript:void(0)">
+                                                        <a class="btn-product_remove" data-productid="@product.Product.ProductId" style="cursor: pointer;">
                                                             <i class="pe-7s-close" title="Remove"></i>
                                                         </a>
                                                     </td>
@@ -57,10 +57,10 @@
                                                     <td class="product-price"><span class="amount">@string.Format("{0:0,0 vnđ}", product.Product.Price)</span></td>
                                                     <td class="quantity">
                                                         <div class="cart-plus-minus">
-                                                            <input class="cart-plus-minus-box" value="@product.Quantity" type="text">
+                                                            <input id="cart-item-quantity-@product.Product.ProductId" class="cart-plus-minus-box" value="@product.Quantity" type="text">
                                                         </div>
                                                     </td>
-                                                    <td class="product-subtotal"><span class="amount">@string.Format("{0:0,0 vnđ}", product.Total)</span></td>
+                                                    <td class="product-subtotal"><span id="cart-item-amount-@product.Product.ProductId" class="amount">@string.Format("{0:0,0 vnđ}", product.Total)</span></td>
                                                 </tr>
                                             }
                                         </tbody>
@@ -84,7 +84,7 @@
                                         <div class="cart-page-total">
                                             <h2>Cart totals</h2>
                                             <ul>
-                                                <li>Tổng tiền phải trả<span>@string.Format("{0:0,0 vnđ}", totalPayment)</span></li>
+                                                <li>Tổng tiền phải trả<span class="cart-total-payment">@string.Format("{0:0,0 vnđ}", totalPayment)</span></li>
                                             </ul>
                                             <a href="javascript:void(0)">Thanh toán</a>
                                         </div>

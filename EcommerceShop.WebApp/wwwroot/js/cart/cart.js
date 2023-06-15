@@ -98,3 +98,76 @@ $(document).ready(function(){
         });
     });
 });
+
+//Delete item in cart
+$(document).ready(function(){
+    $(".btn-product_remove").click(function(){
+        Swal.fire({
+            title: 'Bạn muốn xoá?',
+            icon: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Xoá',
+            showCancelButton: true,
+            cancelButtonText: 'Huỷ'
+            }).then((result) => {
+                if(result.isConfirmed)
+                {
+                    $.ajax({
+                        url: "/Cart/DeleteItem",
+                        type: "POST",
+                        data: {
+                          productId: $(this).data("productid")
+                        },
+                        success: function(data){
+                          Swal.fire({
+                            icon: 'success',
+                            title: 'Đã xoá thành công',
+                            showConfirmButton: false,
+                            timer: 1500
+                          })
+                          setTimeout(() => {
+                            location.href = window.location.href
+                          }, 1500);
+                        },
+                        error: function(){
+                            Swal.fire('Xoá thất bại')
+                        }
+                    })
+                }
+            });
+    });
+});
+
+//Prevent type in quantity
+$(document).ready(function(){
+    $(".cart-plus-minus-box").keydown(function (event){
+        event.preventDefault();
+      });
+});
+
+//Increase quantity item in cart 
+$(document).ready(function(){
+    $(".cart-plus-minus-box").change(function(){
+        console.log("abc")
+        $.ajax({
+            url: "/Cart/UpdateQuantity",
+            type: "POST",
+            data:{
+                productId: $(this).data("productid"),
+                quantity: $("#cart-item-quantity-" + $(this).data("productid")).val()
+            },
+            success: function(data){
+                $("#cart-item-amount-" + parseInt(data.id)).html(data.total);
+                $(".cart-total-payment").html(data.totalToPay);
+                $.ajax({
+                    url: "/Cart/CountCartItem",
+                    type: "POST",
+                    success: function(data){
+                         $("#count-cart-item").html(data)
+                    }
+                });
+            }
+        });
+    });
+});

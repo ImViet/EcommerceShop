@@ -19,6 +19,12 @@ namespace EcommerceShop.WebApp.Controllers
         public IActionResult GetCart()
         {
             var listCart = _cartService.GetCart();
+            var countItem = 0;
+            foreach (var item in listCart)
+            {
+                countItem = countItem + item.Quantity;
+            }
+             HttpContext.Session.SetString("CountCart", countItem.ToString());
             return View(listCart);
         }
         [HttpPost]
@@ -46,15 +52,22 @@ namespace EcommerceShop.WebApp.Controllers
                 };
                 cart.Add(newItem);
             }
-            var jsonCart = JsonConvert.SerializeObject(cart);
-            var cookieOptions = new CookieOptions
-            {
-                Expires = DateTime.Now.AddDays(1),
-                HttpOnly = true,
-                IsEssential = true,
-            };
-            HttpContext.Response.Cookies.Append(CookiesSetting.CART_COOKIES, jsonCart, cookieOptions);
+            SaveCartCookies(cart);
             return Ok();
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateQuantity(int productId, int quantity)
+        {
+            var cart = GetCartInCookies();
+            var cartItem = cart.Find(x => x.Product.ProductId == productId);
+            cartItem.Quantity = quantity;
+            SaveCartCookies(cart);
+            return new JsonResult(new {
+                    Id = productId,
+                    CountItem = HttpContext.Session.GetString("CountCart"),
+                    Total = cartItem.Total,
+                    TotalToPay = cart.Sum(p => p.Total)
+            });
         }
         [HttpPost]
         public async Task<IActionResult> DeleteItem(int productId)
@@ -64,14 +77,7 @@ namespace EcommerceShop.WebApp.Controllers
             var cart = GetCartInCookies();
             var cartItem = cart.Find(x => x.Product.ProductId == productId);
             cart.Remove(cartItem);
-            var jsonCart = JsonConvert.SerializeObject(cart);
-            var cookieOptions = new CookieOptions
-            {
-                Expires = DateTime.Now.AddDays(1),
-                HttpOnly = true,
-                IsEssential = true,
-            };
-            HttpContext.Response.Cookies.Append(CookiesSetting.CART_COOKIES, jsonCart, cookieOptions);
+            SaveCartCookies(cart);
             return Ok();
         }
         [HttpPost]
@@ -92,6 +98,17 @@ namespace EcommerceShop.WebApp.Controllers
             if (jsonCart == null)
                 return new List<CartDto>();
             return JsonConvert.DeserializeObject<List<CartDto>>(jsonCart);
+        }
+        private void SaveCartCookies(List<CartDto> cart)
+        {
+            var jsonCart = JsonConvert.SerializeObject(cart);
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(1),
+                HttpOnly = true,
+                IsEssential = true,
+            };
+            HttpContext.Response.Cookies.Append(CookiesSetting.CART_COOKIES, jsonCart, cookieOptions);
         }
     }
 }
