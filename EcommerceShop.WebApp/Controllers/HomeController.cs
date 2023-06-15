@@ -10,11 +10,13 @@ namespace EcommerceShop.WebApp.Controllers
     {
         private readonly IProductApiService _productService;
         private readonly ICategoryApiService _categoryService;
+        private readonly ICartService _cartService;
 
-        public HomeController(IProductApiService productService, ICategoryApiService categoryService)
+        public HomeController(IProductApiService productService, ICategoryApiService categoryService, ICartService cartService)
         {
             _productService = productService;
             _categoryService = categoryService;
+            _cartService = cartService;
         }
 
         public async Task<IActionResult> Index(int categoryId)
@@ -26,6 +28,7 @@ namespace EcommerceShop.WebApp.Controllers
                 HttpContext.Session.SetString("Language", languageId);
             }
             HttpContext.Session.SetString("CurrentCategory", categoryId.ToString());
+            HttpContext.Session.SetString("CountCart", _cartService.CountItem().ToString());
             var products = await _productService.GetFeatureProduct(languageId, categoryId = 0, ProductSetting.ProductInHome);
             var productsLastest = await _productService.GetLastestProduct(languageId, ProductSetting.ProductInHome);
             var categories = await _categoryService.GetListCategory(languageId);

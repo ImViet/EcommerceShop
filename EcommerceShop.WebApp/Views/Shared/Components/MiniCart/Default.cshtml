@@ -1,0 +1,40 @@
+@using EcommerceShop.Contracts.Dtos.CartDtos
+@model List<CartDto>
+@{
+    double totalPayment = 0;
+}
+<div class="minicart-content">
+    <div class="minicart-heading">
+        <h4 class="mb-0">Giỏ hàng</h4>
+        <a href="#" class="button-close" id="btn-close-miniCart"><i class="pe-7s-close"></i></a>
+    </div>
+    <ul class="minicart-list">
+        @foreach (var product in Model)
+        {
+            totalPayment = totalPayment + product.Total;
+            <li class="minicart-product">
+                <a class="product-item_remove" data-productid="@product.Product.ProductId">
+                    <i class="pe-7s-close btn-remove-item_minicart"></i>
+                </a>
+                <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.Product.ProductId" class="product-item_img">
+                    <img class="img-full" src="/images/product/small-size/1-1-112x124.jpg" alt="Product Image">
+                </a>
+                <div class="product-item_content">
+                    <a class="product-item_title" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.Product.ProductId">@product.Product.Name</a>
+                    <span class="product-item_quantity">@product.Quantity x @string.Format("{0:0,0 vnđ}", product.Product.Price)</span>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+<div class="minicart-item_total">
+    <span>Tạm tính</span>
+    <span class="ammount">@string.Format("{0:0,0 vnđ}", totalPayment)</span>
+</div>
+<div class="group-btn_wrap d-grid gap-2">
+    <a asp-controller="Cart" asp-action="GetCart" class="btn btn-secondary btn-primary-hover">Xem giỏ hàng</a>
+    <a href="checkout.html" class="btn btn-secondary btn-primary-hover">Thanh toán</a>
+</div>
+@section Scripts{
+    <script src="/js/cart/cart.js" asp-append-version="true"></script>
+}
