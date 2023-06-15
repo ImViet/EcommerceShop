@@ -19,7 +19,7 @@ $(document).ready(function(){
                     url: "/Cart/CountCartItem",
                     type: "POST",
                     success: function(data){
-                         $(".quantity").html(data)
+                         $("#count-cart-item").html(data)
                     }
                 });
              },
@@ -61,6 +61,7 @@ $(document).ready(function (){
 $(document).ready(function(){
     $("#miniCart-body").on("click", ".product-item_remove", function(event){
         event.stopPropagation();
+        event.preventDefault();
         $(".product-item_remove").click(function(){
             $.ajax({
                 url: "/Cart/DeleteItem",
@@ -84,7 +85,7 @@ $(document).ready(function(){
                                 url: "/Cart/CountCartItem",
                                 type: "POST",
                                 success: function(data){
-                                     $(".quantity").html(data)
+                                     $("#count-cart-item").html(data)
                                 }
                             });
                         },
