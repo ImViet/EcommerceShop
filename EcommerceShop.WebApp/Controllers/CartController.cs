@@ -53,12 +53,42 @@ namespace EcommerceShop.WebApp.Controllers
                 HttpOnly = true,
                 IsEssential = true,
             };
-            HttpContext.Response.Cookies.Append(CartSetting.CART_COOKIES, jsonCart, cookieOptions);
+            HttpContext.Response.Cookies.Append(CookiesSetting.CART_COOKIES, jsonCart, cookieOptions);
             return Ok();
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteItem(int productId)
+        {
+            var languageId = HttpContext.Session.GetString("Language");
+            var product = await _productService.GetProductById(languageId, productId);
+            var cart = GetCartInCookies();
+            var cartItem = cart.Find(x => x.Product.ProductId == productId);
+            cart.Remove(cartItem);
+            var jsonCart = JsonConvert.SerializeObject(cart);
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(1),
+                HttpOnly = true,
+                IsEssential = true,
+            };
+            HttpContext.Response.Cookies.Append(CookiesSetting.CART_COOKIES, jsonCart, cookieOptions);
+            return Ok();
+        }
+        [HttpPost]
+        public int CountCartItem()
+        {
+            var cart = GetCartInCookies();
+            var countItem = 0;
+            foreach (var item in cart)
+            {
+                countItem = countItem + item.Quantity;
+            }
+            HttpContext.Session.SetString("CountCart", countItem.ToString());
+            return countItem;
         }
         private List<CartDto>? GetCartInCookies()
         {
-            var jsonCart = HttpContext.Request.Cookies[CartSetting.CART_COOKIES];
+            var jsonCart = HttpContext.Request.Cookies[CookiesSetting.CART_COOKIES];
             if (jsonCart == null)
                 return new List<CartDto>();
             return JsonConvert.DeserializeObject<List<CartDto>>(jsonCart);

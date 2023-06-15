@@ -1,3 +1,4 @@
+using EcommerceShop.Contracts.Constants;
 using EcommerceShop.Contracts.Dtos.CartDtos;
 using EcommerceShop.WebApp.Interfaces;
 using Newtonsoft.Json;
@@ -15,7 +16,7 @@ namespace EcommerceShop.WebApp.Services
         }
         public List<CartDto>? GetCart()
         {
-            var jsonCart = _httpContextAccessor.HttpContext.Request.Cookies["cart"];
+            var jsonCart = _httpContextAccessor.HttpContext.Request.Cookies[CookiesSetting.CART_COOKIES];
             if (jsonCart == null)
                 return new List<CartDto>();
             return JsonConvert.DeserializeObject<List<CartDto>>(jsonCart);

@@ -15,11 +15,7 @@ builder.Services.AddHttpClient("myclient", client =>{
 });
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
-builder.Services.AddSession(options =>{
-    options.Cookie.Name = "MyProjectSessionCookie";
-    options.IdleTimeout = TimeSpan.FromMinutes(30);
-    options.Cookie.IsEssential = true;
-});
+builder.Services.AddSession();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

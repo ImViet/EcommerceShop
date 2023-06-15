@@ -1,3 +1,7 @@
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    var countCart = HttpContextAccessor.HttpContext?.Session.GetString("CountCart");
+}
    <!-- Begin Main Header Area -->
     <header class="main-header_area position-relative">
         <div class="header-top border-bottom d-none d-md-block">
@@ -66,7 +70,7 @@
                                     <li class="minicart-wrap me-3 me-lg-0">
                                         <a href="#miniCart" id="btn-mini-cart" class="minicart-btn toolbar-btn">
                                             <i class="pe-7s-shopbag"></i>
-                                            <span class="quantity">3</span>
+                                            <span class="quantity" id="count-cart-item">@countCart</span>
                                         </a>
                                     </li>
                                     <li class="mobile-menu_wrap d-block d-lg-none">

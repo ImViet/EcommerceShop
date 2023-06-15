@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EcommerceShop.Contracts.Constants
 {
-    public static class CartSetting
+    public static class CookiesSetting
     {
         public const string CART_COOKIES = "Cart";
     }

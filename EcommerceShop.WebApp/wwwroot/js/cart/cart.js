@@ -14,7 +14,14 @@ $(document).ready(function(){
                      title: 'Thêm vào giỏ hàng thành công',
                      showConfirmButton: false,
                      timer: 1500
-                 })
+                 }),
+                $.ajax({
+                    url: "/Cart/CountCartItem",
+                    type: "POST",
+                    success: function(data){
+                         $(".quantity").html(data)
+                    }
+                });
              },
              error: function(data){
                  console.log(data);
@@ -41,7 +48,6 @@ $(document).ready(function (){
                 $("#btn-close-miniCart").click(function(){
                     $(".offcanvas-minicart_wrapper").removeClass("open");
                     $(".global-overlay").removeClass("overlay-open");
-                    console.log("ok")
                 });
             },
             error: function(data){
@@ -51,3 +57,43 @@ $(document).ready(function (){
     });
 });
 
+//Delete item in mini cart - using event delegation
+$(document).ready(function(){
+    $("#miniCart-body").on("click", ".product-item_remove", function(event){
+        event.stopPropagation();
+        $(".product-item_remove").click(function(){
+            $.ajax({
+                url: "/Cart/DeleteItem",
+                type: "POST",
+                data:{
+                    productId: $(this).data("productid")
+                },
+                success: function(){
+                    $.ajax({
+                        url: "/Cart/GetMiniCart",
+                        type: "POST",
+                        success: function(data){
+                            $("#miniCart-body").html(data);
+                            //Hide mini cart
+                            $("#btn-close-miniCart").click(function(){
+                                $(".offcanvas-minicart_wrapper").removeClass("open");
+                                $(".global-overlay").removeClass("overlay-open");
+                                console.log("ok")
+                            });
+                            $.ajax({
+                                url: "/Cart/CountCartItem",
+                                type: "POST",
+                                success: function(data){
+                                     $(".quantity").html(data)
+                                }
+                            });
+                        },
+                        error: function(data){
+                            console.log("get mini cart fail");
+                        }
+                    })
+                }
+            });
+        });
+    });
+});
