@@ -1,7 +1,6 @@
 //Add product to cart using ajax
 $(document).ready(function(){
     $(".btn-add-cart").click(function(){
-        console.log($(this).data("productid"))
          $.ajax({
              url: "/Cart/AddToCart",
              type: "POST",

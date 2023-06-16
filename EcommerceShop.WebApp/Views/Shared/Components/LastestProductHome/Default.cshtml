@@ -16,13 +16,13 @@
                             <div class="swiper-slide">
                                 <div class="product-item">
                                     <div class="product-img img-zoom-effect">
-                                        <a href="single-product.html">
+                                        <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.ProductId">
                                             <img class="img-full" src="https://bizweb.dktcdn.net/thumb/large/100/415/697/products/5bcf17a8-5485-4231-8cc4-0e67811e716c.jpg?v=1681109395000" alt="Product Images">
                                         </a>
                                         <div class="product-add-action">
                                             <ul>
                                                 <li>
-                                                    <a href="cart.html">
+                                                    <a class="btn-add-cart" data-productid="@product.ProductId" style="cursor: pointer;">
                                                         <i class="pe-7s-cart"></i>
                                                     </a>
                                                 </li>
@@ -40,7 +40,7 @@
                                         </div>
                                     </div>
                                     <div class="product-content">
-                                        <a class="product-name" href="single-product.html">@product.Name</a>
+                                        <a class="product-name" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.ProductId">@product.Name</a>
                                         <div class="price-box pb-1">
                                             <span class="new-price">@string.Format("{0:0,0 vnđ}", product.Price)</span>
                                         </div>
