@@ -61,7 +61,6 @@ $(document).ready(function (){
 $(document).ready(function(){
     $("#miniCart-body").on("click", ".product-item_remove", function(event){
         event.stopPropagation();
-        event.preventDefault();
         $(".product-item_remove").click(function(){
             $.ajax({
                 url: "/Cart/DeleteItem",
@@ -148,8 +147,7 @@ $(document).ready(function(){
 
 //Increase quantity item in cart 
 $(document).ready(function(){
-    $(".cart-plus-minus-box").change(function(){
-        console.log("abc")
+    $(".btn-quantity-item").click(function(){
         $.ajax({
             url: "/Cart/UpdateQuantity",
             type: "POST",
@@ -158,8 +156,9 @@ $(document).ready(function(){
                 quantity: $("#cart-item-quantity-" + $(this).data("productid")).val()
             },
             success: function(data){
-                $("#cart-item-amount-" + parseInt(data.id)).html(data.total);
-                $(".cart-total-payment").html(data.totalToPay);
+                // var total = String.format("{0:0,0 vnđ}", data.total);
+                $("#cart-item-amount-" + parseInt(data.id)).html(new Intl.NumberFormat().format(data.total) + " vnđ");
+                $(".cart-total-payment").html(new Intl.NumberFormat().format(data.totalToPay) + " vnđ");
                 $.ajax({
                     url: "/Cart/CountCartItem",
                     type: "POST",
