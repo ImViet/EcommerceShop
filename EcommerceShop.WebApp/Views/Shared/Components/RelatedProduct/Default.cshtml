@@ -5,13 +5,13 @@
     <div class="swiper-slide">
     <div class="product-item">
         <div class="product-img img-zoom-effect">
-            <a href="single-product.html">
+            <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.ProductId">
                 <img class="img-full" src="/images/product/medium-size/1-9-270x300.jpg" alt="Product Images">
             </a>
             <div class="product-add-action">
                 <ul>
                     <li>
-                        <a href="cart.html">
+                        <a class="btn-add-cart" data-productid="@product.ProductId" style="cursor: pointer;">
                             <i class="pe-7s-cart"></i>
                         </a>
                     </li>
@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="product-content texx">
-            <a class="product-name" href="single-product.html">@product.Name</a>
+            <a class="product-name" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.ProductId">@product.Name</a>
             <div class="price-box pb-1">
                 <span class="new-price">$80.00</span>
             </div>

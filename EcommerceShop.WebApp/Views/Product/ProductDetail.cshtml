@@ -86,7 +86,7 @@
                                                 </div>
                                             </li>
                                             <li class="add-to-cart">
-                                                <a class="btn btn-custom-size lg-size btn-primary btn-secondary-hover rounded-0" href="cart.html">Thêm giỏ hàng</a>
+                                                <a class="btn btn-custom-size lg-size btn-primary btn-secondary-hover rounded-0" asp-controller="Cart" asp-action="GetCart" asp-route-productId="@Model.ProductId" style="cursor: pointer;">Thêm giỏ hàng</a>
                                             </li>
                                             <li class="wishlist-btn-wrap">
                                                 <a class="btn rounded-0" href="#">

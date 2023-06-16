@@ -53,7 +53,7 @@ namespace EcommerceShop.WebApp.Controllers
                 cart.Add(newItem);
             }
             SaveCartCookies(cart);
-            return Ok();
+            return RedirectToAction("GetCart", "Cart");
         }
         [HttpPost]
         public async Task<IActionResult> UpdateQuantity(int productId, int quantity)
