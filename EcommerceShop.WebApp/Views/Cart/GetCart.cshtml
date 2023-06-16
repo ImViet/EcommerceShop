@@ -58,6 +58,8 @@
                                                     <td class="quantity">
                                                         <div class="cart-plus-minus">
                                                             <input id="cart-item-quantity-@product.Product.ProductId" class="cart-plus-minus-box" value="@product.Quantity" type="text">
+                                                            <div class="dec qtybutton btn-quantity-item" data-productid="@product.Product.ProductId"><i class="fa fa-minus"></i></div>
+                                                            <div class="inc qtybutton btn-quantity-item" data-productid="@product.Product.ProductId"><i class="fa fa-plus"></i></div>
                                                         </div>
                                                     </td>
                                                     <td class="product-subtotal"><span id="cart-item-amount-@product.Product.ProductId" class="amount">@string.Format("{0:0,0 vnđ}", product.Total)</span></td>
