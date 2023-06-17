@@ -19933,6 +19933,9 @@ blockquote .inner-content .user-name:before {
   font-size: 14px;
 }
 
+.input-validation-error{
+  border-color: red!important;
+}
 /*----------------------------------------*/
 /*  17. Cart
 /*----------------------------------------*/

@@ -22,7 +22,7 @@ builder.Services.AddControllers();
 builder.Services.AddControllersWithViews().AddFluentValidation(fv =>
     {
         fv.RegisterValidatorsFromAssemblyContaining<UserRegisterDtoValidator>();
-    });;
+    });
 builder.Services.AddHttpClient("myclient", client =>
 {
     client.BaseAddress = new Uri("https://localhost:7196");
