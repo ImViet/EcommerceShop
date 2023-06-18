@@ -56,10 +56,10 @@ namespace EcommerceShop.WebApp.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> RegisterUser()
+        public async Task<IActionResult> Register(UserRegisterDto user)
         {
             if(!ModelState.IsValid)
-                return View();
+                return View(user);
             return View();
         }
         private ClaimsPrincipal ValidateToken(string jwtToken)
