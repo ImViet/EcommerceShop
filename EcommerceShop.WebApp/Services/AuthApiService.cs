@@ -1,10 +1,10 @@
-﻿using EcommerceShop.AdminApp.Interfaces;
+using System.Text;
 using EcommerceShop.Contracts;
 using EcommerceShop.Contracts.Dtos.AuthDtos;
+using EcommerceShop.WebApp.Interfaces;
 using Newtonsoft.Json;
-using System.Text;
 
-namespace EcommerceShop.AdminApp.Services
+namespace EcommerceShop.WebApp.Services
 {
     public class AuthApiService : IAuthApiService
     {
@@ -15,10 +15,10 @@ namespace EcommerceShop.AdminApp.Services
         }
         public async Task<ApiResponse<string>> LoginAsync(UserLoginDto userLoginDto)
         {
+            var client = _httpClientFactory.CreateClient("myclient");
             var json = JsonConvert.SerializeObject(userLoginDto);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             var url = "/api/authentication/login";
-            var client = _httpClientFactory.CreateClient("myclient");
             var response = await client.PostAsync(url, httpContent);
             var data = await response.Content.ReadAsStringAsync();
             if(response.IsSuccessStatusCode)
@@ -28,7 +28,7 @@ namespace EcommerceShop.AdminApp.Services
             return JsonConvert.DeserializeObject<ApiErrorResponse<string>>(data);
         }
 
-        public async Task<ApiResponse<bool>> RegisterAsync(UserRegisterDto userRegisterDto)
+        public Task<ApiResponse<bool>> RegisterAsync(UserRegisterDto userRegisterDto)
         {
             throw new NotImplementedException();
         }
