@@ -45,7 +45,7 @@ namespace EcommerceShop.WebApp.Services
         }
         public async Task<ApiResponse<PagedResultDto<ProductDto>>> GetProductByCategory(ProductPagingRequestDto request)
         {
-            var url = $"/api/product/getallpaging?languageId={request.LanguageId}&search={request.Search}&categoryId={request.CategoryId}&pageIndex={request.PageIndex}&pageSize={request.PageSize}";
+            var url = $"/api/product/getallpaging?languageId={request.LanguageId}&search={request.Search}&categoryId={request.CategoryId}&sortOrder={request.SortOrder}&pageIndex={request.PageIndex}&pageSize={request.PageSize}";
             var data = await GetAsync<ApiResponse<PagedResultDto<ProductDto>>>(url);
             return data;
         }

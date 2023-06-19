@@ -55,11 +55,9 @@ namespace EcommerceShop.Business.Services
             {
                 query = query.Where(p => p.pic.CategoryId == request.CategoryId);
             }
-            //Paging
+            //Get to list
             int totalRow = await query.CountAsync();
-            var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
-                                    .Take(request.PageSize)
-                                    .Select(x => new ProductDto()
+            var products = query.Select(x => new ProductDto()
                                     {
                                         ProductId = x.p.ProductId,
                                         Price = x.p.Price,
@@ -74,7 +72,17 @@ namespace EcommerceShop.Business.Services
                                         SeoDescription = x.pt.SeoDescription,
                                         SeoTitle = x.pt.SeoTitle,
                                         LanguageId = x.pt.LanguageId,
-                                    }).ToListAsync();
+                                    });
+            //Sorting
+            if(!string.IsNullOrEmpty(request.SortOrder))
+            {
+                products = Sorting(request.SortOrder, products);
+            }
+
+            //Paging
+            var data = await products.Skip((request.PageIndex - 1) * request.PageSize)
+                                .Take(request.PageSize)
+                                .ToListAsync();
             //Select
             var pagedResult = new PagedResultDto<ProductDto>()
             {
@@ -456,6 +464,31 @@ namespace EcommerceShop.Business.Services
                                         LanguageId = x.pt.LanguageId,
                                     }).ToListAsync();
             return new ApiSuccessResponse<List<ProductDto>>(data);
+        }
+        private IQueryable<ProductDto> Sorting(string sortOrder, IQueryable<ProductDto> products)
+        {
+            switch (sortOrder)
+            {
+                case "price":
+                    products = products.OrderBy(x => x.Price);
+                    break;
+                case "price_desc":
+                    products = products.OrderByDescending(x => x.Price);
+                    break;
+                case "lastest":
+                    products = products.OrderByDescending(x => x.DateCreated);
+                    break;  
+                case "name":
+                    products = products.OrderBy(x => x.Name);
+                    break;
+                case "name_desc":
+                    products = products.OrderByDescending(x => x.Name);
+                    break;
+                default:
+                    products = products.OrderBy(x => x.ProductId);
+                    break;
+            }
+            return products;
         }
     }
 }

@@ -60,14 +60,16 @@
                                 }
                             </li>
                             <li class="short">
-                                <select class="nice-select wide rounded-0">
-                                    <option value="1">Xếp mặc định</option>
-                                    <option value="2">Giá thấp nhất</option>
-                                    <option value="3">Giá cao nhất</option>
-                                    <option value="4">Sản phẩm mới</option>
-                                    <option value="5">Tên từ a-z</option>
-                                    <option value="6">Tên từ z-a</option>
-                                </select>
+                                <form asp-controller="Product" asp-action="Index" method="get">
+                                    <select name="sortOrder" onchange="this.form.submit()" class="nice-select wide rounded-0">
+                                        <option value="default">Xếp mặc định</option>
+                                        <option value="price">Giá thấp nhất</option>
+                                        <option value="price_desc">Giá cao nhất</option>
+                                        <option value="lastest">Sản phẩm mới</option>
+                                        <option value="name">Tên từ a-z</option>
+                                        <option value="name_desc">Tên từ z-a</option>
+                                    </select>
+                                </form>
                             </li>
                         </ul>
                     </div>
