@@ -74,11 +74,7 @@
                                                 <a href="javascript:void(0)">( 1 người đánh giá )</a>
                                             </div>
                                         </div>
-                                        <p class="short-desc mb-6">Lorem ipsum dolor sit amet, consecte adipisicin elit, sed do
-                                            eiusmod tempor incidi ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                            quis
-                                            nostrud exercita ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                                            irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
+                                        <p class="short-desc mb-6">@Model.Description</p>
                                         <ul class="quantity-with-btn pb-7">
                                             @* <li class="quantity">
                                                 <div class="cart-plus-minus">
@@ -162,7 +158,7 @@
                             <ul class="nav product-tab-nav product-tab-style-2" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <a class="active btn btn-custom-size" id="description-tab" data-bs-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">
-                                        Mô tả
+                                        Chi tiết
                                     </a>
                                 </li>
                                 <li class="nav-item" role="presentation">
@@ -186,84 +182,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
                                     <div class="product-review-body">
-                                        <h4 class="heading mb-5">3 Review Items</h4>
-                                        <ul class="user-info-wrap">
-                                            <li>
-                                                <ul class="user-info">
-                                                    <li class="user-avatar">
-                                                        <img src="/images/testimonial/user/1.png" alt="User Image">
-                                                    </li>
-                                                    <li class="user-comment">
-                                                        <div class="rating-box">
-                                                            <ul>
-                                                                <li><i class="pe-7s-star"></i></li>
-                                                                <li><i class="pe-7s-star"></i></li>
-                                                                <li><i class="pe-7s-star"></i></li>
-                                                                <li><i class="pe-7s-star"></i></li>
-                                                                <li><i class="pe-7s-star"></i></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="meta">
-                                                            <span><strong>Oscar -</strong> March 15, 2021</span>
-                                                        </div>
-                                                        <p class="short-desc mb-0">“Sed ligula sapien, fermentum id est eget,
-                                                            viverra auctor sem. Vivamus maximus enim vitae urna porta, ut
-                                                            euismod nibh lacinia ellentesque at diam voluptas quas nisi, culpa
-                                                            in accusantium“</p>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <ul class="user-info">
-                                                    <li class="user-avatar">
-                                                        <img src="/images/testimonial/user/1.png" alt="User Image">
-                                                    </li>
-                                                    <li class="user-comment">
-                                                        <div class="rating-box">
-                                                            <ul>
-                                                                <li><i class="pe-7s-star"></i></li>
-                                                                <li><i class="pe-7s-star"></i></li>
-                                                                <li><i class="pe-7s-star"></i></li>
-                                                                <li><i class="pe-7s-star"></i></li>
-                                                                <li><i class="pe-7s-star"></i></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="meta">
-                                                            <span><strong>Oscar -</strong> March 15, 2021</span>
-                                                        </div>
-                                                        <p class="short-desc mb-0">“Sed ligula sapien, fermentum id est eget,
-                                                            viverra auctor sem. Vivamus maximus enim vitae urna porta, ut
-                                                            euismod nibh lacinia ellentesque at diam voluptas quas nisi, culpa
-                                                            in accusantium“</p>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <ul class="user-info">
-                                                    <li class="user-avatar">
-                                                        <img src="/images/testimonial/user/1.png" alt="User Image">
-                                                    </li>
-                                                    <li class="user-comment">
-                                                        <div class="rating-box">
-                                                            <ul>
-                                                                <li><i class="pe-7s-star"></i></li>
-                                                                <li><i class="pe-7s-star"></i></li>
-                                                                <li><i class="pe-7s-star"></i></li>
-                                                                <li><i class="pe-7s-star"></i></li>
-                                                                <li><i class="pe-7s-star"></i></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="meta">
-                                                            <span><strong>Oscar -</strong> March 15, 2021</span>
-                                                        </div>
-                                                        <p class="short-desc mb-0">“Sed ligula sapien, fermentum id est eget,
-                                                            viverra auctor sem. Vivamus maximus enim vitae urna porta, ut
-                                                            euismod nibh lacinia ellentesque at diam voluptas quas nisi, culpa
-                                                            in accusantium“</p>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
+                                        @await Component.InvokeAsync("ProductReview", Model.ProductId)
                                         <div class="feedback-area pt-5">
                                             <h2 class="heading mb-1">Add a review</h2>
                                             <p class="short-desc mb-3">Your email address will not be published.</p>
@@ -301,20 +220,14 @@
                                 </div>
                                 <div class="tab-pane fade" id="shipping" role="tabpanel" aria-labelledby="shipping-tab">
                                     <div class="product-shipping-body">
-                                        <h4 class="title">Shipping</h4>
-                                        <p class="short-desc mb-4">The item will be shipped from China. So it need 15-20 days to
-                                            deliver. Our product is good with reasonable price and we believe you will worth it.
-                                            So please wait for it patiently! Thanks.Any question please kindly to contact us and
-                                            we promise to work hard to help you to solve the problem</p>
-                                        <h4 class="title">About return request</h4>
-                                        <p class="short-desc mb-4">If you don't need the item with worry, you can contact us
-                                            then we will help you to solve the problem, so please close the return request!
-                                            Thanks</p>
-                                        <h4 class="title">Guarantee</h4>
-                                        <p class="short-desc mb-0">If it is the quality question, we will resend or refund to
-                                            you; If you receive damaged or wrong items, please contact us and attach some
-                                            pictures about product, we will exchange a new correct item to you after the
-                                            confirmation.</p>
+                                        <h4 class="title">Giao hàng</h4>
+                                        <p class="short-desc mb-4">Đơn hàng sẽ được giao cho bạn sớm nhất có thể. Trong khoảng 3 - 5 ngày.</p>
+                                        <h4 class="title">Trả hàng</h4>
+                                        <p class="short-desc mb-4">Nếu bạn gặp vấn đề với món hàng, vui lòng liên hệ với chúng tôi để giải quyết vấn đề trước khi gửi yêu cầu trả hàng. Xin cảm ơn!
+                                            </p>
+                                        <h4 class="title">Cam kết</h4>
+                                        <p class="short-desc mb-0">Nếu đó là câu hỏi về chất lượng, chúng tôi sẽ gửi lại hoặc hoàn lại tiền cho bạn.
+                                             Nếu bạn nhận được các mặt hàng bị hư hỏng hoặc sai, vui lòng liên hệ với chúng tôi và đính kèm một số hình ảnh về sản phẩm, chúng tôi sẽ đổi một mặt hàng chính xác mới cho bạn sau khi xác nhận.</p>
                                     </div>
                                 </div>
                             </div>
