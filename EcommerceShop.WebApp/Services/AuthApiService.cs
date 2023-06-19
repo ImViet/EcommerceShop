@@ -28,9 +28,19 @@ namespace EcommerceShop.WebApp.Services
             return JsonConvert.DeserializeObject<ApiErrorResponse<string>>(data);
         }
 
-        public Task<ApiResponse<bool>> RegisterAsync(UserRegisterDto userRegisterDto)
+        public async Task<ApiResponse<bool>> RegisterAsync(UserRegisterDto userRegisterDto)
         {
-            throw new NotImplementedException();
+            var client = _httpClientFactory.CreateClient("myclient");
+            var json = JsonConvert.SerializeObject(userRegisterDto);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var url = "/api/authentication/register";
+            var response = await client.PostAsync(url, httpContent);
+            var data = await response.Content.ReadAsStringAsync();
+            if(response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<ApiSuccessResponse<bool>>(data);
+            }
+            return JsonConvert.DeserializeObject<ApiErrorResponse<bool>>(data);
         }
     }
 }

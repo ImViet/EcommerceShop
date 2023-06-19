@@ -60,6 +60,13 @@ namespace EcommerceShop.WebApp.Controllers
         {
             if(!ModelState.IsValid)
                 return View(user);
+            var result = await _authService.RegisterAsync(user);
+            if(result.IsSuccessed)
+            {
+                TempData["AlertSuccess"] = "Tạo tài khoản thành công";
+                return RedirectToAction("Login", "Auth");
+            }
+            ModelState.AddModelError("", result.Message);
             return View();
         }
         private ClaimsPrincipal ValidateToken(string jwtToken)
