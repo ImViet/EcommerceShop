@@ -4,7 +4,9 @@
 @{
     var countProduct = Model.Items.Count();
     var totalProduct = Model.TotalRecords;
-    var search = (string)TempData["searchKeyword"];
+    var search = (string)ViewData["searchKeyword"];
+    var categoryId = (int)ViewData["categoryId"];
+    var sortOrder = (string)ViewData["sortOrder"];
 }
 <main class="main-content">
     <div class="breadcrumb-area breadcrumb-height" data-bg-image="/images/breadcrumb/bg/1-1-1920x373.jpg">
@@ -47,7 +49,7 @@
                             <li class="page-count">
                                 @if(search != null)
                                 {
-                                    <span>Có <span class="product-count">@countProduct</span> sản phẩm được tìm thấy với từ khoá "@search"</span>
+                                    <span>Có <span class="product-count">@totalProduct</span> sản phẩm được tìm thấy với từ khoá "@search"</span>
                                 }
                                 else
                                 {
@@ -61,13 +63,21 @@
                             </li>
                             <li class="short">
                                 <form asp-controller="Product" asp-action="Index" method="get">
+                                    @if(categoryId != 0)
+                                    {
+                                        <input type="hidden" name="categoryId" value="@categoryId"/>
+                                    }
+                                    @if(search != null)
+                                    {
+                                        <input type="hidden" name="searchKeyword" value="@search" />
+                                    }
                                     <select name="sortOrder" onchange="this.form.submit()" class="nice-select wide rounded-0">
-                                        <option value="default">Xếp mặc định</option>
-                                        <option value="price">Giá thấp nhất</option>
-                                        <option value="price_desc">Giá cao nhất</option>
-                                        <option value="lastest">Sản phẩm mới</option>
-                                        <option value="name">Tên từ a-z</option>
-                                        <option value="name_desc">Tên từ z-a</option>
+                                        <!option value="default" @(sortOrder == "default" ? "selected" : "")>Xếp mặc định</!option>
+                                        <!option value="price" @(sortOrder == "price" ? "selected" : "")>Giá thấp nhất</!option>
+                                        <!option value="price_desc" @(sortOrder == "price_desc" ? "selected" : "")>Giá cao nhất</!option>
+                                        <!option value="lastest" @(sortOrder == "lastest" ? "selected" : "")>Sản phẩm mới</!option>
+                                        <!option value="name" @(sortOrder == "name" ? "selected" : "")>Tên từ a-z</!option>
+                                        <!option value="name_desc" @(sortOrder == "name_desc" ? "selected" : "")>Tên từ z-a</!option>
                                     </select>
                                 </form>
                             </li>
