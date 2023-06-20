@@ -20,12 +20,13 @@ namespace EcommerceShop.WebApp.Controllers
             _authService = authService;
         }
         [HttpGet]
-        public async Task<IActionResult> Login()
+        public async Task<IActionResult> Login(string returnUrl)
         {
+            ViewData["returnUrl"] = returnUrl;
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(UserLoginDto user)
+        public async Task<IActionResult> Login(string returnUrl, UserLoginDto user)
         {
             if(!ModelState.IsValid)
                 return View(user);
@@ -42,6 +43,10 @@ namespace EcommerceShop.WebApp.Controllers
                 IsPersistent = false
             };
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal, authProperties);
+            if(returnUrl != null)
+            {
+                return Redirect(returnUrl);
+            }
             return RedirectToAction("Index", "Home");
         }
         [HttpPost]

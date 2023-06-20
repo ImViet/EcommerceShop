@@ -1,6 +1,8 @@
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     var countCart = HttpContextAccessor.HttpContext?.Session.GetString("CountCart");
+    var location = new Uri($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}");  
+    var url = location.PathAndQuery;  
 }
    <!-- Begin Main Header Area -->
     <header class="main-header_area position-relative">
@@ -66,7 +68,7 @@
                                         else
                                         {
                                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="settingButton">
-                                            <li><a class="dropdown-item" asp-controller="Auth" asp-action="Login">Đăng nhập || Đăng ký</a></li>
+                                            <li><a class="dropdown-item" asp-controller="Auth" asp-action="Login" asp-route-returnUrl="@url">Đăng nhập || Đăng ký</a></li>
                                         </ul>
                                         }
                                     </li>

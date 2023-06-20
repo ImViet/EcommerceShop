@@ -13,7 +13,7 @@ namespace EcommerceShop.WebApp.Controllers
             _productService = productService;
         }
         [HttpGet]
-        public async Task<IActionResult> Index(string searchKeyword, int categoryId, int pageIndex = 1, int pageSize = ProductSetting.ProductInCategory)
+        public async Task<IActionResult> Index(string searchKeyword, string sortOrder, int? categoryId, int pageIndex = 1, int pageSize = ProductSetting.ProductInCategory)
         {
             var languageId = HttpContext.Session.GetString("Language");
             var request = new ProductPagingRequestDto()
@@ -22,9 +22,12 @@ namespace EcommerceShop.WebApp.Controllers
                 PageIndex = pageIndex,
                 PageSize = pageSize,
                 CategoryId = categoryId,
-                LanguageId = languageId
+                LanguageId = languageId,
+                SortOrder = sortOrder
             };
-            TempData["searchKeyword"] = searchKeyword == "" ? null : searchKeyword;
+            ViewData["searchKeyword"] = searchKeyword == "" ? null : searchKeyword;
+            ViewData["categoryId"] = categoryId == null ? 0 : categoryId;
+            ViewData["sortOrder"] = sortOrder == null ? "" : sortOrder;
             var product = await _productService.GetProductByCategory(request);
             return View(product.ResponseObject);
         }
