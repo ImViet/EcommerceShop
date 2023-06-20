@@ -39,9 +39,9 @@ namespace EcommerceShop.Contracts.Validators.AuthDtos
                 .LessThan(DateTime.Now.AddYears(-14)).WithMessage("Người dùng không đủ 14 tuổi");
 
             RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("Nhập số điện thoại")
+                .Matches(new Regex(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$")).WithMessage("SĐT không hợp lệ")
                 .MaximumLength(10).WithMessage("Chỉ 10 chữ số")
-                .MinimumLength(10).WithMessage("Chỉ 10 chữ số")
-                .Matches(new Regex(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$")).WithMessage("SĐT không hợp lệ");
+                .MinimumLength(10).WithMessage("Chỉ 10 chữ số");
         }
     }
 }
