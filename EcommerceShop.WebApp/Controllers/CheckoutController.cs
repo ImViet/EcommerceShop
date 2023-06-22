@@ -1,5 +1,6 @@
 using EcommerceShop.Contracts.Constants;
 using EcommerceShop.Contracts.Dtos.CartDtos;
+using EcommerceShop.Contracts.Dtos.OrderDtos;
 using EcommerceShop.WebApp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -23,6 +24,25 @@ namespace EcommerceShop.WebApp.Controllers
             if(jsonCart == null)
                 return View();
             ViewData["Cart"] = JsonConvert.DeserializeObject<List<CartDto>>(jsonCart);
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Index(CheckoutDto checkout)
+        {
+            if(!ModelState.IsValid)
+            {
+                var jsonCart = HttpContext.Request.Cookies[CookiesSetting.CART_COOKIES];
+                ViewData["Cart"] = JsonConvert.DeserializeObject<List<CartDto>>(jsonCart);
+                // ViewBag.provinceSelected = checkout.ShipProvince;
+                // ViewBag.districtSelected = checkout.ShipDistrict;
+                // ViewBag.wardSelected = checkout.ShipWard;
+                if(checkout.PaymentBy == null)
+                {
+                    ModelState.AddModelError("","Vui lòng chọn phương thức thanh toán");
+                }
+                return View(checkout);
+            }
+            
             return View();
         }
     }

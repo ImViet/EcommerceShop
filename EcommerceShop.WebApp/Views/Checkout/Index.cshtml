@@ -1,7 +1,12 @@
 @using EcommerceShop.Contracts.Dtos.CartDtos
+@using EcommerceShop.Contracts.Dtos.OrderDtos
+@model CheckoutDto
 @{
     var cart = ViewData["Cart"] as List<CartDto>;
     double totalPayment = 0;
+    @* var provinceSelected = ViewBag.provinceSelected;
+    var districtSelected = ViewBag.districtSelected;
+    var wardSelected = ViewBag.wardSelected; *@
 }
 <main class="main-content">
     <div class="checkout-area section-space-y-axis-100">
@@ -13,105 +18,112 @@
                     </div>
                 </div>
             </div>
+            <form asp-controller="Checkout" asp-action="Index" method="post">
             <div class="row">
-                <div class="col-lg-6 col-12">
-                    <form action="javascript:void(0)">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="col-lg-6 col-12">
                         <div class="checkbox-form">
                             <h3>Thông tin giao hàng</h3>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
                                         <label>Họ<span class="required"> *</span></label>
-                                        <input placeholder="" type="text">
+                                        <input asp-for="LastName" placeholder="" type="text">
+                                        <span asp-validation-for="LastName" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
                                         <label>Tên<span class="required"> *</span></label>
-                                        <input placeholder="" type="text">
+                                        <input asp-for="FirstName" placeholder="" type="text">
+                                        <span asp-validation-for="FirstName" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
                                         <label>Email <span class="required">*</span></label>
-                                        <input placeholder="" type="email">
+                                        <input asp-for="ShipEmail" placeholder="" type="email">
+                                        <span asp-validation-for="ShipEmail" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="checkout-form-list">
                                         <label>Số điện thoại <span class="required">*</span></label>
-                                        <input type="text">
+                                        <input asp-for="ShipPhoneNumber" type="text">
+                                        <span asp-validation-for="ShipPhoneNumber" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="checkout-form-list">
                                         <label>Địa chỉ(Số nhà, Ấp, Thôn) <span class="required">*</span></label>
-                                        <input placeholder="" type="text">
+                                        <input asp-for="ShipAddress" placeholder="" type="text">
+                                        <span asp-validation-for="ShipAddress" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="checkout-form-list">
-                                        <select class="w-100" id="city">
-                                            <option value="" selected>Chọn tỉnh thành</option>           
+                                        <select asp-for="ShipProvince" class="w-100" id="city">
+                                            <option value="">Chọn tỉnh thành</option>           
                                         </select>
+                                        <span asp-validation-for="ShipProvince" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="checkout-form-list">
-                                        <select class="w-100" id="district">
-                                            <option value="" selected>Chọn huyện</option>           
+                                        <select asp-for="ShipDistrict" class="w-100" id="district">
+                                            <option value="">Chọn huyện</option>           
                                         </select>
+                                        <span asp-validation-for="ShipDistrict" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="checkout-form-list">
-                                        <select class="w-100" id="ward">
+                                        <select asp-for="ShipWard" class="w-100" id="ward">
                                             <option value="" selected>Chọn xã</option>           
                                         </select>
+                                        <span asp-validation-for="ShipWard" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="col-lg-6 col-12">
-                    <div class="your-order">
-                        <h3>Đơn hàng của bạn</h3>
-                        <div class="your-order-table table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th class="cart-product-name">Sản phẩm</th>
-                                        <th class="cart-product-total">Tổng tiền</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in cart)
-                                    {
-                                        totalPayment = totalPayment + item.Total;
-                                    <tr class="cart_item">
-                                        <td class="cart-product-name">@item.Product.Name<strong class="product-quantity">
-                                            × @item.Quantity</strong></td>
-                                        <td class="cart-product-total"><span class="amount">@string.Format("{0:0,0 vnđ}", item.Total)</span></td>
-                                    </tr>
-                                    }
-                                </tbody>
-                                <tfoot>
-                                    <tr class="order-total">
-                                        <th>Tiền phải thanh toán</th>
-                                        <td><strong><span class="amount">@string.Format("{0:0,0 vnđ}", totalPayment)</span></strong></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <div class="payment-method">
-                            <div class="payment-accordion">
-                                <form asp-controller="Home" asp-action="Index">
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <div class="your-order">
+                            <h3>Đơn hàng của bạn</h3>
+                            <div class="your-order-table table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="cart-product-name">Sản phẩm</th>
+                                            <th class="cart-product-total">Tổng tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in cart)
+                                        {
+                                            totalPayment = totalPayment + item.Total;
+                                        <tr class="cart_item">
+                                            <td class="cart-product-name">@item.Product.Name<strong class="product-quantity">
+                                                × @item.Quantity</strong></td>
+                                            <td class="cart-product-total"><span class="amount">@string.Format("{0:0,0 vnđ}", item.Total)</span></td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="order-total">
+                                            <th>Tiền phải thanh toán</th>
+                                            <td><strong><span class="amount">@string.Format("{0:0,0 vnđ}", totalPayment)</span></strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="payment-method">
+                                <div class="payment-accordion">
                                     <div id="accordion">
                                         <div class="card">
                                             <div class="card-header" id="#payment-1">
                                                 <h5 class="panel-title">
-                                                    <input type="radio" name="payment" id="">
+                                                    <input asp-for="PaymentBy" type="radio" id="" value="COD">
                                                     <a class="" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true">
                                                         COD
                                                     </a>
@@ -126,7 +138,7 @@
                                         <div class="card">
                                             <div class="card-header" id="#payment-2">
                                                 <h5 class="panel-title">
-                                                    <input type="radio" name="payment" id="">
+                                                    <input asp-for="PaymentBy" type="radio" id="" value="Momo">
                                                     <a class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false">
                                                         Momo
                                                     </a>
@@ -142,12 +154,15 @@
                                     <div class="order-button-payment">
                                         <input value="Place order" type="submit">
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
+            @* <input type="hidden" id="provinceSelected" value="@provinceSelected">
+            <input type="hidden" id="districtSelected" value="@districtSelected">
+            <input type="hidden" id="wardSelected" value="@wardSelected"> *@
+            </form>
         </div>
     </div>
 </main>
