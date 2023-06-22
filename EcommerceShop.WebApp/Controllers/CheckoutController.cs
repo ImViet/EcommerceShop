@@ -42,7 +42,10 @@ namespace EcommerceShop.WebApp.Controllers
                 }
                 return View(checkout);
             }
-            
+            if(checkout.PaymentBy == "Momo")
+            {
+                return RedirectToAction("PaymentWithMomo", "Momo", checkout);
+            };
             return View();
         }
     }
