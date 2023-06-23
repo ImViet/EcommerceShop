@@ -12,6 +12,7 @@ builder.Services.AddTransient<IProductApiService, ProductApiService>();
 builder.Services.AddTransient<ILanguageApiService, LanguageApiService>();
 builder.Services.AddTransient<ICartService, CartService>();
 builder.Services.AddTransient<IAuthApiService, AuthApiService>();
+builder.Services.AddTransient<IOrderApiService, OrderApiService>();
 builder.Services.AddControllersWithViews().AddFluentValidation(fv =>
     {
         fv.RegisterValidatorsFromAssemblyContaining<UserRegisterDtoValidator>();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EcommerceShop.Data.Enums
 {
-    public enum OrderStatus
+    public enum OrderStatusDto
     {
         InProgress,
         Confirmed,

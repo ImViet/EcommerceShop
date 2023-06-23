@@ -1,5 +1,6 @@
 ﻿using EcommerceShop.Contracts.Dtos.AuthDtos;
 using EcommerceShop.Contracts.Dtos.LanguageDtos;
+using EcommerceShop.Contracts.Dtos.OrderDtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.ProductImageDtos;
 using EcommerceShop.Contracts.Dtos.RoleDtos;
@@ -34,6 +35,8 @@ namespace EcommerceShop.Business
             //User
             CreateMap<UserUpdateDto, AppUser>()
                 .ForMember(d => d.Id, t => t.Ignore());
+            //Order
+            CreateMap<CreateOrderDto, Order>();
         }
         private void FromDataAccessorLayer()
         {
