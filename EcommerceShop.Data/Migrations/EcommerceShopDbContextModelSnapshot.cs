@@ -80,7 +80,7 @@ namespace EcommerceShop.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "4aa8ed2c-c392-4b42-9e89-a506ab3e25ab",
+                            ConcurrencyStamp = "5a738490-10da-43fa-90e4-e147f5331371",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -157,7 +157,7 @@ namespace EcommerceShop.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8da5e793-781e-4ced-a9ae-91ca778c8214",
+                            ConcurrencyStamp = "07c2091e-4ee3-48ca-a9c4-a3b85b4a5e0c",
                             DoB = new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "admin.eshop@gmail.com",
                             EmailConfirmed = true,
@@ -166,7 +166,7 @@ namespace EcommerceShop.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "admin.eshop@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAtek2U8IPMZDYAufGbrGUba6exHlAWf9NZXPGQGlvhBfKmlFGcYDOdyMU1hXT8HJA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJuQjGt2sqiq9zBFyXIxTyXikcSc4z/Qo+4XIAzi0wLsLnDksFN0/yOmUkVcavnJ4Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -408,11 +408,9 @@ namespace EcommerceShop.Data.Migrations
 
             modelBuilder.Entity("EcommerceShop.Data.Entities.Order", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<Guid>("OrderId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -465,8 +463,8 @@ namespace EcommerceShop.Data.Migrations
 
             modelBuilder.Entity("EcommerceShop.Data.Entities.OrderDetail", b =>
                 {
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -519,7 +517,7 @@ namespace EcommerceShop.Data.Migrations
                         new
                         {
                             ProductId = 1,
-                            DateCreated = new DateTime(2023, 6, 23, 14, 2, 7, 372, DateTimeKind.Local).AddTicks(5724),
+                            DateCreated = new DateTime(2023, 6, 23, 23, 51, 44, 316, DateTimeKind.Local).AddTicks(2275),
                             OriginalPrice = 100000m,
                             Price = 200000m,
                             Stock = 0,

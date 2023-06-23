@@ -9,7 +9,7 @@ namespace EcommerceShop.Data.Entities
 {
     public class Order
     {
-        public int OrderId { set; get; }
+        public Guid OrderId { set; get; }
         public DateTime OrderDate { set; get; }
         public Guid? UserId { set; get; }
         public string FirstName {get; set;}

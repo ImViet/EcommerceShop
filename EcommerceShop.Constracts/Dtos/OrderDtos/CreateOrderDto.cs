@@ -4,6 +4,7 @@ namespace EcommerceShop.Contracts.Dtos.OrderDtos
 {
     public class CreateOrderDto
     {
+        public Guid OrderId {get; set;}
         public string? FirstName {get; set;}
         public string? LastName {get; set;}
         public string? ShipAddress { set; get; }

@@ -18,7 +18,7 @@ namespace EcommerceShop.WebApp.Controllers
             var cart = _cartService.GetCart();
             var totalPayment = cart.Sum(x => x.Total);
 
-            string orderid = DateTime.Now.Ticks.ToString(); //mã đơn hàng
+            string orderid = Guid.NewGuid().ToString(); //mã đơn hàng
             string endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
             string partnerCode = "MOMOOJOI20210710";
             string accessKey = "iPXneGmrJH0G8FOP";

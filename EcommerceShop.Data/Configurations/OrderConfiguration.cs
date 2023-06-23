@@ -17,8 +17,6 @@ namespace EcommerceShop.Data.Configurations
 
             builder.HasKey(x => x.OrderId);
 
-            builder.Property(x => x.OrderId).UseIdentityColumn();
-
             builder.Property(x => x.OrderDate);
             builder.Property(x => x.ShipEmail).IsRequired().IsUnicode(false).HasMaxLength(50);
 
