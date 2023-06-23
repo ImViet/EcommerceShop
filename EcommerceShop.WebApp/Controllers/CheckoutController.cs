@@ -10,7 +10,7 @@ namespace EcommerceShop.WebApp.Controllers
     public class CheckoutController: Controller
     {
         private readonly ICartService _cartService;
-        public CheckoutController(ICartService cartService)
+        public CheckoutController(ICartService cartService, IOrderApiService orderService)
         {
             _cartService = cartService;
         }
@@ -42,10 +42,6 @@ namespace EcommerceShop.WebApp.Controllers
                 }
                 return View(checkout);
             }
-            if(checkout.PaymentBy == "Momo")
-            {
-                return RedirectToAction("PaymentWithMomo", "Momo", checkout);
-            };
             return RedirectToAction("SaveOrder", "Order", checkout);
         }
     }

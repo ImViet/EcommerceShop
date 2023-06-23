@@ -12,6 +12,8 @@ namespace EcommerceShop.Data.Enums
         Confirmed,
         Shipping,
         Success,
-        Canceled
+        Canceled,
+        Error,
+        Paying
     }
 }
