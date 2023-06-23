@@ -22,6 +22,7 @@ namespace EcommerceShop.WebApp.Controllers
         {
             var newOrder = new CreateOrderDto()
             {
+                OrderId = Guid.NewGuid(),
                 FirstName = checkout.FirstName,
                 LastName = checkout.LastName,
                 ShipAddress = checkout.ShipAddress + ", " + checkout.ShipWard + ", " + checkout.ShipDistrict + ", " + checkout.ShipProvince,
@@ -33,7 +34,7 @@ namespace EcommerceShop.WebApp.Controllers
             var result = await _orderService.SaveOrder(newOrder);
             if(checkout.PaymentBy == "Momo")
             {
-                return RedirectToAction("PaymentWithMomo", "Momo", checkout);
+                return RedirectToAction("PaymentWithMomo", "Momo", newOrder);
             }
             return Redirect("/Order/InProcess");
         }

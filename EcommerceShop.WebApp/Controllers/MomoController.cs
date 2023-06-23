@@ -13,17 +13,17 @@ namespace EcommerceShop.WebApp.Controllers
         {
             _cartService = cartService;
         }
-        public async Task<IActionResult> PaymentWithMomo(CheckoutDto checkout)
+        public async Task<IActionResult> PaymentWithMomo(CreateOrderDto newOrder)
         {
             var cart = _cartService.GetCart();
             var totalPayment = cart.Sum(x => x.Total);
 
-            string orderid = Guid.NewGuid().ToString(); //mã đơn hàng
+            string orderid = newOrder.OrderId.ToString(); //mã đơn hàng
             string endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
             string partnerCode = "MOMOOJOI20210710";
             string accessKey = "iPXneGmrJH0G8FOP";
             string serectkey = "sFcbSGRSJjwGxwhhcEktCHWYUuTuPNDB";
-            string orderInfo = "Thanh toán đơn hàng " + orderid + " cho KH: " + checkout.LastName + " " + checkout.FirstName;
+            string orderInfo = "Thanh toán đơn hàng " + orderid + " cho KH: " + newOrder.LastName + " " + newOrder.FirstName;
             string returnUrl = "https://localhost:7288/Payment/PaymentClient";
             string notifyurl = "https://localhost:7288/Home/SavePayment"; 
 

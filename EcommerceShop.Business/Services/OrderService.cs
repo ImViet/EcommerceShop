@@ -44,5 +44,17 @@ namespace EcommerceShop.Business.Services
                 return new ApiSuccessResponse<bool>();
             return new ApiErrorResponse<bool>("Lưu đơn hàng thất bại");
         }
+        public async Task<ApiResponse<bool>> UpdateStatusAsync(Guid orderId, OrderStatus status)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            if(order == null)
+                return new ApiErrorResponse<bool>("Không tìm thấy đơn hàng");
+            order.Status = status;
+            _context.Update(order);
+            var result = await _context.SaveChangesAsync();
+            if(result > 0)
+                return new ApiSuccessResponse<bool>();
+            return new ApiErrorResponse<bool>("Lưu đơn hàng thất bại");
+        }
     }
 }

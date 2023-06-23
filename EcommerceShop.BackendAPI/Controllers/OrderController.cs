@@ -1,5 +1,6 @@
 using EcommerceShop.Business.Interfaces;
 using EcommerceShop.Contracts.Dtos.OrderDtos;
+using EcommerceShop.Data.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceShop.BackendAPI.Controllers
@@ -21,6 +22,17 @@ namespace EcommerceShop.BackendAPI.Controllers
             if(!result.IsSuccessed)
             {
                 return BadRequest("Không thể tạo đơn hàng");
+            }
+            return Ok(result);
+        }
+        [HttpPut]
+        [Route("UpdateStatus")]
+        public async Task<IActionResult> UpdateStatus([FromQuery]Guid orderId, [FromBody]OrderStatus status)
+        {
+            var result = await _orderService.UpdateStatusAsync(orderId, status);
+            if(!result.IsSuccessed)
+            {
+                return BadRequest("Cập nhật trạng thái thất bại");
             }
             return Ok(result);
         }
