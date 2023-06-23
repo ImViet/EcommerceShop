@@ -10,12 +10,12 @@ namespace EcommerceShop.WebApp.Controllers
 {
     public class PaymentController: Controller
     {
-        public async Task<IActionResult> PaymentClient()
+        public async Task<IActionResult> PaymentClient(CheckoutDto checkout)
         {
             var statusCode = Request.Query["errorCode"];
             if(statusCode == "0")
             {
-                return RedirectToAction("PaymentSuccess", "Payment");
+                return RedirectToAction("SaveOrder", "Momo");
             }
             return RedirectToAction("PaymentFail", "Payment");
         }

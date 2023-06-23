@@ -46,7 +46,7 @@ namespace EcommerceShop.WebApp.Controllers
             {
                 return RedirectToAction("PaymentWithMomo", "Momo", checkout);
             };
-            return View();
+            return RedirectToAction("SaveOrder", "Order", checkout);
         }
     }
 }
