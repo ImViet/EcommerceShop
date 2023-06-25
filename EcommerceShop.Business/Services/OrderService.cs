@@ -5,6 +5,8 @@ using EcommerceShop.Contracts.Dtos.OrderDtos;
 using EcommerceShop.Data.Data;
 using EcommerceShop.Data.Entities;
 using EcommerceShop.Data.Enums;
+using Microsoft.EntityFrameworkCore;
+
 namespace EcommerceShop.Business.Services
 {
     public class OrderService : IOrderService
@@ -15,6 +17,30 @@ namespace EcommerceShop.Business.Services
         {
             _mapper = mapper;
             _context = context;
+        }
+        public async Task<ApiResponse<List<OrderDto>>> GetUserOrderAsync(string userName, string email)
+        {
+             var checkAccount = await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName && x.Email == email);
+            if(checkAccount == null)
+            {
+                return new ApiErrorResponse<List<OrderDto>>("Không tìm thấy tài khoản");
+            }
+            var queryListOrder = await _context.Orders.Where(x => x.User.UserName == userName || x.ShipEmail == email).ToListAsync();
+            if(queryListOrder == null)
+            {
+                return new ApiErrorResponse<List<OrderDto>>("Không tìm thấy đơn hàng nào");
+            }
+            var listOrder = new List<OrderDto>();
+            foreach (var order in queryListOrder)
+            {
+                listOrder.Add(new OrderDto(){
+                    OrderDate = order.OrderDate,
+                    Status = (OrderStatusDto)order.Status,
+                    Quantity = _context.OrderDetails.Where(x => x.OrderId == order.OrderId).Sum(x => x.Quantity),
+                    Total = _context.OrderDetails.Where(x => x.OrderId == order.OrderId).Sum(x => x.Quantity * (double)x.Price)
+                });
+            }
+            return new ApiSuccessResponse<List<OrderDto>>(listOrder);
         }   
         public async Task<ApiResponse<bool>> CreateOrderAsync(CreateOrderDto newOrder)
         {

@@ -19,12 +19,13 @@ namespace EcommerceShop.WebApp.Controllers
         public async Task<IActionResult> PaymentClient(CheckoutDto checkout)
         {
             var statusCode = Request.Query["errorCode"];
+            var orderId = Request.Query["orderId"];
             if(statusCode == "0")
             {
-                var orderId = Request.Query["orderId"];
                 _orderService.UpdateStatus(Guid.Parse(orderId), OrderStatusDto.InProgress);
                 return RedirectToAction("PaymentSuccess", "Payment");
             }
+            _orderService.UpdateStatus(Guid.Parse(orderId), OrderStatusDto.Error);
             return RedirectToAction("PaymentFail", "Payment");
         }
         public async Task<IActionResult> PaymentSuccess()

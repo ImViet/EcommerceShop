@@ -14,6 +14,17 @@ namespace EcommerceShop.BackendAPI.Controllers
         {
             _orderService = orderService;
         }
+        [HttpGet]
+        [Route("GetUserOrder")]
+        public async Task<IActionResult> GetUserOrder([FromQuery]string userName, [FromQuery]string email)
+        {
+            var result = await _orderService.GetUserOrderAsync(userName, email);
+            if(!result.IsSuccessed)
+            {
+                return BadRequest("Không tìm thấy đơn hàng");
+            }
+            return Ok(result);
+        }
         [HttpPost]
         [Route("CreateOrder")]
         public async Task<IActionResult> CreateOrder([FromBody]CreateOrderDto newOrder)

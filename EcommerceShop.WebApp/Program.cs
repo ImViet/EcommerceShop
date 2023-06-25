@@ -23,7 +23,9 @@ builder.Services.AddHttpClient("myclient", client =>{
     client.BaseAddress = new Uri("https://localhost:7196");
 });
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie( options =>
+    options.LoginPath = "/Auth/Login"
+);
 builder.Services.AddSession(options => {
     options.IdleTimeout = TimeSpan.FromHours(3);
 });

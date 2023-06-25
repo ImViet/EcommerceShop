@@ -6,6 +6,7 @@ using EcommerceShop.Contracts.Dtos.AuthDtos;
 using EcommerceShop.WebApp.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -20,12 +21,14 @@ namespace EcommerceShop.WebApp.Controllers
             _authService = authService;
         }
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl)
         {
             ViewData["returnUrl"] = returnUrl;
             return View();
         }
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl, UserLoginDto user)
         {
             if(!ModelState.IsValid)
@@ -43,15 +46,16 @@ namespace EcommerceShop.WebApp.Controllers
                 IsPersistent = false
             };
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, userPrincipal, authProperties);
-            if(returnUrl != null)
+            if(returnUrl != null && returnUrl !="/Auth/Login")
             {
                 return Redirect(returnUrl);
             }
             return RedirectToAction("Index", "Home");
         }
         [HttpPost]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(string returnUrl)
         {
+            var url = returnUrl;
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login", "Auth");
         }

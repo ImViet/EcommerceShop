@@ -6,6 +6,7 @@ namespace EcommerceShop.Business.Interfaces
 {
     public interface IOrderService
     {
+        Task<ApiResponse<List<OrderDto>>> GetUserOrderAsync(string userName, string email);
         Task<ApiResponse<bool>> CreateOrderAsync(CreateOrderDto order);
         Task<ApiResponse<bool>> UpdateStatusAsync(Guid orderId, OrderStatus status);
     }
