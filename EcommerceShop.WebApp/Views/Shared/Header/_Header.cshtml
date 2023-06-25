@@ -60,6 +60,7 @@
                                             <li><a class="dropdown-item" asp-controller="User" asp-action="Index">Tài khoản của tôi</a></li>
                                             <li>
                                                 <form asp-controller="Auth" asp-action="Logout" method="post">
+                                                    <input type="hidden">
                                                 <button type="submit" class="dropdown-item">Đăng xuất</button>
                                                 </form>
                                             </li>
