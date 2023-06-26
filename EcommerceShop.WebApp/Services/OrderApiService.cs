@@ -1,7 +1,7 @@
 using System.Text;
 using EcommerceShop.Contracts;
+using EcommerceShop.Contracts.Dtos.EnumDtos;
 using EcommerceShop.Contracts.Dtos.OrderDtos;
-using EcommerceShop.Data.Enums;
 using EcommerceShop.WebApp.Interfaces;
 using Newtonsoft.Json;
 
@@ -13,6 +13,16 @@ namespace EcommerceShop.WebApp.Services
         public OrderApiService(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
+        }
+        public async Task<ApiResponse<List<OrderDto>>> GetUserOrder(string userName, string email)
+        {
+            var client = _httpClientFactory.CreateClient("myclient");
+            var url = $"/api/order/getuserorder?username={userName}&email={email}";
+            var response = await client.GetAsync(url);
+            var data = await response.Content.ReadAsStringAsync();
+            if(response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiResponse<List<OrderDto>>>(data);
+            return JsonConvert.DeserializeObject<ApiResponse<List<OrderDto>>>(data);
         }
         public async Task<ApiResponse<bool>> SaveOrder(CreateOrderDto newOrder)
         {
