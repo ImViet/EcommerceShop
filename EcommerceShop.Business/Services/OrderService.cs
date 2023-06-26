@@ -1,6 +1,7 @@
 using AutoMapper;
 using EcommerceShop.Business.Interfaces;
 using EcommerceShop.Contracts;
+using EcommerceShop.Contracts.Dtos.EnumDtos;
 using EcommerceShop.Contracts.Dtos.OrderDtos;
 using EcommerceShop.Data.Data;
 using EcommerceShop.Data.Entities;
@@ -25,7 +26,7 @@ namespace EcommerceShop.Business.Services
             {
                 return new ApiErrorResponse<List<OrderDto>>("Không tìm thấy tài khoản");
             }
-            var queryListOrder = await _context.Orders.Where(x => x.User.UserName == userName || x.ShipEmail == email).ToListAsync();
+            var queryListOrder = await _context.Orders.Where(x => x.User.UserName == userName || x.ShipEmail == email).OrderByDescending(x => x.OrderDate).ToListAsync();
             if(queryListOrder == null)
             {
                 return new ApiErrorResponse<List<OrderDto>>("Không tìm thấy đơn hàng nào");
@@ -35,7 +36,7 @@ namespace EcommerceShop.Business.Services
             {
                 listOrder.Add(new OrderDto(){
                     OrderDate = order.OrderDate,
-                    Status = (OrderStatusDto)order.Status,
+                    Status = ChangeOrderStatusName((OrderStatusDto)order.Status),
                     Quantity = _context.OrderDetails.Where(x => x.OrderId == order.OrderId).Sum(x => x.Quantity),
                     Total = _context.OrderDetails.Where(x => x.OrderId == order.OrderId).Sum(x => x.Quantity * (double)x.Price)
                 });
@@ -81,6 +82,35 @@ namespace EcommerceShop.Business.Services
             if(result > 0)
                 return new ApiSuccessResponse<bool>();
             return new ApiErrorResponse<bool>("Lưu đơn hàng thất bại");
+        }
+        private string ChangeOrderStatusName(OrderStatusDto status)
+        {
+            string statusName = "";
+            switch (status)
+            {
+                case OrderStatusDto.InProgress:
+                    statusName = "Đang xử lý";
+                    break;
+                case OrderStatusDto.Canceled:
+                    statusName = "Bị huỷ";
+                    break;
+                case OrderStatusDto.Confirmed:
+                    statusName = "Đã xác nhận";
+                    break;
+                case OrderStatusDto.Error:
+                    statusName = "Lỗi";
+                    break;
+                case OrderStatusDto.Paying:
+                    statusName = "Đang thanh toán";
+                    break;
+                case OrderStatusDto.Shipping:
+                    statusName = "Đang giao hàng";
+                    break;
+                case OrderStatusDto.Success:
+                    statusName = "Giao hàng thành công";
+                    break;
+            }
+            return statusName;
         }
     }
 }

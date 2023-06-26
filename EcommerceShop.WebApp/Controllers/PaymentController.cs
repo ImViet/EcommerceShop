@@ -1,6 +1,6 @@
 using EcommerceShop.Contracts.Dtos.CartDtos;
+using EcommerceShop.Contracts.Dtos.EnumDtos;
 using EcommerceShop.Contracts.Dtos.OrderDtos;
-using EcommerceShop.Data.Enums;
 using EcommerceShop.WebApp.Extensions;
 using EcommerceShop.WebApp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
