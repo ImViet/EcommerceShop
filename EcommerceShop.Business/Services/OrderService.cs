@@ -19,9 +19,31 @@ namespace EcommerceShop.Business.Services
             _mapper = mapper;
             _context = context;
         }
+        public async Task<ApiResponse<List<OrderDto>>> GetAllAsync(OrderStatusDto status)
+        {
+            var queryListOrder = await _context.Orders.Where(x => x.Status == (OrderStatus)status).OrderByDescending(x => x.OrderDate).ToListAsync();
+            if(queryListOrder == null)
+            {
+                return new ApiErrorResponse<List<OrderDto>>("Không tìm thấy đơn hàng nào");
+            }
+            var listOrder = new List<OrderDto>();
+            foreach (var order in queryListOrder)
+            {
+                listOrder.Add(new OrderDto(){
+                    OrderId = order.OrderId,
+                    OrderDate = order.OrderDate,
+                    Status = ChangeOrderStatusName((OrderStatusDto)order.Status),
+                    Email = order.ShipEmail,
+                    PhoneNumber = order.ShipPhoneNumber,
+                    Quantity = _context.OrderDetails.Where(x => x.OrderId == order.OrderId).Sum(x => x.Quantity),
+                    Total = _context.OrderDetails.Where(x => x.OrderId == order.OrderId).Sum(x => x.Quantity * (double)x.Price)
+                });
+            }
+            return new ApiSuccessResponse<List<OrderDto>>(listOrder);
+        }   
         public async Task<ApiResponse<List<OrderDto>>> GetUserOrderAsync(string userName, string email)
         {
-             var checkAccount = await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName && x.Email == email);
+            var checkAccount = await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName && x.Email == email);
             if(checkAccount == null)
             {
                 return new ApiErrorResponse<List<OrderDto>>("Không tìm thấy tài khoản");
@@ -89,13 +111,13 @@ namespace EcommerceShop.Business.Services
             switch (status)
             {
                 case OrderStatusDto.InProgress:
-                    statusName = "Đang xử lý";
+                    statusName = "Chờ xác nhận";
                     break;
                 case OrderStatusDto.Canceled:
                     statusName = "Bị huỷ";
                     break;
                 case OrderStatusDto.Confirmed:
-                    statusName = "Đã xác nhận";
+                    statusName = "Chờ lấy hàng";
                     break;
                 case OrderStatusDto.Error:
                     statusName = "Lỗi";

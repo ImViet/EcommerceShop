@@ -1,4 +1,5 @@
 using EcommerceShop.Business.Interfaces;
+using EcommerceShop.Contracts.Dtos.EnumDtos;
 using EcommerceShop.Contracts.Dtos.OrderDtos;
 using EcommerceShop.Data.Enums;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,17 @@ namespace EcommerceShop.BackendAPI.Controllers
         public OrderController(IOrderService orderService) 
         {
             _orderService = orderService;
+        }
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<IActionResult> GetAll([FromQuery]OrderStatusDto status)
+        {
+            var result = await _orderService.GetAllAsync(status);
+            if(!result.IsSuccessed)
+            {
+                return BadRequest("Không tìm thấy đơn hàng");
+            }
+            return Ok(result);
         }
         [HttpGet]
         [Route("GetUserOrder")]

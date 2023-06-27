@@ -44,7 +44,7 @@ namespace Ecommerce.AdminApp.Controllers
             var userPrincipal = ValidateToken(result.ResponseObject);
             var authProperties = new AuthenticationProperties()
             {
-                ExpiresUtc = DateTime.UtcNow.AddMinutes(10),
+                ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
                 IsPersistent = false,
             };
             HttpContext.Session.SetString("Token", result.ResponseObject);
