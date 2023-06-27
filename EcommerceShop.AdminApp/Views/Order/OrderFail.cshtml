@@ -1,0 +1,83 @@
+@using EcommerceShop.Contracts.Dtos.OrderDtos
+@using EcommerceShop.Contracts.Dtos.EnumDtos
+@model List<OrderDto>
+@{
+    var search = "";
+    var location = new Uri($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}");  
+    var url = location.PathAndQuery;  
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-5">Quản lý đơn đặt hàng</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Tổng quan</a></li>
+        <li class="breadcrumb-item">Danh sách đơn đặt hàng</li>
+        <li class="breadcrumb-item active">Đơn hàng giao thất bại</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header mb-1 bg-transparent">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    @* <a class="btn btn-success" asp-action="Create" asp-controller="Product">Tạo mới</a> *@
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <form class="d-flex">
+                        <input class="form-control me-1" value="@search" name="searchKeyword" type="search" placeholder="Nhập email để tra cứu..." aria-label="Tìm kiếm">
+                        <button class="btn btn-outline-success" type="submit">Tìm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @if(Model.Count > 0)
+    {
+        <div class="card">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Danh sách
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Ngày đặt</th>
+                        <th>Email</th>
+                        <th>Số sản phẩm</th>
+                        <th>SDT</th>
+                        <th>Tổng tiền</th>
+                    </tr>
+                </thead>
+                @* <tfoot>
+                    <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Office</th>
+                        <th>Age</th>
+                        <th>Start date</th>
+                        <th>Salary</th>
+                    </tr>
+                </tfoot> *@
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                    <tr>
+                        <td></td>
+                        <td>@order.OrderDate</td>
+                        <td>@order.Email</td>
+                        <td>@order.Quantity</td>
+                        <td>@order.PhoneNumber</td>
+                        <td>@string.Format("{0:0,0 vnđ}", order.Total)</td>
+                    </tr>
+                    }                 
+                </tbody>
+            </table>
+            </div>
+            @* @await Component.InvokeAsync("Paging", Model) *@
+        </div>
+    </div>
+    }
+    else
+    {
+        <h3 class="text-center">Chưa có đơn đặt hàng bị lỗi</h3>
+    }
+</div>
