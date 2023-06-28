@@ -9,5 +9,10 @@ namespace EcommerceShop.WebApp.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public async Task<IActionResult> NotAuthorized()
+        {
+            return View();
+        }
     }
 }

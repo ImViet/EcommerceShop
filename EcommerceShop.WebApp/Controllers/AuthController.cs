@@ -57,7 +57,7 @@ namespace EcommerceShop.WebApp.Controllers
         {
             var url = returnUrl;
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login", "Auth");
+            return RedirectToAction("Index", "Home");
         }
         [HttpGet]
         public async Task<IActionResult> Register()
