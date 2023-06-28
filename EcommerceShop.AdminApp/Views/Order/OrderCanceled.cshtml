@@ -27,57 +27,58 @@
                 </div>
             </div>
         </div>
-    @if(Model.Count > 0)
-    {
         <div class="card">
-        <div class="card-header">
-            <i class="fas fa-table me-1"></i>
-            Danh sách
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Ngày đặt</th>
-                        <th>Email</th>
-                        <th>Số sản phẩm</th>
-                        <th>SDT</th>
-                        <th>Tổng tiền</th>
-                    </tr>
-                </thead>
-                @* <tfoot>
-                    <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
-                        <th>Start date</th>
-                        <th>Salary</th>
-                    </tr>
-                </tfoot> *@
-                <tbody>
-                    @foreach (var order in Model)
-                    {
-                    <tr>
-                        <td></td>
-                        <td>@order.OrderDate</td>
-                        <td>@order.Email</td>
-                        <td>@order.Quantity</td>
-                        <td>@order.PhoneNumber</td>
-                        <td>@string.Format("{0:0,0 vnđ}", order.Total)</td>
-                    </tr>
-                    }                 
-                </tbody>
-            </table>
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                Danh sách
             </div>
-            @* @await Component.InvokeAsync("Paging", Model) *@
+            @if(Model.Count > 0)
+            {
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Ngày đặt</th>
+                                <th>Email</th>
+                                <th>Số sản phẩm</th>
+                                <th>SDT</th>
+                                <th>Tổng tiền</th>
+                            </tr>
+                        </thead>
+                        @* <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
+                            </tr>
+                        </tfoot> *@
+                        <tbody>
+                            @foreach (var order in Model)
+                            {
+                            <tr>
+                                <td></td>
+                                <td>@order.OrderDate</td>
+                                <td>@order.Email</td>
+                                <td>@order.Quantity</td>
+                                <td>@order.PhoneNumber</td>
+                                <td>@string.Format("{0:0,0 vnđ}", order.Total)</td>
+                            </tr>
+                            }                 
+                        </tbody>
+                    </table>
+                    </div>
+                    @* @await Component.InvokeAsync("Paging", Model) *@
+                </div>
+            }
+            else
+            {
+                <h3 class="text-center">Chưa có đơn đặt hàng giao thất bại</h3>
+            }
         </div>
     </div>
-    }
-    else
-    {
-        <h3 class="text-center">Chưa có đơn đặt hàng giao thất bại</h3>
-    }
 </div>
