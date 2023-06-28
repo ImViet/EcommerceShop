@@ -24,8 +24,11 @@ builder.Services.AddHttpClient("myclient", client =>{
 });
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie( options =>
-    options.LoginPath = "/Auth/Login"
-    // options.AccessDeniedPath = "/Error/NotAuthorized"
+    {
+
+        options.LoginPath = "/Auth/Login";
+        options.LoginPath = "/Error/NotAuthorized";
+    }
 );
 builder.Services.AddSession(options => {
     options.IdleTimeout = TimeSpan.FromHours(3);
@@ -46,7 +49,7 @@ else
         if(context.Response.StatusCode == 404)
         {
             context.Request.Path = "/Error/NotFound";
-            await next();
+            await next();   
         }
     });
 }

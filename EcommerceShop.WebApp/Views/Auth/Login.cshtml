@@ -3,6 +3,10 @@
 @{
     var checkRegisterSuccess = (string)TempData["AlertSuccess"];
     var returnUrl = (string)ViewData["returnUrl"];
+    if(returnUrl == null)
+    {
+        returnUrl = "/Home/Index";
+    }
 }
 <main class="main-content">
     <div class="breadcrumb-area breadcrumb-height" data-bg-image="/images/breadcrumb/bg/1-1-1920x373.jpg">
@@ -27,6 +31,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6">
                     <form asp-controller="Auth" asp-action="Login" method="post">
+                        @Html.AntiForgeryToken()
                         <input type="hidden" name="returnUrl" value="@returnUrl" />
                         <div class="login-form">
                             <h4 class="login-title">Đăng nhập</h4>
