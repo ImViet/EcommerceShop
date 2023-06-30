@@ -43,7 +43,7 @@ namespace EcommerceShop.Business.Services
             {
                 return new ApiErrorResponse<string>("Sai tài khoản hoặc mật khẩu");
             }
-            var token = CreateToken(user);
+            var token = await CreateToken(user);
             return new ApiSuccessResponse<string>(token);
         }
 
@@ -68,14 +68,18 @@ namespace EcommerceShop.Business.Services
             }
             return new ApiSuccessResponse<bool>();
         }
-        private string CreateToken(AppUser user)
+        private async Task<string> CreateToken(AppUser user)
         {
-            var roles = _userManager.GetRolesAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
             var claims = new List<Claim>()
             {
                 new Claim("Email", user.Email),
                 new Claim("UserName", user.UserName),
             };
+            foreach (var item in roles)
+            {
+               claims.Add(new Claim("Role", item));
+            }
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JWTSettings.Key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
             var token = new JwtSecurityToken(

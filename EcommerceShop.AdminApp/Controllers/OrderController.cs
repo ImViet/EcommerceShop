@@ -1,10 +1,12 @@
 using EcommerceShop.AdminApp.Interfaces;
 using EcommerceShop.Contracts.Dtos.EnumDtos;
 using EcommerceShop.Contracts.Dtos.OrderDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceShop.AdminApp.Controllers
 {
+    [Authorize(Policy = "RoleAdmin")]
     public class OrderController: BaseController
     {
         private readonly IOrderApiService _orderService;

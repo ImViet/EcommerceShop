@@ -30,6 +30,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Error/NotAuthorized";
     }
 );
+builder.Services.AddAuthorization();
 builder.Services.AddSession(options => {
     options.IdleTimeout = TimeSpan.FromHours(3);
 });

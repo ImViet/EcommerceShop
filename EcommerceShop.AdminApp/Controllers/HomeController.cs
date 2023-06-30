@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.AdminApp.Controllers
 {
+    [Authorize(Policy = "RoleAdmin")]
     public class HomeController : BaseController
     {
         public IActionResult Index()

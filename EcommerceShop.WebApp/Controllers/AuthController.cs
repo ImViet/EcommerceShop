@@ -60,7 +60,7 @@ namespace EcommerceShop.WebApp.Controllers
         {
             var url = returnUrl;
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Auth");
         }
         [HttpGet]
         [AllowAnonymous]

@@ -3,11 +3,13 @@ using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.CategoryDtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EcommerceShop.AdminApp.Controllers
 {
+    [Authorize(Policy = "RoleAdmin")]
     public class ProductController: BaseController
     {
         private readonly IProductApiService _productService;
