@@ -21,6 +21,7 @@ namespace EcommerceShop.WebApp.Controllers
             _authService = authService;
         }
         [HttpGet]
+        // [ValidateAntiForgeryToken]
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl)
         {
@@ -28,6 +29,7 @@ namespace EcommerceShop.WebApp.Controllers
             return View();
         }
         [HttpPost]
+        // [ValidateAntiForgeryToken]
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl, UserLoginDto user)
         {
@@ -53,6 +55,7 @@ namespace EcommerceShop.WebApp.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Logout(string returnUrl)
         {
             var url = returnUrl;
@@ -60,11 +63,13 @@ namespace EcommerceShop.WebApp.Controllers
             return RedirectToAction("Login", "Auth");
         }
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Register()
         {
             return View();
         }
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(UserRegisterDto user)
         {
             if(!ModelState.IsValid)

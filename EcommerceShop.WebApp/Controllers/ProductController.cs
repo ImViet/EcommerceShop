@@ -1,6 +1,7 @@
 using EcommerceShop.Contracts.Constants;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
 using EcommerceShop.WebApp.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceShop.WebApp.Controllers

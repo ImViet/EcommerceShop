@@ -5,10 +5,12 @@ using EcommerceShop.Contracts.Dtos.AuthDtos;
 using EcommerceShop.Contracts.Dtos.RequestDtos;
 using EcommerceShop.Contracts.Dtos.RoleDtos;
 using EcommerceShop.Contracts.Dtos.UserDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.AdminApp.Controllers
 {
+    [Authorize(Policy = "RoleAdmin")]
     public class UserController: BaseController
     {
         private readonly IUserApiService _userService;
