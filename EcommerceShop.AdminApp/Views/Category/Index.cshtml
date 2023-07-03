@@ -1,0 +1,59 @@
+@using EcommerceShop.Contracts.Dtos.CategoryDtos
+@model List<CategoryDto>
+<div class="container-fluid px-4">
+    <h1 class="mt-5">Quản lý loại sản phẩm</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Tổng quan</a></li>
+        <li class="breadcrumb-item active">Danh sách loại sản phẩm</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header mb-1 bg-transparent">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <a class="btn btn-success" asp-action="Create" asp-controller="Category">Tạo mới</a>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <form class="d-flex">
+                        <select class="form-control me-1" name="categoryId" id="" onchange="this.form.submit()" asp-items="@ViewBag.Categories">
+                            <option>--Lọc theo danh mục--</option>
+                        </select>
+                        @* <input class="form-control me-1" value="@search" name="searchKeyword" type="search" placeholder="Tìm kiếm..." aria-label="Tìm kiếm"> *@
+                        <button class="btn btn-outline-success" type="submit">Tìm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <div class="card">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Danh sách
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Tên loại sản phẩm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>@item.CategoryId</td>
+                        <td>@item.CategoryName</td>
+                        <td class="text-center">
+                            <a class="btn btn-outline-primary" asp-controller="Category" asp-action="Update" asp-route-productId="@item.CategoryId">Cập nhật</a>
+                            <a class="btn btn-outline-danger btn-delete-product" data-productid="@item.CategoryId">Xoá</a>
+                            <a class="btn btn-outline-info btn-detail-product" data-id="@item.CategoryId">Chi tiết</a>
+                        </td>
+                    </tr>
+                    }                 
+                </tbody>
+            </table>
+            </div>
+            @* @await Component.InvokeAsync("Paging", Model) *@
+        </div>
+    </div>
+</div>

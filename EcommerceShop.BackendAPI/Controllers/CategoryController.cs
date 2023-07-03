@@ -29,7 +29,6 @@ namespace EcommerceShop.BackendAPI.Controllers
         }
         [HttpPost]
         [Route("CreateCategory")]
-        [AllowAnonymous]
         public async Task<IActionResult> CreateCategory(CategoryCreateDto categoryCreateDto)
         {
             if(!ModelState.IsValid)
@@ -41,7 +40,6 @@ namespace EcommerceShop.BackendAPI.Controllers
         }
         [HttpPut]
         [Route("UpdateCategory")]
-        [AllowAnonymous]
         public async Task<IActionResult> UpdateCategory(CategoryUpdateDto categoryUpdateDto)
         {
             if(!ModelState.IsValid)

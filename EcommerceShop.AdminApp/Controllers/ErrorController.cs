@@ -14,7 +14,7 @@ namespace EcommerceShop.AdminApp.Controllers
         [HttpGet]
         public IActionResult NotAuthorized()
         {
-            return View();
+            return View("NotAuthorized");
         }
     }
 }
