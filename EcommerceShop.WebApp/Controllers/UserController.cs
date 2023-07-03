@@ -14,6 +14,10 @@ namespace EcommerceShop.WebApp.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            if(!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
             var userName = User.FindFirst("UserName").Value;
             var email = User.FindFirst("Email").Value;
             var listOrder = await _orderService.GetUserOrder(userName, email);
