@@ -24,7 +24,7 @@ namespace EcommerceShop.WebApp.Services
                 return JsonConvert.DeserializeObject<ApiResponse<List<OrderDto>>>(data);
             return JsonConvert.DeserializeObject<ApiResponse<List<OrderDto>>>(data);
         }
-        public async Task<ApiResponse<bool>> SaveOrder(CreateOrderDto newOrder)
+        public async Task<ApiResponse<bool>> SaveOrder(OrderCreateDto newOrder)
         {
             var client = _httpClientFactory.CreateClient("myclient");
             var json = JsonConvert.SerializeObject(newOrder);

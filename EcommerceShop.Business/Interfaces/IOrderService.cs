@@ -9,7 +9,7 @@ namespace EcommerceShop.Business.Interfaces
     {
         Task<ApiResponse<List<OrderDto>>> GetAllAsync(OrderStatusDto status);
         Task<ApiResponse<List<OrderDto>>> GetUserOrderAsync(string userName, string email);
-        Task<ApiResponse<bool>> CreateOrderAsync(CreateOrderDto order);
+        Task<ApiResponse<bool>> CreateOrderAsync(OrderCreateDto order);
         Task<ApiResponse<bool>> UpdateStatusAsync(Guid orderId, OrderStatus status);
     }
 }

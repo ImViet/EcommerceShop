@@ -2,7 +2,7 @@ using EcommerceShop.Contracts.Dtos.CartDtos;
 
 namespace EcommerceShop.Contracts.Dtos.OrderDtos
 {
-    public class CreateOrderDto
+    public class OrderCreateDto
     {
         public Guid OrderId {get; set;}
         public string? FirstName {get; set;}

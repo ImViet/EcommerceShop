@@ -1,4 +1,5 @@
 using EcommerceShop.Business.Interfaces;
+using EcommerceShop.Contracts.Dtos.CategoryDtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +22,31 @@ namespace EcommerceShop.BackendAPI.Controllers
         {
             if(!ModelState.IsValid)
                 return BadRequest();
-            var data = await _categoryService.GetAll(languageId);
+            var data = await _categoryService.GetAllAsync(languageId);
+            if(!data.IsSuccessed)
+                return BadRequest();
+            return Ok(data);
+        }
+        [HttpPost]
+        [Route("CreateCategory")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CreateCategory(CategoryCreateDto categoryCreateDto)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest();
+            var data = await _categoryService.CreateCategoryAsync(categoryCreateDto);
+            if(!data.IsSuccessed)
+                return BadRequest();
+            return Ok(data);
+        }
+        [HttpPut]
+        [Route("UpdateCategory")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateCategory(CategoryUpdateDto categoryUpdateDto)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest();
+            var data = await _categoryService.UpdateCategoryAsync(categoryUpdateDto);
             if(!data.IsSuccessed)
                 return BadRequest();
             return Ok(data);

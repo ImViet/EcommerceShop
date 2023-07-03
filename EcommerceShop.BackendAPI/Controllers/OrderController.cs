@@ -39,7 +39,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         }
         [HttpPost]
         [Route("CreateOrder")]
-        public async Task<IActionResult> CreateOrder([FromBody]CreateOrderDto newOrder)
+        public async Task<IActionResult> CreateOrder([FromBody]OrderCreateDto newOrder)
         {
             var result = await _orderService.CreateOrderAsync(newOrder);
             if(!result.IsSuccessed)
