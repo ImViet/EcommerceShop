@@ -17,7 +17,7 @@
                                 <div class="product-item">
                                     <div class="product-img img-zoom-effect">
                                         <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.ProductId">
-                                            <img class="img-full" src="https://bizweb.dktcdn.net/thumb/large/100/415/697/products/5bcf17a8-5485-4231-8cc4-0e67811e716c.jpg?v=1681109395000" alt="Product Images">
+                                            <img class="img-full" src="@product.ThumbnailImage" alt="Product Images">
                                         </a>
                                         <div class="product-add-action">
                                             <ul>

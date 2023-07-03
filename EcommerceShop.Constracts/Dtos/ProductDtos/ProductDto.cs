@@ -21,6 +21,7 @@ namespace EcommerceShop.Contracts.Dtos.ProductDtos
         public string SeoTitle { set; get; }
         public string SeoAlias { get; set; }
         public string LanguageId { get; set; }
+        public string ThumbnailImage {get; set;}
         public List<string> Categories {get; set;}
     }
 }

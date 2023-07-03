@@ -8,7 +8,7 @@
                 <div class="product-item">
                 <div class="product-img img-zoom-effect">
                     <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.ProductId">
-                        <img class="img-full" src="https://bizweb.dktcdn.net/100/415/697/products/te9178-11k7zwk1-1-o908-hinh-mat-truoc-0.jpg?v=1685788097953" alt="Product Images">
+                        <img class="img-full" src="@product.ThumbnailImage" alt="Product Images">
                     </a>
                     <div class="product-add-action">
                         <ul>
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="product-content">
-                    <a class="product-name" href="single-product.html">@product.Name</a>
+                    <a class="product-name" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.ProductId">@product.Name</a>
                     <div class="price-box pb-1">
                         <span class="new-price">@string.Format("{0:0,0 vnđ}", product.Price)</span>
                     </div>

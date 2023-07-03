@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EcommerceShop.Business.Interfaces;
 using EcommerceShop.Contracts;
+using EcommerceShop.Contracts.Constants;
 using EcommerceShop.Contracts.Dtos;
 using EcommerceShop.Contracts.Dtos.CategoryDtos;
 using EcommerceShop.Contracts.Dtos.ProductDtos;
@@ -40,12 +41,14 @@ namespace EcommerceShop.Business.Services
             //Join table
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.ProductId equals pt.ProductId
+                        join pi in _context.ProductImages on p.ProductId equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
                         join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId into ppic
                         from pic in ppic.DefaultIfEmpty()
                         join c in _context.Categories on pic.CategoryId equals c.CategoryId into picc
                         from c in picc.DefaultIfEmpty()
                         where pt.LanguageId == request.LanguageId
-                        select new {p, pt, pic};
+                        select new {p, pt, pic, pi};
             //Filter
             if(!string.IsNullOrEmpty(request.Search))
             {
@@ -72,6 +75,7 @@ namespace EcommerceShop.Business.Services
                                         SeoDescription = x.pt.SeoDescription,
                                         SeoTitle = x.pt.SeoTitle,
                                         LanguageId = x.pt.LanguageId,
+                                        ThumbnailImage = x.pi.ImagePath != null ? ProductSetting.PRODUCT_IMAGE_URL + x.pi.ImagePath : ProductSetting.PRODUCT_IMAGE_URL + "no-image.jpg"
                                     });
             //Sorting
             if(!string.IsNullOrEmpty(request.SortOrder))
@@ -99,8 +103,10 @@ namespace EcommerceShop.Business.Services
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.ProductId equals pt.ProductId
                         join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId
+                        join pi in _context.ProductImages on p.ProductId equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
                         join c in _context.Categories on pic.CategoryId equals c.CategoryId
-                        select new { p, pt, pic };
+                        select new { p, pt, pic, pi };
             //Filter
             if (categoryId > 0)
             {
@@ -125,6 +131,7 @@ namespace EcommerceShop.Business.Services
                                         SeoDescription = x.pt.SeoDescription,
                                         SeoTitle = x.pt.SeoTitle,
                                         LanguageId = x.pt.LanguageId,
+                                        ThumbnailImage = x.pi.ImagePath != null ? ProductSetting.PRODUCT_IMAGE_URL + x.pi.ImagePath : ProductSetting.PRODUCT_IMAGE_URL + "no-image.jpg"
                                     }).ToListAsync();
             //Select
             var pagedResult = new PagedResultDto<ProductDto>()
@@ -147,6 +154,7 @@ namespace EcommerceShop.Business.Services
                                     where pic.ProductId == productId && ct.LanguageId == languageId
                                     select ct.Name
                                     ).ToListAsync();
+            var productImage = await _context.ProductImages.Where(x => x.ProductId == productId).FirstOrDefaultAsync();
             var productDto = new ProductDto()
             {
                 ProductId = product.ProductId,
@@ -161,6 +169,7 @@ namespace EcommerceShop.Business.Services
                 SeoDescription = productTranslation != null ? productTranslation.SeoDescription : null,
                 SeoTitle = productTranslation != null ? productTranslation.SeoTitle : null,
                 Stock = product.Stock,
+                ThumbnailImage = productImage != null ? (ProductSetting.PRODUCT_IMAGE_URL + productImage.ImagePath) : (ProductSetting.PRODUCT_IMAGE_URL + "no-image.jpg"),
                 ViewCount = product.ViewCount,
                 Categories = categories
             };
@@ -382,10 +391,12 @@ namespace EcommerceShop.Business.Services
         {
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.ProductId equals pt.ProductId
+                        join pi in _context.ProductImages on p.ProductId equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
                         join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId
                         join c in _context.Categories on pic.CategoryId equals c.CategoryId
                         where pt.LanguageId == languageId
-                        select new {p, pt, pic};
+                        select new {p, pt, pic, pi};
             if(categoryId != 0)
             {
                 query = query.Where(x => x.pic.CategoryId == categoryId);
@@ -405,6 +416,7 @@ namespace EcommerceShop.Business.Services
                                         SeoDescription = x.pt.SeoDescription,
                                         SeoTitle = x.pt.SeoTitle,
                                         LanguageId = x.pt.LanguageId,
+                                        ThumbnailImage = x.pi.ImagePath != null ? ProductSetting.PRODUCT_IMAGE_URL + x.pi.ImagePath : ProductSetting.PRODUCT_IMAGE_URL + "no-image.jpg"
                                     }).ToListAsync();
             return new ApiSuccessResponse<List<ProductDto>>(data);
         }
@@ -412,10 +424,12 @@ namespace EcommerceShop.Business.Services
         {
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.ProductId equals pt.ProductId
+                        join pi in _context.ProductImages on p.ProductId equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
                         join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId
                         join c in _context.Categories on pic.CategoryId equals c.CategoryId
                         where pt.LanguageId == languageId
-                        select new {p, pt, pic};
+                        select new {p, pt, pic, pi};
             var data = await query.Take(take).OrderByDescending(x => x.p.DateCreated).Select(x => new ProductDto()
                                     {
                                         ProductId = x.p.ProductId,
@@ -431,6 +445,7 @@ namespace EcommerceShop.Business.Services
                                         SeoDescription = x.pt.SeoDescription,
                                         SeoTitle = x.pt.SeoTitle,
                                         LanguageId = x.pt.LanguageId,
+                                        ThumbnailImage = x.pi.ImagePath != null ? ProductSetting.PRODUCT_IMAGE_URL + x.pi.ImagePath : ProductSetting.PRODUCT_IMAGE_URL + "no-image.jpg"
                                     }).ToListAsync();
             return new ApiSuccessResponse<List<ProductDto>>(data);
         }
@@ -439,10 +454,12 @@ namespace EcommerceShop.Business.Services
             var cateOfProduct = await _context.ProductInCategories.Where(x => x.ProductId == productId).Select(x => x.CategoryId).ToListAsync();
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.ProductId equals pt.ProductId
+                        join pi in _context.ProductImages on p.ProductId equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
                         join pic in _context.ProductInCategories on p.ProductId equals pic.ProductId
                         join c in _context.Categories on pic.CategoryId equals c.CategoryId
                         where pt.LanguageId == languageId && p.ProductId != productId
-                        select new {p, pt, pic};
+                        select new {p, pt, pic, pi};
             if(cateOfProduct != null)
             {
                 query = query.Where(x => cateOfProduct.Contains(x.pic.CategoryId));
@@ -462,6 +479,7 @@ namespace EcommerceShop.Business.Services
                                         SeoDescription = x.pt.SeoDescription,
                                         SeoTitle = x.pt.SeoTitle,
                                         LanguageId = x.pt.LanguageId,
+                                        ThumbnailImage = x.pi.ImagePath != null ? ProductSetting.PRODUCT_IMAGE_URL + x.pi.ImagePath : ProductSetting.PRODUCT_IMAGE_URL + "no-image.jpg"
                                     }).ToListAsync();
             return new ApiSuccessResponse<List<ProductDto>>(data);
         }

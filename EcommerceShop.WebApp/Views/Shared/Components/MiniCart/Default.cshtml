@@ -19,7 +19,7 @@
                         <i class="pe-7s-close btn-remove-item_minicart"></i>
                     </a>
                     <a asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.Product.ProductId" class="product-item_img">
-                        <img class="img-full" src="/images/product/small-size/1-1-112x124.jpg" alt="Product Image">
+                        <img class="img-full" src="@product.Product.ThumbnailImage" alt="Product Image">
                     </a>
                     <div class="product-item_content">
                         <a class="product-item_title" asp-controller="Product" asp-action="ProductDetail" asp-route-productId="@product.Product.ProductId">@product.Product.Name</a>
