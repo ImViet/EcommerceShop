@@ -42,5 +42,21 @@ namespace EcommerceShop.AdminApp.Controllers
             TempData["ModalSuccess"] = "Thêm loại sản phẩm thành công";
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public async Task<IActionResult> Delete(int categoryId)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(categoryId);
+            }
+            var data = await _categoryService.DeleteCategory(categoryId);
+            if(!data.IsSuccessed)
+            {
+                ModelState.AddModelError("", data.Message);
+                return View(categoryId);
+            }
+            TempData["ModalSuccess"] = "Xoá loại sản phẩm thành công";
+            return RedirectToAction("Index", "Category");
+        }
     }
 }

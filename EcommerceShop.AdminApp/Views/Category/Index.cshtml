@@ -49,8 +49,8 @@
                         <td>@item.CategoryName</td>
                         <td class="text-center">
                             <a class="btn btn-outline-primary" asp-controller="Category" asp-action="Update" asp-route-productId="@item.CategoryId">Cập nhật</a>
-                            <a class="btn btn-outline-danger btn-delete-product" data-productid="@item.CategoryId">Xoá</a>
-                            <a class="btn btn-outline-info btn-detail-product" data-id="@item.CategoryId">Chi tiết</a>
+                            <a class="btn btn-outline-danger btn-delete-category" data-categoryid="@item.CategoryId">Xoá</a>
+                            <a class="btn btn-outline-info btn-detail-product" data-categoryid="@item.CategoryId">Chi tiết</a>
                         </td>
                     </tr>
                     }                 
@@ -78,5 +78,5 @@
         </text>  
         }
     </script>
-    <script src="/js/products/product.js" asp-append-version="true"></script>
+    <script src="/js/categories/category.js" asp-append-version="true"></script>
 }
