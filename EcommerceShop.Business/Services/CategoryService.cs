@@ -61,12 +61,25 @@ namespace EcommerceShop.Business.Services
             {
                 throw new EcommerceShopException($"Không thể tìm thấy danh mục với Id: {categoryUpdateDto.CategoryId}");
             }
-            _mapper.Map(categoryUpdateDto, category);
             _mapper.Map(categoryUpdateDto, categoryTranslation);
             var result = await _context.SaveChangesAsync();
             if(result > 0)
                 return new ApiSuccessResponse<bool>();
             return new ApiErrorResponse<bool>("Cập nhật danh mục thất bại");
+        }
+
+        public async Task<ApiResponse<bool>> DeleteCategoryAsync(int categoryId)
+        {
+            var category = await _context.Categories.FindAsync(categoryId);
+            if(category == null)
+            {
+                throw new EcommerceShopException($"Không tìm thấy danh mục với Id: {categoryId}");
+            }
+            _context.Categories.Remove(category);
+           var result = await _context.SaveChangesAsync();
+            if(result > 0)
+                return new ApiSuccessResponse<bool>();
+            return new ApiErrorResponse<bool>("Xoá sản phẩm thất bại");
         }
     }
 }

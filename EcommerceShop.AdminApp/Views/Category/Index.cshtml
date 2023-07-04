@@ -1,5 +1,9 @@
 @using EcommerceShop.Contracts.Dtos.CategoryDtos
 @model List<CategoryDto>
+@{
+    ViewData["Title"] = "Danh sách loại sản phẩm";
+    var checkModalSuccess = (string)TempData["ModalSuccess"];
+}
 <div class="container-fluid px-4">
     <h1 class="mt-5">Quản lý loại sản phẩm</h1>
     <ol class="breadcrumb mb-4">
@@ -57,3 +61,22 @@
         </div>
     </div>
 </div>
+@section Scripts
+{
+    <script asp-append-version="true">
+        @if(checkModalSuccess != null)
+        {
+        <text>
+        $(document).ready(function(){
+                    Swal.fire({
+                        icon: 'success',
+                        title: "@checkModalSuccess",
+                        showConfirmButton: false,
+                        timer: 1500
+                        })
+                    });
+        </text>  
+        }
+    </script>
+    <script src="/js/products/product.js" asp-append-version="true"></script>
+}

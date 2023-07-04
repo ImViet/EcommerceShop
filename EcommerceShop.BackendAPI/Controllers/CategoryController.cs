@@ -29,7 +29,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         }
         [HttpPost]
         [Route("CreateCategory")]
-        public async Task<IActionResult> CreateCategory(CategoryCreateDto categoryCreateDto)
+        public async Task<IActionResult> CreateCategory([FromBody]CategoryCreateDto categoryCreateDto)
         {
             if(!ModelState.IsValid)
                 return BadRequest();
@@ -40,11 +40,22 @@ namespace EcommerceShop.BackendAPI.Controllers
         }
         [HttpPut]
         [Route("UpdateCategory")]
-        public async Task<IActionResult> UpdateCategory(CategoryUpdateDto categoryUpdateDto)
+        public async Task<IActionResult> UpdateCategory([FromBody]CategoryUpdateDto categoryUpdateDto)
         {
             if(!ModelState.IsValid)
                 return BadRequest();
             var data = await _categoryService.UpdateCategoryAsync(categoryUpdateDto);
+            if(!data.IsSuccessed)
+                return BadRequest();
+            return Ok(data);
+        }
+        [HttpDelete]
+        [Route("DeleteCategory")]
+        public async Task<IActionResult> DeleteCategory(int categoryId)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest();
+            var data = await _categoryService.DeleteCategoryAsync(categoryId);
             if(!data.IsSuccessed)
                 return BadRequest();
             return Ok(data);

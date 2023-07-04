@@ -10950,7 +10950,9 @@ body {
 .img-error {
   max-width: 20rem;
 }
-
+.input-validation-error{
+  border-color: red;
+}
 .nav .nav-link .sb-nav-link-icon,
 .sb-sidenav-menu .nav-link .sb-nav-link-icon {
   margin-right: 0.5rem;

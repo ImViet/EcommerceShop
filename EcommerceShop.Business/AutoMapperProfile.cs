@@ -40,8 +40,6 @@ namespace EcommerceShop.Business
             CreateMap<OrderCreateDto, Order>();
             //Category
             CreateMap<CategoryCreateDto, Category>();
-            CreateMap<CategoryUpdateDto, Category>()
-                .ForMember(d => d.CategoryId, t => t.Ignore());
             CreateMap<CategoryUpdateDto, CategoryTranslation>()
                 .ForMember(d => d.CategoryId, t => t.Ignore());
         }

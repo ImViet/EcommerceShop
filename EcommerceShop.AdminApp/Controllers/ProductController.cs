@@ -52,6 +52,7 @@ namespace EcommerceShop.AdminApp.Controllers
         {
             if(!ModelState.IsValid)
                 return View(product);
+            product.LanguageId = HttpContext.Session.GetString("Language");
             var data = await _productService.CreateProduct(product);
             if(data.IsSuccessed)
             {

@@ -8,5 +8,6 @@ namespace EcommerceShop.Business.Interfaces
         Task<ApiResponse<List<CategoryDto>>> GetAllAsync(string languageId);
         Task<ApiResponse<bool>> CreateCategoryAsync(CategoryCreateDto categoryCreateDto);
         Task<ApiResponse<bool>> UpdateCategoryAsync(CategoryUpdateDto categoryUpdateDto);
+        Task<ApiResponse<bool>> DeleteCategoryAsync(int categoryId);
     }
 }
