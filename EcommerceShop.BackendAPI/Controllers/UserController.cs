@@ -9,7 +9,7 @@ namespace EcommerceShop.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "RoleAdmin")]
     public class UserController: ControllerBase
     {
         private readonly IUserService _userService;
@@ -32,6 +32,7 @@ namespace EcommerceShop.BackendAPI.Controllers
         }
         [HttpGet]
         [Route("GetUser")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetUser([FromQuery]Guid userId)
         {
             if(!ModelState.IsValid)

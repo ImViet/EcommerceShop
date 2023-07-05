@@ -20,7 +20,9 @@ builder.Services.AddEndpointsApiExplorer();
 
 //Swagger bearer token
 builder.Services.AddSwaggerRegister();
-
+builder.Services.AddAuthorization(options =>{
+    options.AddPolicy("RoleAdmin", policy => policy.RequireClaim("Role", "admin"));
+});
 builder.Services.AddControllers()
     .AddFluentValidation(fv =>
     {
