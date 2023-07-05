@@ -22,10 +22,10 @@ namespace EcommerceShop.WebApp.Controllers
             var orderId = Request.Query["orderId"];
             if(statusCode == "0")
             {
-                _orderService.UpdateStatus(Guid.Parse(orderId), OrderStatusDto.InProgress);
+                await _orderService.UpdateStatus(Guid.Parse(orderId), OrderStatusDto.InProgress);
                 return RedirectToAction("PaymentSuccess", "Payment");
             }
-            _orderService.UpdateStatus(Guid.Parse(orderId), OrderStatusDto.Error);
+            await _orderService.UpdateStatus(Guid.Parse(orderId), OrderStatusDto.Error);
             return RedirectToAction("PaymentFail", "Payment");
         }
         public async Task<IActionResult> PaymentSuccess()

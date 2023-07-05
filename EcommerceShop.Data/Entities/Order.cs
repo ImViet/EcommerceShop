@@ -10,6 +10,7 @@ namespace EcommerceShop.Data.Entities
     public class Order
     {
         public Guid OrderId { set; get; }
+        public int No { get; set; }
         public DateTime OrderDate { set; get; }
         public Guid? UserId { set; get; }
         public string FirstName {get; set;}

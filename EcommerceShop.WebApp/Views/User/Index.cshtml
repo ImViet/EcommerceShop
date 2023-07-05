@@ -67,7 +67,7 @@
                                             @for (int i = 0; i < listOrder.Count; i++)
                                             {
                                                 <tr>
-                                                    <td><a class="account-order-id" href="javascript:void(0)">#@(i + 1)</a></td>
+                                                    <td><a class="account-order-id" href="javascript:void(0)">@listOrder[i].No</a></td>
                                                     <td>@listOrder[i].OrderDate.ToString("dd/MM/yyyy")</td>
                                                     <td>@listOrder[i].Status</td>
                                                     <td>@string.Format("{0:0,0 vnđ}", listOrder[i].Total) cho @listOrder[i].Quantity sản phẩm</td>
