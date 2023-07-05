@@ -13,7 +13,7 @@ namespace EcommerceShop.WebApp.Controllers
         {
             _cartService = cartService;
         }
-        public async Task<IActionResult> PaymentWithMomo(CreateOrderDto newOrder)
+        public async Task<IActionResult> PaymentWithMomo(OrderCreateDto newOrder)
         {
             var cart = _cartService.GetCart();
             var totalPayment = cart.Sum(x => x.Total);

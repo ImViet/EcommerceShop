@@ -20,7 +20,7 @@ namespace EcommerceShop.WebApp.Controllers
         }
         public async Task<IActionResult> SaveOrder(CheckoutDto checkout)
         {
-            var newOrder = new CreateOrderDto()
+            var newOrder = new OrderCreateDto()
             {
                 OrderId = Guid.NewGuid(),
                 FirstName = checkout.FirstName,

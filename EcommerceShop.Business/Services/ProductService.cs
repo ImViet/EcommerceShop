@@ -224,7 +224,7 @@ namespace EcommerceShop.Business.Services
                 .FirstOrDefaultAsync(x => x.ProductId == productUpdateDto.ProductId && x.LanguageId == productUpdateDto.LanguageId);
             if(product == null || productTranslation == null)
             {
-                throw new EcommerceShopException($"Product is not found!!! Product: {productUpdateDto.ProductId}");
+                throw new EcommerceShopException($"Không thể tìm thấy sản phẩm với Id: {productUpdateDto.ProductId}");
             }
             _mapper.Map(productUpdateDto, productTranslation);
             //Save image
@@ -239,6 +239,7 @@ namespace EcommerceShop.Business.Services
                     _context.ProductImages.Update(thumbnailImage);
                 }
             }
+            _context.ProductTranslations.Update(productTranslation);
             var result = await _context.SaveChangesAsync();
             if(result > 0)
                 return new ApiSuccessResponse<bool>();

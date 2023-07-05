@@ -67,7 +67,7 @@
                                 <td>@order.Quantity</td>
                                 <td>@order.PhoneNumber</td>
                                 <td>@string.Format("{0:0,0 vnđ}", order.Total)</td>
-                                <td>
+                                <td class="text-center">
                                     <form asp-controller="Order" asp-action="ChangeOrderStatus" method="post">
                                         <input type="hidden" name="orderId" value="@order.OrderId">
                                         <input type="hidden" name="status" value="@OrderStatusDto.Confirmed">

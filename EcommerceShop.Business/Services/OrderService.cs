@@ -65,7 +65,7 @@ namespace EcommerceShop.Business.Services
             }
             return new ApiSuccessResponse<List<OrderDto>>(listOrder);
         }   
-        public async Task<ApiResponse<bool>> CreateOrderAsync(CreateOrderDto newOrder)
+        public async Task<ApiResponse<bool>> CreateOrderAsync(OrderCreateDto newOrder)
         {
             var order = _mapper.Map<Order>(newOrder);
             order.OrderDate = DateTime.Now;

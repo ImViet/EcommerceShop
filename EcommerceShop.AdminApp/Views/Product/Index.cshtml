@@ -68,7 +68,7 @@
                         <td>@string.Format("{0:0,0 vnđ}", item.OriginalPrice)</td>
                         <td>@string.Format("{0:0,0 vnđ}", item.Price)</td>
                         <td>@item.Stock</td>
-                        <td>
+                        <td class="text-center">
                             <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Update" asp-route-productId="@item.ProductId">Cập nhật</a>
                             <a class="btn btn-outline-danger btn-delete-product" data-productid="@item.ProductId">Xoá</a>
                             <a class="btn btn-outline-info btn-detail-product" data-id="@item.ProductId">Chi tiết</a>
