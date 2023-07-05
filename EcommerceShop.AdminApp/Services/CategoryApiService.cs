@@ -24,6 +24,12 @@ namespace EcommerceShop.AdminApp.Services
             var result = await GetAsync<ApiResponse<List<CategoryDto>>>(url);
             return result;
         }
+        public async Task<ApiResponse<CategoryDto>> GetCategoryById(int categoryId, string languageId)
+        {
+            var url = $"/api/category/getbyid?categoryid={categoryId}&languageid={languageId}";
+            var result = await GetAsync<ApiResponse<CategoryDto>>(url);
+            return result;
+        }
 
         public async Task<ApiResponse<bool>> CreateCategory(CategoryCreateDto category)
         {

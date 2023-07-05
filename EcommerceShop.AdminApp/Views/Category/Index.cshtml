@@ -48,9 +48,9 @@
                         <td>@item.CategoryId</td>
                         <td>@item.CategoryName</td>
                         <td class="text-center">
-                            <a class="btn btn-outline-primary" asp-controller="Category" asp-action="Update" asp-route-productId="@item.CategoryId">Cập nhật</a>
+                            <a class="btn btn-outline-primary" asp-controller="Category" asp-action="Update" asp-route-categoryId="@item.CategoryId">Cập nhật</a>
                             <a class="btn btn-outline-danger btn-delete-category" data-categoryid="@item.CategoryId">Xoá</a>
-                            <a class="btn btn-outline-info btn-detail-product" data-categoryid="@item.CategoryId">Chi tiết</a>
+                            <a class="btn btn-outline-info btn-detail-category" data-categoryid="@item.CategoryId">Chi tiết</a>
                         </td>
                     </tr>
                     }                 

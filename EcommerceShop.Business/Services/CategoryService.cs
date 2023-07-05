@@ -31,6 +31,25 @@ namespace EcommerceShop.Business.Services
             }).ToListAsync();
             return new ApiSuccessResponse<List<CategoryDto>>(categories);
         }
+        public async Task<ApiResponse<CategoryDto>> GetByIdAsync(int categoryId, string languageId)
+        {
+            var category = await _context.Categories.FindAsync(categoryId);
+            if(category == null)
+            {
+                throw new EcommerceShopException("Không tìm thấy loại sản phẩm");
+            }
+            var categoryTranslation = await _context.CategoryTranslations
+                                .FirstOrDefaultAsync(x => x.CategoryId == categoryId && x.LanguageId == languageId);
+            var categoryResult = new CategoryDto()
+            {
+                CategoryId = categoryId,
+                CategoryName = categoryTranslation.Name,
+                SeoAlias = categoryTranslation.SeoAlias,
+                SeoTitle = categoryTranslation.SeoTitle,
+                SeoDescription = categoryTranslation.SeoDescription
+            };
+            return new ApiSuccessResponse<CategoryDto>(categoryResult);
+        }
         public async Task<ApiResponse<bool>> CreateCategoryAsync(CategoryCreateDto newCategory)
         {
             var category = _mapper.Map<Category>(newCategory);
@@ -62,6 +81,7 @@ namespace EcommerceShop.Business.Services
                 throw new EcommerceShopException($"Không thể tìm thấy danh mục với Id: {categoryUpdateDto.CategoryId}");
             }
             _mapper.Map(categoryUpdateDto, categoryTranslation);
+            _context.CategoryTranslations.Update(categoryTranslation);
             var result = await _context.SaveChangesAsync();
             if(result > 0)
                 return new ApiSuccessResponse<bool>();

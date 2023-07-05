@@ -27,6 +27,18 @@ namespace EcommerceShop.BackendAPI.Controllers
                 return BadRequest();
             return Ok(data);
         }
+        [HttpGet]
+        [Route("GetById")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetById(int categoryId, string languageId)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest();
+            var data = await _categoryService.GetByIdAsync(categoryId, languageId);
+            if(!data.IsSuccessed)
+                return BadRequest();
+            return Ok(data);
+        }
         [HttpPost]
         [Route("CreateCategory")]
         public async Task<IActionResult> CreateCategory([FromBody]CategoryCreateDto categoryCreateDto)
@@ -46,7 +58,7 @@ namespace EcommerceShop.BackendAPI.Controllers
                 return BadRequest();
             var data = await _categoryService.UpdateCategoryAsync(categoryUpdateDto);
             if(!data.IsSuccessed)
-                return BadRequest();
+                return BadRequest(data.Message);
             return Ok(data);
         }
         [HttpDelete]

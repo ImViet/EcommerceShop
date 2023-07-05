@@ -239,6 +239,7 @@ namespace EcommerceShop.Business.Services
                     _context.ProductImages.Update(thumbnailImage);
                 }
             }
+            _context.ProductTranslations.Update(productTranslation);
             var result = await _context.SaveChangesAsync();
             if(result > 0)
                 return new ApiSuccessResponse<bool>();

@@ -59,7 +59,7 @@ namespace EcommerceShop.BackendAPI.Controllers
             var result = await _productService.UpdateProductAsync(productUpdateDto);
             if(!result.IsSuccessed)
             {
-                return BadRequest($"Cannot update product with id = {productUpdateDto.ProductId}");
+                return BadRequest($"{result.Message}");
             }
             return Ok(result);
         }

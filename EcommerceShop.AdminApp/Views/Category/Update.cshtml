@@ -1,11 +1,11 @@
 @using EcommerceShop.Contracts.Dtos.CategoryDtos
-@model CategoryCreateDto
+@model CategoryUpdateDto
 <div class="container-fluid px-4">
-    <h1 class="mt-5">Tạo loại sản phẩm</h1>
+    <h1 class="mt-5">Cập nhật loại sản phẩm</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Tổng quan</a></li>
         <li class="breadcrumb-item"><a asp-controller="Category" asp-action="Index">Danh sách loại sản phẩm</a></li>
-        <li class="breadcrumb-item active">Tạo loại sản phẩm</li>
+        <li class="breadcrumb-item active">Cập nhật loại sản phẩm</li>
     </ol>
     <div class="card mb-4">
         <div class="card-body">
@@ -18,8 +18,13 @@
             DataTable Example
         </div> *@
         <div class="card-body">
-            <form id="form-create-category" class="row g-3" asp-controller="Category" asp-action="Create" method="post">
+            <form id="form-create-category" class="row g-3" asp-controller="Category" asp-action="Update" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col-md-6" hidden>
+                    <label asp-for="CategoryId" for="inputCategoryId" class="form-label">Tên loại sản phẩm</label>
+                    <input asp-for="CategoryId" type="text" class="form-control" id="inputCategoryId">
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
                 <div class="col-md-6">
                     <label asp-for="Name" for="inputName" class="form-label">Tên loại sản phẩm</label>
                     <input asp-for="Name" type="text" class="form-control" id="inputName">
