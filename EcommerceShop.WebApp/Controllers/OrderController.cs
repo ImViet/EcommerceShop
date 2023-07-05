@@ -38,6 +38,7 @@ namespace EcommerceShop.WebApp.Controllers
                 return RedirectToAction("PaymentWithMomo", "Momo", newOrder);
             }
             Response.Cookies.Delete(CookiesSetting.CART_COOKIES);
+            HttpContext.Session.SetString("CountCart", "0");
             return Redirect("/Order/InProcess");
         }
     }

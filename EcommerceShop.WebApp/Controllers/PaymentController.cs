@@ -25,6 +25,7 @@ namespace EcommerceShop.WebApp.Controllers
             {
                 await _orderService.UpdateStatus(Guid.Parse(orderId), OrderStatusDto.InProgress);
                 Response.Cookies.Delete(CookiesSetting.CART_COOKIES);
+                HttpContext.Session.SetString("CountCart", "0");
                 return RedirectToAction("PaymentSuccess", "Payment");
             }
             await _orderService.UpdateStatus(Guid.Parse(orderId), OrderStatusDto.Error);
