@@ -1,1 +1,8 @@
-<h1>Fail</h1>
+@using EcommerceShop.Contracts.Constants
+@{
+    var imgSuccess = ProductSetting.PRODUCT_IMAGE_URL + "/payment_fail.png";
+}
+<div class="text-center">
+    <img class="p-5" src="@imgSuccess" alt="" style="height: 300px;">
+    <h3>Thanh toán thất bại</h3>
+</div>

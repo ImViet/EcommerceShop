@@ -1,3 +1,4 @@
+using EcommerceShop.Contracts.Constants;
 using EcommerceShop.Contracts.Dtos.CartDtos;
 using EcommerceShop.Contracts.Dtos.EnumDtos;
 using EcommerceShop.Contracts.Dtos.OrderDtos;
@@ -23,6 +24,7 @@ namespace EcommerceShop.WebApp.Controllers
             if(statusCode == "0")
             {
                 await _orderService.UpdateStatus(Guid.Parse(orderId), OrderStatusDto.InProgress);
+                Response.Cookies.Delete(CookiesSetting.CART_COOKIES);
                 return RedirectToAction("PaymentSuccess", "Payment");
             }
             await _orderService.UpdateStatus(Guid.Parse(orderId), OrderStatusDto.Error);
