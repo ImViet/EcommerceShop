@@ -5,6 +5,7 @@ namespace EcommerceShop.Contracts.Dtos.OrderDtos
     public class OrderDto
     {
         public Guid OrderId {get; set;}
+        public int No {get; set;}
         public DateTime OrderDate {get; set;}
         public string Email {get; set;}
         public string PhoneNumber {get; set;}

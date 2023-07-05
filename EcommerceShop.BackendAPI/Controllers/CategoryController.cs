@@ -7,7 +7,7 @@ namespace EcommerceShop.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "RoleAdmin")]
     public class CategoryController: ControllerBase
     {
         private readonly ICategoryService _categoryService;

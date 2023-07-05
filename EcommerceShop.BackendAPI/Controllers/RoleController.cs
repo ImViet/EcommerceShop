@@ -6,7 +6,7 @@ namespace EcommerceShop.BackendAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Policy = "RoleAdmin")]
     public class RoleController: ControllerBase
     {
         private readonly IRoleService _roleService;

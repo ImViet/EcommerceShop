@@ -60,7 +60,8 @@ namespace EcommerceShop.Business.Services
                     OrderDate = order.OrderDate,
                     Status = ChangeOrderStatusName((OrderStatusDto)order.Status),
                     Quantity = _context.OrderDetails.Where(x => x.OrderId == order.OrderId).Sum(x => x.Quantity),
-                    Total = _context.OrderDetails.Where(x => x.OrderId == order.OrderId).Sum(x => x.Quantity * (double)x.Price)
+                    Total = _context.OrderDetails.Where(x => x.OrderId == order.OrderId).Sum(x => x.Quantity * (double)x.Price),
+                    No = order.No
                 });
             }
             return new ApiSuccessResponse<List<OrderDto>>(listOrder);
@@ -99,7 +100,7 @@ namespace EcommerceShop.Business.Services
             if(order == null)
                 return new ApiErrorResponse<bool>("Không tìm thấy đơn hàng");
             order.Status = status;
-            _context.Update(order);
+            _context.Update(order).Property(x => x.No).IsModified = false;
             var result = await _context.SaveChangesAsync();
             if(result > 0)
                 return new ApiSuccessResponse<bool>();

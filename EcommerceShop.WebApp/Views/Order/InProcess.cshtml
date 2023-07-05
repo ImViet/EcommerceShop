@@ -1,1 +1,8 @@
-<h1>In Process</h1>
+@using EcommerceShop.Contracts.Constants
+@{
+    var imgSuccess = ProductSetting.PRODUCT_IMAGE_URL + "/payment_success.png";
+}
+<div class="text-center">
+    <img class="p-5" src="@imgSuccess" alt="" style="height: 300px;">
+    <h3>Đơn hàng của bạn đang được xử lý</h3>
+</div>

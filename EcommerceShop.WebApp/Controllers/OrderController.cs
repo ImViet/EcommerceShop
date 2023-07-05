@@ -1,3 +1,4 @@
+using EcommerceShop.Contracts.Constants;
 using EcommerceShop.Contracts.Dtos.CartDtos;
 using EcommerceShop.Contracts.Dtos.OrderDtos;
 using EcommerceShop.WebApp.Interfaces;
@@ -36,6 +37,8 @@ namespace EcommerceShop.WebApp.Controllers
             {
                 return RedirectToAction("PaymentWithMomo", "Momo", newOrder);
             }
+            Response.Cookies.Delete(CookiesSetting.CART_COOKIES);
+            HttpContext.Session.SetString("CountCart", "0");
             return Redirect("/Order/InProcess");
         }
     }
